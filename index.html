@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Upload (Direct Link)</title>
+    <style>
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 40px;
+        }
+        
+        /* Header section */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #3498db, #2c3e50);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+        }
+        
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        /* Upload section */
+        .upload-section {
+            background-color: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 2px dashed #3498db;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-section:hover {
+            border-color: #2980b9;
+            background-color: #f0f7ff;
+        }
+        
+        .upload-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 20px;
+        }
+        
+        #img {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            z-index: 2;
+        }
+        
+        .file-label {
+            display: block;
+            width: 100%;
+            padding: 18px 20px;
+            background: white;
+            border-radius: 12px;
+            border: 2px solid #3498db;
+            text-align: center;
+            font-weight: 600;
+            color: #3498db;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.1);
+        }
+        
+        .file-label:hover {
+            background: #3498db;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.2);
+        }
+        
+        .file-label:active {
+            transform: translateY(0);
+        }
+        
+        .upload-btn {
+            background: linear-gradient(to right, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.3);
+            letter-spacing: 0.5px;
+        }
+        
+        .upload-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.4);
+        }
+        
+        .upload-btn:active {
+            transform: translateY(-1px);
+        }
+        
+        .upload-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .file-info {
+            margin-top: 15px;
+            font-size: 0.95rem;
+            color: #7f8c8d;
+            text-align: center;
+        }
+        
+        /* Link box section */
+        .link-section {
+            margin-top: 30px;
+        }
+        
+        .link-section h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            text-align: center;
+        }
+        
+        #linkBox {
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+            border-left: 5px solid #3498db;
+            transition: all 0.3s ease;
+            word-break: break-all;
+        }
+        
+        #linkBox:hover {
+            background-color: #f0f7ff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        .link-placeholder {
+            color: #7f8c8d;
+            font-style: italic;
+            text-align: center;
+        }
+        
+        .direct-link {
+            display: block;
+            color: #3498db;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            padding: 12px 15px;
+            background: white;
+            border-radius: 8px;
+            margin-top: 10px;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+            word-break: break-all;
+        }
+        
+        .direct-link:hover {
+            color: #2980b9;
+            text-decoration: underline;
+            background-color: #f8f9fa;
+            border-color: #3498db;
+        }
+        
+        .link-label {
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 1rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        /* Loading indicator */
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .upload-section {
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .upload-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Image Upload & Direct URL Generator</h1>
+            <p>Upload any image and get a direct link to share anywhere. Powered by ImgBB API for reliable hosting.</p>
+        </div>
+        
+        <div class="upload-section">
+            <div class="upload-area">
+                <div class="file-input-wrapper">
+                    <input type="file" id="img" accept="image/*">
+                    <label for="img" class="file-label">
+                        <span>📁 Choose an Image File</span>
+                    </label>
+                </div>
+                
+                <p class="file-info">Supported formats: JPG, PNG, GIF, WebP (Max 32MB)</p>
+                
+                <button class="upload-btn" onclick="upload()">Upload Image</button>
+                
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Uploading image, please wait...</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="link-section">
+            <h3>Your Direct Image Link</h3>
+            <div id="linkBox">
+                <div class="link-placeholder">Your direct image link will appear here after upload...</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Your images are securely hosted on ImgBB. Links do not expire.</p>
+        </div>
+    </div>
+
+<script>
+    // Get references to elements
+    const fileInput = document.getElementById('img');
+    const linkBox = document.getElementById('linkBox');
+    const loading = document.getElementById('loading');
+    const uploadBtn = document.querySelector('.upload-btn');
+    
+    // Update file info when a file is selected
+    fileInput.addEventListener('change', function() {
+        if (this.files.length > 0) {
+            const file = this.files[0];
+            const fileSize = (file.size / (1024 * 1024)).toFixed(2); // Convert to MB
+            const fileName = file.name.length > 25 ? file.name.substring(0, 22) + '...' : file.name;
+            
+            const fileInfo = document.querySelector('.file-info');
+            fileInfo.innerHTML = `Selected: <strong>${fileName}</strong> (${fileSize} MB)`;
+            
+            // Enable upload button
+            uploadBtn.disabled = false;
+        }
+    });
+    
+    async function upload() {
+        let file = document.getElementById('img').files[0];
+        if (!file) {
+            showMessage("Please select an image first!", "error");
+            return;
+        }
+        
+        // Check file size (ImgBB limit is 32MB)
+        if (file.size > 32 * 1024 * 1024) {
+            showMessage("File size exceeds 32MB limit. Please choose a smaller image.", "error");
+            return;
+        }
+        
+        // Show loading state
+        loading.style.display = 'block';
+        uploadBtn.disabled = true;
+        uploadBtn.innerHTML = 'Uploading...';
+        
+        let formData = new FormData();
+        formData.append("image", file);
+
+        try {
+            let response = await fetch("https://api.imgbb.com/1/upload?key=3fa1cfe3b6cb4990996480905fcbbb70", {
+                method: "POST",
+                body: formData
+            });
+
+            let data = await response.json();
+            
+            // Hide loading
+            loading.style.display = 'none';
+            uploadBtn.disabled = false;
+            uploadBtn.innerHTML = 'Upload Image';
+            
+            if (data.success) {
+                // Display the direct link
+                linkBox.innerHTML = `
+                    <span class="link-label">Direct Image Link:</span>
+                    <a href="${data.data.url}" class="direct-link" target="_blank">${data.data.url}</a>
+                    <p style="margin-top: 15px; color: #27ae60; font-weight: 600;">
+                        ✓ Upload successful! Your image is now ready to share.
+                    </p>
+                    <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button onclick="copyToClipboard('${data.data.url}')" style="background: #2ecc71; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">Copy Link</button>
+                        <button onclick="viewImage('${data.data.url}')" style="background: #3498db; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">View Image</button>
+                    </div>
+                `;
+                
+                // Reset file input
+                fileInput.value = '';
+                document.querySelector('.file-info').textContent = 'Supported formats: JPG, PNG, GIF, WebP (Max 32MB)';
+                
+                showMessage("Image uploaded successfully!", "success");
+            } else {
+                showMessage("Upload failed. Please try again.", "error");
+                linkBox.innerHTML = `<div class="link-placeholder">Upload failed. Please try again with a different image.</div>`;
+            }
+        } catch (error) {
+            // Hide loading
+            loading.style.display = 'none';
+            uploadBtn.disabled = false;
+            uploadBtn.innerHTML = 'Upload Image';
+            
+            showMessage("Network error. Please check your connection.", "error");
+            linkBox.innerHTML = `<div class="link-placeholder">Network error. Please check your connection and try again.</div>`;
+        }
+    }
+    
+    // Helper functions
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            showMessage("Link copied to clipboard!", "success");
+        });
+    }
+    
+    function viewImage(url) {
+        window.open(url, '_blank');
+    }
+    
+    function showMessage(message, type) {
+        // Create a temporary message element
+        const messageEl = document.createElement('div');
+        messageEl.textContent = message;
+        messageEl.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            z-index: 1000;
+            animation: fadeIn 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        `;
+        
+        // Set color based on type
+        if (type === "success") {
+            messageEl.style.backgroundColor = "#27ae60";
+        } else if (type === "error") {
+            messageEl.style.backgroundColor = "#e74c3c";
+        } else {
+            messageEl.style.backgroundColor = "#3498db";
+        }
+        
+        document.body.appendChild(messageEl);
+        
+        // Remove message after 3 seconds
+        setTimeout(() => {
+            messageEl.style.animation = "fadeOut 0.3s";
+            setTimeout(() => {
+                document.body.removeChild(messageEl);
+            }, 300);
+        }, 3000);
+    }
+    
+    // Add CSS for fade animations
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-10px); }
+        }
+    `;
+    document.head.appendChild(style);
+</script>
+
+</body>
+</html>
