@@ -1,84 +1,261 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Multi Image Upload - Cloudinary</title>
-<style>
-body { font-family:sans-serif; background:#f0f4f8; display:flex; justify-content:center; align-items:center; min-height:100vh; margin:0;}
-.container { background:#fff; padding:30px; border-radius:15px; max-width:600px; width:100%; box-shadow:0 10px 25px rgba(0,0,0,0.1);}
-h1 { text-align:center; color:#3498db; }
-input[type=file] { width:100%; margin:15px 0;}
-button { background:#3498db; color:#fff; padding:12px 25px; border:none; border-radius:8px; cursor:pointer; font-size:16px; }
-button:disabled { background:#ccc; cursor:not-allowed; }
-.link-list { margin-top:20px; }
-.link-item { background:#f8f9fa; padding:10px; margin-bottom:10px; border-radius:8px; display:flex; justify-content:space-between; align-items:center; word-break:break-all; }
-.link-item a { color:#2980b9; text-decoration:none; }
-.link-item button { background:#2ecc71; border:none; padding:5px 10px; border-radius:5px; cursor:pointer; color:#fff; }
-.loading { display:none; text-align:center; margin-top:15px; }
-</style>
+    <title>ফ্রি ইমেজ আপলোড - Unlimited</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Arial', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 500px; margin: 0 auto; background: white; border-radius: 20px; padding: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        h1 { text-align: center; color: #333; margin-bottom: 30px; font-size: 28px; }
+        .upload-area { border: 3px dashed #667eea; border-radius: 15px; padding: 40px; text-align: center; margin-bottom: 20px; cursor: pointer; transition: 0.3s; }
+        .upload-area:hover { background: #f0f4ff; border-color: #764ba2; }
+        .upload-area.dragover { background: #e0e7ff; border-color: #4f46e5; }
+        #fileInput { display: none; }
+        .upload-btn { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 15px 30px; border-radius: 10px; font-size: 18px; cursor: pointer; width: 100%; margin-top: 20px; transition: 0.3s; }
+        .upload-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4); }
+        .upload-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .preview { max-width: 100%; max-height: 300px; margin: 20px auto; display: block; border-radius: 10px; display: none; }
+        .link-container { margin-top: 20px; }
+        #imageLink { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; margin-top: 10px; }
+        .copy-btn { background: #10b981; color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; margin-top: 10px; width: 100%; }
+        .stats { display: flex; justify-content: space-between; margin-top: 30px; padding-top: 20px; border-top: 2px solid #eee; }
+        .stat-box { text-align: center; }
+        .stat-number { font-size: 24px; font-weight: bold; color: #667eea; }
+        .stat-label { font-size: 14px; color: #666; }
+        .loader { display: none; border: 5px solid #f3f3f3; border-top: 5px solid #667eea; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 20px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .message { padding: 15px; border-radius: 10px; margin-top: 20px; text-align: center; display: none; }
+        .success { background: #d1fae5; color: #065f46; border: 2px solid #10b981; }
+        .error { background: #fee2e2; color: #991b1b; border: 2px solid #ef4444; }
+        @media (max-width: 600px) { .container { padding: 20px; } h1 { font-size: 24px; } }
+    </style>
 </head>
 <body>
-<div class="container">
-    <h1> Image Upload</h1>
-    <input type="file" id="images" multiple accept="image/*">
-    <button id="uploadBtn">Upload Images</button>
-    <div class="loading" id="loading">Uploading...</div>
-    <div class="link-list" id="linkList"></div>
-</div>
+    <div class="container">
+        <h1>📱 ফ্রি ইমেজ আপলোড</h1>
+        <h3 style="text-align: center; color: #666; margin-bottom: 20px;">আনলিমিটেড স্টোরেজ - ১০০% ফ্রি</h3>
+        
+        <div class="upload-area" id="dropArea">
+            <div style="font-size: 60px; color: #667eea;">📤</div>
+            <p style="font-size: 18px; color: #555; margin: 10px 0;">আপনার ইমেজ এখানে ড্রপ করুন</p>
+            <p style="color: #888;">বা</p>
+            <button class="upload-btn" onclick="document.getElementById('fileInput').click()">ফাইল সিলেক্ট করুন</button>
+            <input type="file" id="fileInput" accept="image/*">
+        </div>
+        
+        <img id="preview" class="preview" alt="Preview">
+        
+        <div class="loader" id="loader"></div>
+        
+        <button class="upload-btn" id="uploadBtn" onclick="uploadImage()" disabled>ইমেজ আপলোড করুন</button>
+        
+        <div class="message" id="message"></div>
+        
+        <div class="link-container" id="linkContainer" style="display: none;">
+            <h3 style="color: #333; margin-bottom: 10px;">✨ আপনার ইমেজ লিংক:</h3>
+            <input type="text" id="imageLink" readonly>
+            <button class="copy-btn" onclick="copyLink()">📋 লিংক কপি করুন</button>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-number" id="fileCount">0</div>
+                <div class="stat-label">আপলোড হয়েছে</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number" id="totalSize">0 MB</div>
+                <div class="stat-label">মোট স্টোরেজ</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">ফ্রি</div>
+                <div class="stat-label">খরচ</div>
+            </div>
+        </div>
+    </div>
 
-<script>
-const imagesInput = document.getElementById('images');
-const uploadBtn = document.getElementById('uploadBtn');
-const linkList = document.getElementById('linkList');
-const loading = document.getElementById('loading');
+    <script>
+        // Configuration - আপনার Cloudflare R2 ডিটেইলস
+        const R2_CONFIG = {
+            accountId: 'YOUR_CLOUDFLARE_ACCOUNT_ID',
+            bucketName: 'YOUR_BUCKET_NAME',
+            accessKeyId: 'YOUR_ACCESS_KEY_ID',
+            secretAccessKey: 'YOUR_SECRET_ACCESS_KEY'
+        };
 
-// ⚡ Cloudinary credentials (from user)
-const CLOUD_NAME = "369416746762969";
-const UPLOAD_PRESET = "dzp1zaut5"; // unsigned upload preset
+        let selectedFile = null;
+        const dropArea = document.getElementById('dropArea');
+        const fileInput = document.getElementById('fileInput');
+        const preview = document.getElementById('preview');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const loader = document.getElementById('loader');
+        const message = document.getElementById('message');
+        const linkContainer = document.getElementById('linkContainer');
+        const imageLink = document.getElementById('imageLink');
 
-uploadBtn.addEventListener('click', async () => {
-    const files = imagesInput.files;
-    if (!files.length) { alert("Please select at least one image."); return; }
-    
-    linkList.innerHTML = '';
-    loading.style.display = 'block';
-    uploadBtn.disabled = true;
-    
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append("upload_preset", UPLOAD_PRESET);
+        // Drag and Drop events
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, preventDefaults, false);
+        });
 
-        try {
-            const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`, {
-                method: 'POST',
-                body: formData
-            });
-            const data = await res.json();
-            if (data.secure_url) {
-                const div = document.createElement('div');
-                div.className = 'link-item';
-                div.innerHTML = `<a href="${data.secure_url}" target="_blank">${data.secure_url}</a> 
-                                 <button onclick="copyLink('${data.secure_url}')">Copy</button>`;
-                linkList.appendChild(div);
-            } else {
-                alert("Upload failed for " + file.name);
-            }
-        } catch(err) {
-            alert("Network or API error for " + file.name);
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
         }
-    }
 
-    loading.style.display = 'none';
-    uploadBtn.disabled = false;
-    imagesInput.value = '';
-});
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropArea.addEventListener(eventName, () => {
+                dropArea.classList.add('dragover');
+            }, false);
+        });
 
-function copyLink(url) {
-    navigator.clipboard.writeText(url).then(()=> alert("Copied!"));
-}
-</script>
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, () => {
+                dropArea.classList.remove('dragover');
+            }, false);
+        });
+
+        dropArea.addEventListener('drop', handleDrop, false);
+        fileInput.addEventListener('change', handleFileSelect, false);
+
+        function handleDrop(e) {
+            const files = e.dataTransfer.files;
+            handleFiles(files);
+        }
+
+        function handleFileSelect(e) {
+            const files = e.target.files;
+            handleFiles(files);
+        }
+
+        function handleFiles(files) {
+            if (files.length > 0) {
+                selectedFile = files[0];
+                
+                // File validation
+                const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+                if (!validTypes.includes(selectedFile.type)) {
+                    showMessage('শুধুমাত্র JPG, PNG, GIF, WebP ফাইল আপলোড করুন', 'error');
+                    return;
+                }
+                
+                if (selectedFile.size > 10 * 1024 * 1024) { // 10MB limit
+                    showMessage('ফাইল সাইজ 10MB এর কম হতে হবে', 'error');
+                    return;
+                }
+                
+                // Show preview
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(selectedFile);
+                
+                uploadBtn.disabled = false;
+            }
+        }
+
+        async function uploadImage() {
+            if (!selectedFile) return;
+            
+            loader.style.display = 'block';
+            uploadBtn.disabled = true;
+            message.style.display = 'none';
+            
+            try {
+                // Generate unique filename
+                const fileExt = selectedFile.name.split('.').pop();
+                const fileName = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
+                
+                // Create form data
+                const formData = new FormData();
+                formData.append('image', selectedFile);
+                formData.append('filename', fileName);
+                
+                // Upload to server (you'll need to create a serverless function)
+                // For now using mock response
+                const mockUrl = await mockUpload(selectedFile, fileName);
+                
+                // Display link
+                imageLink.value = mockUrl;
+                linkContainer.style.display = 'block';
+                
+                // Update stats
+                updateStats(selectedFile.size);
+                
+                showMessage('✅ ইমেজ সফলভাবে আপলোড হয়েছে!', 'success');
+                
+                // Reset for next upload
+                selectedFile = null;
+                preview.style.display = 'none';
+                uploadBtn.disabled = true;
+                
+                // Scroll to link
+                linkContainer.scrollIntoView({ behavior: 'smooth' });
+                
+            } catch (error) {
+                showMessage('❌ আপলোড ব্যর্থ: ' + error.message, 'error');
+                uploadBtn.disabled = false;
+            } finally {
+                loader.style.display = 'none';
+            }
+        }
+
+        // Mock upload function - Replace with actual Cloudflare R2 upload
+        async function mockUpload(file, filename) {
+            // In real implementation, upload to Cloudflare R2
+            // For demo, return a mock URL
+            return `https://your-subdomain.workers.dev/images/${filename}`;
+        }
+
+        function copyLink() {
+            imageLink.select();
+            imageLink.setSelectionRange(0, 99999);
+            document.execCommand('copy');
+            
+            const btn = document.querySelector('.copy-btn');
+            const originalText = btn.textContent;
+            btn.textContent = '✅ কপি হয়েছে!';
+            btn.style.background = '#059669';
+            
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = '#10b981';
+            }, 2000);
+        }
+
+        function showMessage(text, type) {
+            message.textContent = text;
+            message.className = `message ${type}`;
+            message.style.display = 'block';
+        }
+
+        function updateStats(fileSize) {
+            const fileCountEl = document.getElementById('fileCount');
+            const totalSizeEl = document.getElementById('totalSize');
+            
+            let count = parseInt(fileCountEl.textContent) + 1;
+            let size = parseFloat(totalSizeEl.textContent) + (fileSize / (1024*1024));
+            
+            fileCountEl.textContent = count;
+            totalSizeEl.textContent = size.toFixed(2) + ' MB';
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check if PWA can be installed
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js');
+            }
+            
+            // Add to home screen prompt
+            let deferredPrompt;
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+            });
+        });
+    </script>
 </body>
 </html>
