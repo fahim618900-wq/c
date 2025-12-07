@@ -1,261 +1,499 @@
 <!DOCTYPE html>
-<html>
+<html lang="bn">
 <head>
-    <title>ফ্রি ইমেজ আপলোড - Unlimited</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📷 ইমেজ আপলোডার</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Arial', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
-        .container { max-width: 500px; margin: 0 auto; background: white; border-radius: 20px; padding: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
-        h1 { text-align: center; color: #333; margin-bottom: 30px; font-size: 28px; }
-        .upload-area { border: 3px dashed #667eea; border-radius: 15px; padding: 40px; text-align: center; margin-bottom: 20px; cursor: pointer; transition: 0.3s; }
-        .upload-area:hover { background: #f0f4ff; border-color: #764ba2; }
-        .upload-area.dragover { background: #e0e7ff; border-color: #4f46e5; }
-        #fileInput { display: none; }
-        .upload-btn { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 15px 30px; border-radius: 10px; font-size: 18px; cursor: pointer; width: 100%; margin-top: 20px; transition: 0.3s; }
-        .upload-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4); }
-        .upload-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-        .preview { max-width: 100%; max-height: 300px; margin: 20px auto; display: block; border-radius: 10px; display: none; }
-        .link-container { margin-top: 20px; }
-        #imageLink { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; margin-top: 10px; }
-        .copy-btn { background: #10b981; color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; margin-top: 10px; width: 100%; }
-        .stats { display: flex; justify-content: space-between; margin-top: 30px; padding-top: 20px; border-top: 2px solid #eee; }
-        .stat-box { text-align: center; }
-        .stat-number { font-size: 24px; font-weight: bold; color: #667eea; }
-        .stat-label { font-size: 14px; color: #666; }
-        .loader { display: none; border: 5px solid #f3f3f3; border-top: 5px solid #667eea; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 20px auto; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .message { padding: 15px; border-radius: 10px; margin-top: 20px; text-align: center; display: none; }
-        .success { background: #d1fae5; color: #065f46; border: 2px solid #10b981; }
-        .error { background: #fee2e2; color: #991b1b; border: 2px solid #ef4444; }
-        @media (max-width: 600px) { .container { padding: 20px; } h1 { font-size: 24px; } }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Noto Sans Bengali', sans-serif;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(to right, #4776E6, #8E54E9);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .upload-area {
+            border: 3px dashed #8E54E9;
+            border-radius: 15px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+            background: #f8f9ff;
+        }
+
+        .upload-area:hover {
+            background: #edf1ff;
+            border-color: #4776E6;
+        }
+
+        .upload-area i {
+            font-size: 60px;
+            color: #8E54E9;
+            margin-bottom: 15px;
+        }
+
+        .upload-area h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .upload-area p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .file-info {
+            background: #f0f4ff;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            display: none;
+            align-items: center;
+            gap: 15px;
+            animation: fadeIn 0.5s;
+        }
+
+        .file-info.show {
+            display: flex;
+        }
+
+        .file-info i {
+            color: #4776E6;
+            font-size: 24px;
+        }
+
+        .file-details h4 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .file-details p {
+            color: #666;
+            font-size: 12px;
+        }
+
+        .btn {
+            background: linear-gradient(to right, #4776E6, #8E54E9);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(142, 84, 233, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(-1px);
+        }
+
+        .btn:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .loader {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            animation: fadeIn 0.5s;
+        }
+
+        .loader.show {
+            display: block;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #8E54E9;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        .result-box {
+            background: #f8f9ff;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+            display: none;
+            animation: fadeIn 0.8s;
+        }
+
+        .result-box.show {
+            display: block;
+        }
+
+        .success-icon {
+            text-align: center;
+            color: #4CAF50;
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .link-container {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            border: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .link-text {
+            font-size: 14px;
+            color: #333;
+            word-break: break-all;
+            flex-grow: 1;
+        }
+
+        .copy-btn {
+            background: #4776E6;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+            transition: background 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: #3a68d6;
+        }
+
+        .copy-btn.copied {
+            background: #4CAF50;
+        }
+
+        .preview-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .preview-img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .footer {
+            text-align: center;
+            padding: 15px;
+            color: #666;
+            font-size: 12px;
+            border-top: 1px solid #eee;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                border-radius: 15px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>📱 ফ্রি ইমেজ আপলোড</h1>
-        <h3 style="text-align: center; color: #666; margin-bottom: 20px;">আনলিমিটেড স্টোরেজ - ১০০% ফ্রি</h3>
-        
-        <div class="upload-area" id="dropArea">
-            <div style="font-size: 60px; color: #667eea;">📤</div>
-            <p style="font-size: 18px; color: #555; margin: 10px 0;">আপনার ইমেজ এখানে ড্রপ করুন</p>
-            <p style="color: #888;">বা</p>
-            <button class="upload-btn" onclick="document.getElementById('fileInput').click()">ফাইল সিলেক্ট করুন</button>
-            <input type="file" id="fileInput" accept="image/*">
+        <div class="header">
+            <h1><i class="fas fa-cloud-upload-alt"></i> ইমেজ আপলোডার</h1>
+            <p>আপনার ছবি আপলোড করুন এবং তাৎক্ষণিক লিঙ্ক পান</p>
         </div>
-        
-        <img id="preview" class="preview" alt="Preview">
-        
-        <div class="loader" id="loader"></div>
-        
-        <button class="upload-btn" id="uploadBtn" onclick="uploadImage()" disabled>ইমেজ আপলোড করুন</button>
-        
-        <div class="message" id="message"></div>
-        
-        <div class="link-container" id="linkContainer" style="display: none;">
-            <h3 style="color: #333; margin-bottom: 10px;">✨ আপনার ইমেজ লিংক:</h3>
-            <input type="text" id="imageLink" readonly>
-            <button class="copy-btn" onclick="copyLink()">📋 লিংক কপি করুন</button>
+
+        <div class="content">
+            <div class="upload-area" id="uploadArea">
+                <i class="fas fa-file-image"></i>
+                <h3>ছবি সিলেক্ট করুন</h3>
+                <p>এখানে ক্লিক করুন অথবা ফাইলটি ড্র্যাগ করে আনুন</p>
+                <p style="font-size: 12px; margin-top: 10px;">সাপোর্টেড: JPG, PNG, GIF, WEBP (Max: 5MB)</p>
+                
+                <input type="file" id="imageInput" accept="image/*" hidden>
+            </div>
+
+            <div class="file-info" id="fileInfo">
+                <i class="fas fa-image"></i>
+                <div class="file-details">
+                    <h4 id="fileName">ফাইলের নাম</h4>
+                    <p id="fileSize">ফাইলের সাইজ</p>
+                </div>
+            </div>
+
+            <div class="preview-container" id="previewContainer">
+                <img class="preview-img" id="previewImg" src="" alt="Preview">
+            </div>
+
+            <button class="btn" id="uploadBtn" onclick="uploadImage()" disabled>
+                <i class="fas fa-upload"></i> আপলোড করুন
+            </button>
+
+            <div class="loader" id="loader">
+                <div class="spinner"></div>
+                <p>আপলোড করা হচ্ছে... দয়া করে অপেক্ষা করুন</p>
+            </div>
+
+            <div class="result-box" id="resultBox">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3 style="text-align: center; color: #333; margin-bottom: 15px;">আপলোড সফল!</h3>
+                
+                <div class="link-container">
+                    <div class="link-text" id="imageLink"></div>
+                    <button class="copy-btn" onclick="copyLink()" id="copyBtn">
+                        <i class="fas fa-copy"></i> কপি
+                    </button>
+                </div>
+                
+                <div style="text-align: center; margin-top: 15px;">
+                    <a href="#" id="viewLink" target="_blank" style="text-decoration: none;">
+                        <button class="btn" style="padding: 10px 20px; width: auto;">
+                            <i class="fas fa-external-link-alt"></i> ছবিটি দেখুন
+                        </button>
+                    </a>
+                </div>
+            </div>
         </div>
-        
-        <div class="stats">
-            <div class="stat-box">
-                <div class="stat-number" id="fileCount">0</div>
-                <div class="stat-label">আপলোড হয়েছে</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-number" id="totalSize">0 MB</div>
-                <div class="stat-label">মোট স্টোরেজ</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-number">ফ্রি</div>
-                <div class="stat-label">খরচ</div>
-            </div>
+
+        <div class="footer">
+            <p>Powered by ImgBB API | সর্বোচ্চ 5MB সাইজের ছবি আপলোড করা যাবে</p>
         </div>
     </div>
 
     <script>
-        // Configuration - আপনার Cloudflare R2 ডিটেইলস
-        const R2_CONFIG = {
-            accountId: 'YOUR_CLOUDFLARE_ACCOUNT_ID',
-            bucketName: 'YOUR_BUCKET_NAME',
-            accessKeyId: 'YOUR_ACCESS_KEY_ID',
-            secretAccessKey: 'YOUR_SECRET_ACCESS_KEY'
-        };
-
-        let selectedFile = null;
-        const dropArea = document.getElementById('dropArea');
-        const fileInput = document.getElementById('fileInput');
-        const preview = document.getElementById('preview');
+        const API_KEY = "c1f29465e1de3534d7069b0e1a663aee";
+        
+        // DOM Elements
+        const uploadArea = document.getElementById('uploadArea');
+        const imageInput = document.getElementById('imageInput');
+        const fileInfo = document.getElementById('fileInfo');
+        const fileName = document.getElementById('fileName');
+        const fileSize = document.getElementById('fileSize');
         const uploadBtn = document.getElementById('uploadBtn');
         const loader = document.getElementById('loader');
-        const message = document.getElementById('message');
-        const linkContainer = document.getElementById('linkContainer');
+        const resultBox = document.getElementById('resultBox');
         const imageLink = document.getElementById('imageLink');
-
-        // Drag and Drop events
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            dropArea.addEventListener(eventName, preventDefaults, false);
-        });
-
-        function preventDefaults(e) {
+        const previewContainer = document.getElementById('previewContainer');
+        const previewImg = document.getElementById('previewImg');
+        const copyBtn = document.getElementById('copyBtn');
+        const viewLink = document.getElementById('viewLink');
+        
+        // Event Listeners
+        uploadArea.addEventListener('click', () => imageInput.click());
+        uploadArea.addEventListener('dragover', (e) => {
             e.preventDefault();
-            e.stopPropagation();
-        }
-
-        ['dragenter', 'dragover'].forEach(eventName => {
-            dropArea.addEventListener(eventName, () => {
-                dropArea.classList.add('dragover');
-            }, false);
+            uploadArea.style.borderColor = '#4776E6';
+            uploadArea.style.backgroundColor = '#e8eeff';
         });
-
-        ['dragleave', 'drop'].forEach(eventName => {
-            dropArea.addEventListener(eventName, () => {
-                dropArea.classList.remove('dragover');
-            }, false);
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.borderColor = '#8E54E9';
+            uploadArea.style.backgroundColor = '#f8f9ff';
         });
-
-        dropArea.addEventListener('drop', handleDrop, false);
-        fileInput.addEventListener('change', handleFileSelect, false);
-
-        function handleDrop(e) {
-            const files = e.dataTransfer.files;
-            handleFiles(files);
-        }
-
-        function handleFileSelect(e) {
-            const files = e.target.files;
-            handleFiles(files);
-        }
-
-        function handleFiles(files) {
-            if (files.length > 0) {
-                selectedFile = files[0];
-                
-                // File validation
-                const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-                if (!validTypes.includes(selectedFile.type)) {
-                    showMessage('শুধুমাত্র JPG, PNG, GIF, WebP ফাইল আপলোড করুন', 'error');
-                    return;
-                }
-                
-                if (selectedFile.size > 10 * 1024 * 1024) { // 10MB limit
-                    showMessage('ফাইল সাইজ 10MB এর কম হতে হবে', 'error');
-                    return;
-                }
-                
-                // Show preview
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    preview.src = e.target.result;
-                    preview.style.display = 'block';
-                };
-                reader.readAsDataURL(selectedFile);
-                
-                uploadBtn.disabled = false;
-            }
-        }
-
-        async function uploadImage() {
-            if (!selectedFile) return;
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#8E54E9';
+            uploadArea.style.backgroundColor = '#f8f9ff';
             
-            loader.style.display = 'block';
+            if (e.dataTransfer.files.length) {
+                imageInput.files = e.dataTransfer.files;
+                handleFileSelect();
+            }
+        });
+        
+        imageInput.addEventListener('change', handleFileSelect);
+        
+        function handleFileSelect() {
+            const file = imageInput.files[0];
+            
+            if (!file) return;
+            
+            // Check if file is an image
+            if (!file.type.match('image.*')) {
+                alert('দয়া করে শুধুমাত্র ছবি ফাইল সিলেক্ট করুন!');
+                return;
+            }
+            
+            // Check file size (5MB limit)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('ফাইলের সাইজ 5MB এর বেশি হওয়া যাবে না!');
+                return;
+            }
+            
+            // Show file info
+            fileName.textContent = file.name;
+            fileSize.textContent = formatFileSize(file.size);
+            fileInfo.classList.add('show');
+            
+            // Show preview
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewImg.src = e.target.result;
+                previewContainer.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+            
+            // Enable upload button
+            uploadBtn.disabled = false;
+        }
+        
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + ' bytes';
+            else if (bytes < 1048576) return (bytes / 1024).toFixed(2) + ' KB';
+            else return (bytes / 1048576).toFixed(2) + ' MB';
+        }
+        
+        function uploadImage() {
+            const file = imageInput.files[0];
+            
+            if (!file) {
+                alert('একটি ছবি সিলেক্ট করুন!');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append("image", file);
+            
+            // Show loader, hide other elements
+            loader.classList.add('show');
+            resultBox.classList.remove('show');
             uploadBtn.disabled = true;
-            message.style.display = 'none';
             
-            try {
-                // Generate unique filename
-                const fileExt = selectedFile.name.split('.').pop();
-                const fileName = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
+            fetch(`https://api.imgbb.com/1/upload?key=${API_KEY}`, {
+                method: "POST",
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                loader.classList.remove('show');
                 
-                // Create form data
-                const formData = new FormData();
-                formData.append('image', selectedFile);
-                formData.append('filename', fileName);
-                
-                // Upload to server (you'll need to create a serverless function)
-                // For now using mock response
-                const mockUrl = await mockUpload(selectedFile, fileName);
-                
-                // Display link
-                imageLink.value = mockUrl;
-                linkContainer.style.display = 'block';
-                
-                // Update stats
-                updateStats(selectedFile.size);
-                
-                showMessage('✅ ইমেজ সফলভাবে আপলোড হয়েছে!', 'success');
-                
-                // Reset for next upload
-                selectedFile = null;
-                preview.style.display = 'none';
-                uploadBtn.disabled = true;
-                
-                // Scroll to link
-                linkContainer.scrollIntoView({ behavior: 'smooth' });
-                
-            } catch (error) {
-                showMessage('❌ আপলোড ব্যর্থ: ' + error.message, 'error');
+                if (data.success) {
+                    const link = data.data.url;
+                    imageLink.textContent = link;
+                    viewLink.href = link;
+                    resultBox.classList.add('show');
+                    
+                    // Scroll to result
+                    resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                } else {
+                    alert("আপলোড ব্যর্থ হয়েছে! দয়া করে আবার চেষ্টা করুন।");
+                    uploadBtn.disabled = false;
+                }
+            })
+            .catch(error => {
+                loader.classList.remove('show');
+                alert("নেটওয়ার্ক ত্রুটি! ইন্টারনেট সংযোগ পরীক্ষা করুন।");
                 uploadBtn.disabled = false;
-            } finally {
-                loader.style.display = 'none';
-            }
-        }
-
-        // Mock upload function - Replace with actual Cloudflare R2 upload
-        async function mockUpload(file, filename) {
-            // In real implementation, upload to Cloudflare R2
-            // For demo, return a mock URL
-            return `https://your-subdomain.workers.dev/images/${filename}`;
-        }
-
-        function copyLink() {
-            imageLink.select();
-            imageLink.setSelectionRange(0, 99999);
-            document.execCommand('copy');
-            
-            const btn = document.querySelector('.copy-btn');
-            const originalText = btn.textContent;
-            btn.textContent = '✅ কপি হয়েছে!';
-            btn.style.background = '#059669';
-            
-            setTimeout(() => {
-                btn.textContent = originalText;
-                btn.style.background = '#10b981';
-            }, 2000);
-        }
-
-        function showMessage(text, type) {
-            message.textContent = text;
-            message.className = `message ${type}`;
-            message.style.display = 'block';
-        }
-
-        function updateStats(fileSize) {
-            const fileCountEl = document.getElementById('fileCount');
-            const totalSizeEl = document.getElementById('totalSize');
-            
-            let count = parseInt(fileCountEl.textContent) + 1;
-            let size = parseFloat(totalSizeEl.textContent) + (fileSize / (1024*1024));
-            
-            fileCountEl.textContent = count;
-            totalSizeEl.textContent = size.toFixed(2) + ' MB';
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            // Check if PWA can be installed
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('/sw.js');
-            }
-            
-            // Add to home screen prompt
-            let deferredPrompt;
-            window.addEventListener('beforeinstallprompt', (e) => {
-                e.preventDefault();
-                deferredPrompt = e;
+                console.error('Error:', error);
             });
-        });
+        }
+        
+        function copyLink() {
+            const text = imageLink.textContent;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                // Show copied state
+                const originalText = copyBtn.innerHTML;
+                copyBtn.innerHTML = '<i class="fas fa-check"></i> কপিড!';
+                copyBtn.classList.add('copied');
+                
+                setTimeout(() => {
+                    copyBtn.innerHTML = originalText;
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Copy failed:', err);
+                alert('লিঙ্ক কপি করতে সমস্যা হচ্ছে!');
+            });
+        }
+        
+        // Initialize
+        previewContainer.style.display = 'none';
     </script>
 </body>
 </html>
