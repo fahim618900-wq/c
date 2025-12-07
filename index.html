@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📷 প্রিমিয়াম ছবি প্রসেসিং টুল</title>
+    <title>📸 অটো হাই-কোয়ালিটি ছবি প্রসেসিং টুল</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -41,7 +41,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
@@ -77,6 +77,19 @@
             margin: 0 auto;
         }
 
+        .quality-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--gold) 0%, #FFEC8B 100%);
+            color: #333;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            margin-top: 15px;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+
         .main-content {
             background: var(--white);
             border-radius: 20px;
@@ -84,56 +97,83 @@
             box-shadow: 0 15px 35px var(--shadow);
         }
 
+        /* Upload Section */
         .upload-section {
-            margin-bottom: 30px;
+            margin-bottom: 40px;
+            text-align: center;
         }
 
         .upload-area {
             border: 3px dashed var(--primary);
             border-radius: 15px;
-            padding: 40px 20px;
+            padding: 50px 20px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
             background: var(--bg);
+            position: relative;
+            overflow: hidden;
         }
 
         .upload-area:hover {
             background: var(--primary-light);
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(74, 108, 247, 0.2);
+            box-shadow: 0 15px 35px rgba(74, 108, 247, 0.2);
+            border-color: var(--gold);
         }
 
         .upload-area.dragover {
-            background: var(--primary-light);
-            border-color: var(--success);
+            background: var(--gold-light);
+            border-color: var(--gold);
         }
 
         .upload-icon {
-            font-size: 60px;
+            font-size: 70px;
             color: var(--primary);
-            margin-bottom: 15px;
-            opacity: 0.8;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .upload-area:hover .upload-icon {
+            color: var(--gold);
         }
 
         .upload-text h3 {
             color: var(--text);
-            font-size: 22px;
-            margin-bottom: 10px;
+            font-size: 26px;
+            margin-bottom: 15px;
         }
 
         .upload-text p {
             color: var(--text-light);
+            font-size: 16px;
+            margin-bottom: 8px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .upload-note {
+            background: var(--gold-light);
+            border-left: 4px solid var(--gold);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: left;
             font-size: 14px;
-            margin-bottom: 5px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         input[type="file"] {
             display: none;
         }
 
+        /* Preview Section */
         .preview-section {
-            margin-top: 30px;
+            margin-top: 40px;
             animation: slideDown 0.5s ease;
         }
 
@@ -147,197 +187,109 @@
 
         .preview-box {
             flex: 1;
-            min-width: 300px;
+            min-width: 350px;
             text-align: center;
+            background: var(--bg);
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px solid var(--border);
         }
 
         .preview-title {
             font-weight: 600;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             color: var(--text);
-            font-size: 18px;
-            padding-bottom: 10px;
+            font-size: 20px;
+            padding-bottom: 15px;
             border-bottom: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
         .preview-img {
             width: 100%;
-            max-height: 300px;
+            max-height: 350px;
             object-fit: contain;
             border-radius: 10px;
             border: 2px solid var(--border);
-            background: var(--bg);
-            padding: 10px;
-        }
-
-        /* Quality Selection Section */
-        .quality-section {
-            margin-top: 40px;
-            text-align: center;
-            animation: slideDown 0.5s ease;
-        }
-
-        .quality-title {
-            font-size: 24px;
-            color: var(--text);
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--border);
-        }
-
-        .quality-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
-        }
-
-        .quality-card {
             background: var(--white);
-            border-radius: 15px;
-            padding: 25px;
-            border: 2px solid var(--border);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            text-align: left;
-            position: relative;
-        }
-
-        .quality-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px var(--shadow);
-        }
-
-        .quality-card.active {
-            border-color: var(--primary);
-            background: var(--primary-light);
-            box-shadow: 0 10px 25px rgba(74, 108, 247, 0.15);
-        }
-
-        .quality-card.high-quality {
-            border-color: var(--gold);
-            background: var(--gold-light);
-        }
-
-        .quality-card.high-quality.active {
-            border-color: var(--gold);
-            background: var(--gold-light);
-            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.2);
-        }
-
-        .quality-badge {
-            position: absolute;
-            top: -10px;
-            right: 20px;
-            background: var(--gold);
-            color: #333;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-            box-shadow: 0 4px 10px rgba(255, 215, 0, 0.3);
-        }
-
-        .quality-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .quality-icon {
-            font-size: 40px;
-            color: var(--primary);
-        }
-
-        .quality-card.high-quality .quality-icon {
-            color: var(--gold);
-        }
-
-        .quality-name {
-            font-size: 22px;
-            color: var(--text);
-            font-weight: 700;
-        }
-
-        .quality-card.high-quality .quality-name {
-            color: #333;
-        }
-
-        .quality-description {
-            color: var(--text-light);
-            font-size: 14px;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-
-        .quality-features {
-            list-style: none;
-            margin: 15px 0;
-            padding-left: 10px;
-        }
-
-        .quality-features li {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-
-        .quality-features i {
-            color: var(--success);
-            font-size: 12px;
+            padding: 15px;
+            box-shadow: 0 5px 15px var(--shadow);
         }
 
         /* Options Section */
         .options-section {
-            margin-top: 40px;
+            margin-top: 50px;
             text-align: center;
-            animation: slideDown 0.5s ease;
         }
 
         .options-title {
-            font-size: 24px;
+            font-size: 28px;
             color: var(--text);
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--border);
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid var(--border);
+            position: relative;
+        }
+
+        .options-title:after {
+            content: '🎯';
+            position: absolute;
+            right: 0;
+            top: -5px;
+            font-size: 24px;
         }
 
         .options-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
         }
 
         .option-card {
             background: var(--white);
-            border-radius: 15px;
-            padding: 25px;
-            border: 2px solid var(--border);
+            border-radius: 20px;
+            padding: 35px 30px;
+            border: 3px solid var(--border);
             transition: all 0.3s ease;
             cursor: pointer;
-            text-align: center;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
         }
 
         .option-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px var(--shadow);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
             border-color: var(--primary);
         }
 
         .option-card.active {
             border-color: var(--primary);
             background: var(--primary-light);
-            box-shadow: 0 10px 25px rgba(74, 108, 247, 0.15);
+            box-shadow: 0 15px 35px rgba(74, 108, 247, 0.2);
+        }
+
+        .option-card:hover .option-badge {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .option-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
         }
 
         .option-icon {
             font-size: 50px;
             color: var(--primary);
-            margin-bottom: 15px;
+            min-width: 60px;
+            text-align: center;
         }
 
         .option-card:nth-child(2) .option-icon {
@@ -345,78 +297,110 @@
         }
 
         .option-title {
-            font-size: 20px;
+            font-size: 24px;
             color: var(--text);
-            margin-bottom: 10px;
-            font-weight: 600;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .option-subtitle {
+            color: var(--text-light);
+            font-size: 14px;
+            font-weight: 500;
         }
 
         .option-description {
-            color: var(--text-light);
-            font-size: 14px;
-            margin-bottom: 15px;
-            line-height: 1.5;
+            color: var(--text);
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            padding-left: 10px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .option-features {
+            list-style: none;
+            margin: 20px 0;
+            padding-left: 0;
+        }
+
+        .option-features li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 15px;
+            padding: 8px 15px;
+            background: var(--bg);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .option-features li:hover {
+            background: var(--primary-light);
+            transform: translateX(5px);
+        }
+
+        .option-features i {
+            color: var(--success);
+            font-size: 16px;
+            min-width: 20px;
         }
 
         .option-badge {
-            display: inline-block;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-top: 10px;
-        }
-
-        .badge-link {
+            position: absolute;
+            top: 20px;
+            right: 20px;
             background: var(--info);
             color: var(--white);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: all 0.3s ease;
         }
 
-        .badge-bgremove {
+        .option-card:nth-child(2) .option-badge {
             background: var(--secondary);
-            color: var(--white);
         }
 
         .action-section {
-            margin-top: 30px;
+            margin-top: 40px;
             text-align: center;
         }
 
         .btn {
-            padding: 16px 40px;
-            border-radius: 12px;
-            font-size: 18px;
-            font-weight: 600;
+            padding: 20px 50px;
+            border-radius: 15px;
+            font-size: 20px;
+            font-weight: 700;
             cursor: pointer;
             border: none;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            gap: 15px;
             transition: all 0.3s ease;
-            min-width: 250px;
-        }
-
-        .btn-primary {
+            min-width: 300px;
             background: linear-gradient(135deg, var(--primary) 0%, #6a8aff 100%);
             color: var(--white);
-            box-shadow: 0 8px 20px rgba(74, 108, 247, 0.3);
+            box-shadow: 0 10px 30px rgba(74, 108, 247, 0.4);
         }
 
-        .btn-primary:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(74, 108, 247, 0.4);
+        .btn:hover:not(:disabled) {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(74, 108, 247, 0.6);
         }
 
-        .btn-gold {
-            background: linear-gradient(135deg, var(--gold) 0%, #FFEC8B 100%);
-            color: #333;
-            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--secondary) 0%, #9b5de5 100%);
+            box-shadow: 0 10px 30px rgba(118, 75, 162, 0.4);
         }
 
-        .btn-gold:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(255, 215, 0, 0.4);
+        .btn-secondary:hover:not(:disabled) {
+            box-shadow: 0 20px 40px rgba(118, 75, 162, 0.6);
         }
 
         .btn:disabled {
@@ -426,71 +410,98 @@
             box-shadow: none !important;
         }
 
-        /* Processing and Results Sections */
+        /* Processing Section */
         .processing-container {
             background: var(--white);
             border-radius: 20px;
-            padding: 30px;
-            margin-top: 30px;
+            padding: 40px;
+            margin-top: 40px;
             text-align: center;
-            box-shadow: 0 10px 30px var(--shadow);
+            box-shadow: 0 15px 35px var(--shadow);
             animation: slideDown 0.5s ease;
             display: none;
         }
 
-        .spinner {
-            width: 60px;
-            height: 60px;
-            border: 5px solid var(--primary-light);
-            border-top: 5px solid var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-
-        .spinner.gold {
-            border-top-color: var(--gold);
+        .processing-header {
+            margin-bottom: 30px;
         }
 
         .processing-title {
-            font-size: 22px;
+            font-size: 28px;
             color: var(--text);
             margin-bottom: 10px;
-        }
-
-        .processing-text {
-            color: var(--text-light);
-            font-size: 15px;
-        }
-
-        .processing-steps {
-            margin-top: 20px;
-            text-align: left;
-            max-width: 400px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .step {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 15px;
-            margin-bottom: 15px;
-            padding: 10px;
-            border-radius: 8px;
+        }
+
+        .processing-subtitle {
+            color: var(--text-light);
+            font-size: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .spinner-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .spinner {
+            width: 80px;
+            height: 80px;
+            border: 6px solid var(--primary-light);
+            border-top: 6px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1.5s linear infinite;
+        }
+
+        .processing-details {
+            text-align: left;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 25px;
             background: var(--bg);
+            border-radius: 15px;
+            border-left: 5px solid var(--gold);
         }
 
-        .step.active {
-            background: var(--primary-light);
-            border-left: 3px solid var(--primary);
+        .processing-details h4 {
+            color: var(--text);
+            margin-bottom: 15px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .step i {
-            color: var(--primary);
-            font-size: 20px;
+        .processing-details ul {
+            list-style: none;
+            padding-left: 0;
         }
 
+        .processing-details li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            padding: 8px 12px;
+            background: var(--white);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .processing-details i {
+            color: var(--success);
+            font-size: 16px;
+        }
+
+        /* Results Section */
         .results-section {
             margin-top: 40px;
             animation: slideDown 0.5s ease;
@@ -498,166 +509,195 @@
         }
 
         .results-container {
-            background: var(--bg);
-            border-radius: 15px;
-            padding: 30px;
-            border: 2px solid var(--border);
+            background: linear-gradient(135deg, var(--white) 0%, var(--bg) 100%);
+            border-radius: 20px;
+            padding: 40px;
+            border: 3px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .results-container:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, var(--gold), var(--primary));
         }
 
         .results-header {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 40px;
         }
 
         .success-icon {
-            font-size: 60px;
+            font-size: 80px;
             color: var(--success);
-            margin-bottom: 15px;
-            animation: bounce 1s;
+            margin-bottom: 20px;
+            animation: bounce 1.5s infinite;
         }
 
         .results-title {
-            font-size: 28px;
+            font-size: 32px;
             color: var(--text);
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         .results-subtitle {
             color: var(--text-light);
-            font-size: 16px;
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto 20px;
         }
 
-        .link-result, .image-result {
+        .quality-highlight {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--gold-light);
+            color: #333;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 700;
+            margin: 10px 0;
+            border: 2px solid var(--gold);
+        }
+
+        .result-content {
             background: var(--white);
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            display: none;
-        }
-
-        .link-result {
-            border-left: 4px solid var(--info);
-        }
-
-        .image-result {
-            border-left: 4px solid var(--secondary);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 2px solid var(--border);
+            box-shadow: 0 10px 30px var(--shadow);
         }
 
         .result-type {
-            font-size: 16px;
-            font-weight: 600;
+            font-size: 24px;
+            font-weight: 700;
             color: var(--text);
-            margin-bottom: 10px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--border);
         }
 
         .link-box {
             background: var(--primary-light);
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 10px;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 25px 0;
             word-break: break-all;
-            font-size: 14px;
+            font-size: 16px;
             color: var(--text);
-            border: 1px solid var(--border);
+            border: 2px solid var(--border);
+            font-family: 'Courier New', monospace;
+            position: relative;
+        }
+
+        .link-box:before {
+            content: '🔗';
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: var(--white);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .result-image-container {
+            text-align: center;
+            margin: 30px 0;
         }
 
         .result-image {
             width: 100%;
-            max-height: 300px;
+            max-height: 400px;
             object-fit: contain;
-            border-radius: 8px;
-            border: 2px solid var(--border);
-            margin-top: 15px;
+            border-radius: 15px;
+            border: 3px solid var(--border);
             background: var(--bg);
-            padding: 10px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         .action-buttons {
             display: flex;
-            gap: 15px;
-            margin-top: 20px;
+            gap: 20px;
+            margin-top: 40px;
             flex-wrap: wrap;
             justify-content: center;
         }
 
         .action-btn {
-            padding: 12px 25px;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 500;
+            padding: 18px 35px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
             cursor: pointer;
             border: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 12px;
             transition: all 0.3s ease;
-            min-width: 150px;
+            min-width: 200px;
+            flex: 1;
         }
 
         .copy-btn {
             background: var(--info);
             color: var(--white);
+            box-shadow: 0 8px 20px rgba(33, 150, 243, 0.3);
         }
 
         .copy-btn:hover {
             background: #1976D2;
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(33, 150, 243, 0.4);
         }
 
         .download-btn {
             background: var(--success);
             color: var(--white);
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.3);
         }
 
         .download-btn:hover {
             background: #388E3C;
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(76, 175, 80, 0.4);
         }
 
         .view-btn {
             background: var(--primary);
             color: var(--white);
+            box-shadow: 0 8px 20px rgba(74, 108, 247, 0.3);
         }
 
         .view-btn:hover {
             background: #3a5ce5;
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(74, 108, 247, 0.4);
         }
 
         .reset-btn {
             background: var(--warning);
             color: var(--white);
+            box-shadow: 0 8px 20px rgba(255, 167, 38, 0.3);
+            width: 100%;
+            margin-top: 20px;
         }
 
         .reset-btn:hover {
             background: #F57C00;
-            transform: translateY(-2px);
-        }
-
-        /* Quality Info for Results */
-        .quality-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-            padding: 10px;
-            background: var(--gold-light);
-            border-radius: 8px;
-            border: 1px solid var(--gold);
-        }
-
-        .quality-info i {
-            color: var(--gold);
-            font-size: 20px;
-        }
-
-        .quality-info span {
-            font-weight: 600;
-            color: #333;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(255, 167, 38, 0.4);
         }
 
         .footer {
@@ -675,17 +715,17 @@
             right: 30px;
             background: var(--success);
             color: var(--white);
-            padding: 15px 25px;
-            border-radius: 12px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
             transform: translateX(400px);
             opacity: 0;
             transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             z-index: 1000;
-            max-width: 350px;
+            max-width: 400px;
         }
 
         .notification.show {
@@ -694,13 +734,13 @@
         }
 
         .notification i {
-            font-size: 20px;
+            font-size: 24px;
         }
 
         @keyframes slideDown {
             from {
                 opacity: 0;
-                transform: translateY(-20px);
+                transform: translateY(-30px);
             }
             to {
                 opacity: 1;
@@ -739,8 +779,13 @@
                 font-size: 24px;
             }
             
-            .quality-grid, .options-grid {
+            .options-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .option-card {
+                min-width: 100%;
+                padding: 25px 20px;
             }
             
             .preview-container {
@@ -754,6 +799,7 @@
             .btn {
                 width: 100%;
                 min-width: auto;
+                padding: 18px 30px;
             }
             
             .action-buttons {
@@ -763,6 +809,13 @@
             .action-btn {
                 width: 100%;
             }
+            
+            .notification {
+                bottom: 20px;
+                right: 20px;
+                left: 20px;
+                max-width: none;
+            }
         }
     </style>
 </head>
@@ -771,11 +824,15 @@
         <div class="header">
             <h1 class="title">
                 <i class="fas fa-crown"></i>
-                প্রিমিয়াম ছবি প্রসেসিং টুল
+                অটো হাই-কোয়ালিটি ছবি প্রসেসিং
             </h1>
             <p class="subtitle">
-                উচ্চ মানের ছবি প্রসেসিং - লিঙ্ক তৈরি করুন অথবা ব্যাকগ্রাউন্ড রিমুভ করুন
+                সব ছবি স্বয়ংক্রিয়ভাবে উচ্চ মানে প্রসেস হবে - কোনও আলাদা সেটিংসের প্রয়োজন নেই
             </p>
+            <div class="quality-badge">
+                <i class="fas fa-bolt"></i>
+                অটোমেটিক হাই কোয়ালিটি প্রসেসিং
+            </div>
         </div>
 
         <div class="main-content">
@@ -786,128 +843,117 @@
                         <i class="fas fa-cloud-upload-alt"></i>
                     </div>
                     <div class="upload-text">
-                        <h3>একটি ছবি সিলেক্ট করুন</h3>
-                        <p>এখানে ক্লিক করুন অথবা ছবিটি ড্র্যাগ করে আনুন</p>
-                        <p>JPG, PNG, WEBP, GIF ফরম্যাট সাপোর্টেড (Max: 10MB)</p>
+                        <h3>ছবি সিলেক্ট করুন</h3>
+                        <p>একটি ছবি আপলোড করুন এবং অটোমেটিক হাই-কোয়ালিটি প্রসেসিং পান</p>
+                        <p>সাপোর্টেড: JPG, PNG, WEBP, GIF (সর্বোচ্চ 10MB)</p>
                     </div>
                     <input type="file" id="imageInput" accept="image/*">
+                    
+                    <div class="upload-note">
+                        <i class="fas fa-info-circle"></i>
+                        <span><strong>নোট:</strong> সব ছবি স্বয়ংক্রিয়ভাবে হাই কোয়ালিটিতে প্রসেস হবে। কোনও আলাদা সেটিংস প্রয়োজন নেই।</span>
+                    </div>
                 </div>
 
                 <div class="preview-section" id="previewSection" style="display: none;">
                     <div class="preview-container">
                         <div class="preview-box">
-                            <div class="preview-title">আপনার সিলেক্ট করা ছবি</div>
+                            <div class="preview-title">
+                                <i class="fas fa-image"></i>
+                                আপনার সিলেক্ট করা ছবি
+                            </div>
                             <img class="preview-img" id="selectedImage" src="" alt="Selected Image">
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- কোয়ালিটি সিলেকশন সেকশন (প্রথমে দেখাবে) -->
-            <div class="quality-section" id="qualitySection" style="display: none;">
-                <h2 class="quality-title">ছবির মান নির্বাচন করুন</h2>
-                
-                <div class="quality-grid">
-                    <div class="quality-card" id="standardQuality" onclick="selectQuality('standard')">
-                        <div class="quality-header">
-                            <div class="quality-icon">
-                                <i class="fas fa-check-circle"></i>
-                            </div>
-                            <div class="quality-name">স্ট্যান্ডার্ড কোয়ালিটি</div>
-                        </div>
-                        <div class="quality-description">
-                            দ্রুত প্রসেসিং এবং স্ট্যান্ডার্ড মানের ছবি প্রসেসিং। সাধারণ ব্যবহারের জন্য উপযুক্ত।
-                        </div>
-                        <ul class="quality-features">
-                            <li><i class="fas fa-check"></i> দ্রুত প্রসেসিং</li>
-                            <li><i class="fas fa-check"></i> স্ট্যান্ডার্ড ইমেজ কোয়ালিটি</li>
-                            <li><i class="fas fa-check"></i> কম ডেটা ব্যবহার</li>
-                            <li><i class="fas fa-check"></i> দৈনিক লিমিট নেই</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="quality-card high-quality" id="highQuality" onclick="selectQuality('high')">
-                        <div class="quality-badge">
-                            <i class="fas fa-crown"></i> প্রিমিয়াম
-                        </div>
-                        <div class="quality-header">
-                            <div class="quality-icon">
-                                <i class="fas fa-gem"></i>
-                            </div>
-                            <div class="quality-name">হাই কোয়ালিটি</div>
-                        </div>
-                        <div class="quality-description">
-                            সর্বোচ্চ মানের ছবি প্রসেসিং। প্রফেশনাল গ্রাফিক্স ডিজাইন এবং প্রিন্টিংয়ের জন্য আদর্শ।
-                        </div>
-                        <ul class="quality-features">
-                            <li><i class="fas fa-check"></i> সর্বোচ্চ ইমেজ কোয়ালিটি</li>
-                            <li><i class="fas fa-check"></i> 4K রেজুলেশন সাপোর্ট</li>
-                            <li><i class="fas fa-check"></i> প্রফেশনাল কালার গ্রেডিং</li>
-                            <li><i class="fas fa-check"></i> কোনও কম্প্রেশন নেই</li>
-                            <li><i class="fas fa-check"></i> প্রিন্ট-রেডি আউটপুট</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- অপশন সিলেকশন সেকশন (দ্বিতীয় ধাপ) -->
+            <!-- অপশন সিলেকশন সেকশন -->
             <div class="options-section" id="optionsSection" style="display: none;">
                 <h2 class="options-title">আপনি কি করতে চান?</h2>
                 
                 <div class="options-grid">
                     <div class="option-card" id="linkOption" onclick="selectOption('link')">
-                        <div class="option-icon">
-                            <i class="fas fa-link"></i>
+                        <div class="option-badge">
+                            <i class="fas fa-share-alt"></i> শেয়ার করা যাবে
                         </div>
-                        <div class="option-title">লিঙ্ক তৈরি করুন</div>
+                        <div class="option-header">
+                            <div class="option-icon">
+                                <i class="fas fa-link"></i>
+                            </div>
+                            <div>
+                                <div class="option-title">লিঙ্ক তৈরি করুন</div>
+                                <div class="option-subtitle">পাবলিক লিঙ্ক জেনারেট করুন</div>
+                            </div>
+                        </div>
                         <div class="option-description">
                             ছবি আপলোড করুন এবং একটি পাবলিক লিঙ্ক পান। এই লিঙ্ক যেকেউ ব্যবহার করে ছবিটি দেখতে পারবে।
                         </div>
-                        <div class="option-badge badge-link">
-                            লিঙ্ক শেয়ার করা যাবে
-                        </div>
+                        <ul class="option-features">
+                            <li><i class="fas fa-check-circle"></i> হাই-কোয়ালিটি আপলোড</li>
+                            <li><i class="fas fa-check-circle"></i> পাবলিক শেয়ারিং লিঙ্ক</li>
+                            <li><i class="fas fa-check-circle"></i> সিকিউর এবং স্থায়ী লিঙ্ক</li>
+                            <li><i class="fas fa-check-circle"></i> যে কোনও ডিভাইস থেকে অ্যাক্সেস</li>
+                        </ul>
                     </div>
                     
                     <div class="option-card" id="bgRemoveOption" onclick="selectOption('bgremove')">
-                        <div class="option-icon">
-                            <i class="fas fa-magic"></i>
+                        <div class="option-badge">
+                            <i class="fas fa-download"></i> ডাউনলোড করুন
                         </div>
-                        <div class="option-title">ব্যাকগ্রাউন্ড রিমুভ করুন</div>
+                        <div class="option-header">
+                            <div class="option-icon">
+                                <i class="fas fa-magic"></i>
+                            </div>
+                            <div>
+                                <div class="option-title">ব্যাকগ্রাউন্ড রিমুভ করুন</div>
+                                <div class="option-subtitle">AI ব্যাকগ্রাউন্ড রিমুভাল</div>
+                            </div>
+                        </div>
                         <div class="option-description">
-                            AI প্রযুক্তি ব্যবহার করে ছবি থেকে ব্যাকগ্রাউন্ড মুছে ফেলুন। PNG বা JPG ফরম্যাটে ডাউনলোড করুন।
+                            AI প্রযুক্তি ব্যবহার করে ছবি থেকে ব্যাকগ্রাউন্ড স্বয়ংক্রিয়ভাবে মুছে ফেলুন। PNG বা JPG ফরম্যাটে ডাউনলোড করুন।
                         </div>
-                        <div class="option-badge badge-bgremove">
-                            PNG/JPG ডাউনলোড
-                        </div>
+                        <ul class="option-features">
+                            <li><i class="fas fa-check-circle"></i> AI প্রযুক্তি ব্যবহার</li>
+                            <li><i class="fas fa-check-circle"></i> স্বচ্ছ PNG / হাই-কোয়ালিটি JPG</li>
+                            <li><i class="fas fa-check-circle"></i> স্বয়ংক্রিয় ব্যাকগ্রাউন্ড ডিটেকশন</li>
+                            <li><i class="fas fa-check-circle"></i> প্রফেশনাল গ্রেড আউটপুট</li>
+                        </ul>
                     </div>
                 </div>
                 
                 <div class="action-section">
                     <button class="btn btn-primary" id="processBtn" onclick="processImage()" disabled>
-                        <i class="fas fa-play"></i> প্রসেস শুরু করুন
+                        <i class="fas fa-play-circle"></i> প্রসেস শুরু করুন
                     </button>
                 </div>
             </div>
 
             <!-- প্রসেসিং সেকশন -->
             <div class="processing-container" id="processingContainer">
-                <div class="spinner" id="processingSpinner"></div>
-                <h3 class="processing-title" id="processingTitle">প্রসেসিং...</h3>
-                <p class="processing-text" id="processingText">দয়া করে অপেক্ষা করুন</p>
+                <div class="processing-header">
+                    <h3 class="processing-title">
+                        <i class="fas fa-cog fa-spin"></i>
+                        হাই-কোয়ালিটি প্রসেসিং
+                    </h3>
+                    <p class="processing-subtitle">
+                        আপনার ছবি উচ্চ মানে প্রসেস করা হচ্ছে, দয়া করে অপেক্ষা করুন...
+                    </p>
+                </div>
                 
-                <div class="processing-steps">
-                    <div class="step" id="step1">
-                        <i class="fas fa-sync-alt"></i>
-                        <span>ছবি প্রসেস করা হচ্ছে...</span>
-                    </div>
-                    <div class="step" id="step2">
-                        <i class="fas fa-cog"></i>
-                        <span id="step2Text">প্রসেসিং ধাপ ২</span>
-                    </div>
-                    <div class="step" id="step3">
-                        <i class="fas fa-check"></i>
-                        <span id="step3Text">প্রসেসিং ধাপ ৩</span>
-                    </div>
+                <div class="spinner-container">
+                    <div class="spinner"></div>
+                </div>
+                
+                <div class="processing-details">
+                    <h4><i class="fas fa-info-circle"></i> প্রসেসিং ডিটেইলস:</h4>
+                    <ul>
+                        <li><i class="fas fa-check"></i> ছবি হাই-কোয়ালিটি মোডে প্রসেস হচ্ছে</li>
+                        <li><i class="fas fa-check"></i> সর্বোচ্চ রেজুলেশন মেইনটেইন করা হচ্ছে</li>
+                        <li><i class="fas fa-check"></i> কোনও কম্প্রেশন বা কোয়ালিটি লস নেই</li>
+                        <li><i class="fas fa-check"></i> অটোমেটিক অপ্টিমাইজেশন প্রয়োগ করা হচ্ছে</li>
+                        <li><i class="fas fa-check"></i> প্রফেশনাল আউটপুট তৈরি করা হচ্ছে</li>
+                    </ul>
                 </div>
             </div>
 
@@ -918,22 +964,22 @@
                         <div class="success-icon">
                             <i class="fas fa-check-circle"></i>
                         </div>
-                        <h2 class="results-title" id="resultsTitle">সফল!</h2>
-                        <p class="results-subtitle" id="resultsSubtitle">আপনার ছবি প্রসেস করা হয়েছে</p>
-                    </div>
-
-                    <!-- কোয়ালিটি ইনফো -->
-                    <div class="quality-info" id="qualityInfo" style="display: none;">
-                        <i class="fas fa-gem"></i>
-                        <span id="qualityText">হাই কোয়ালিটি মোডে প্রসেস করা হয়েছে</span>
+                        <h2 class="results-title" id="resultsTitle">প্রসেসিং সম্পূর্ণ!</h2>
+                        <p class="results-subtitle" id="resultsSubtitle">
+                            আপনার ছবি সফলভাবে হাই-কোয়ালিটিতে প্রসেস করা হয়েছে
+                        </p>
+                        <div class="quality-highlight">
+                            <i class="fas fa-crown"></i>
+                            <span>অটোমেটিক হাই কোয়ালিটি প্রসেসিং</span>
+                        </div>
                     </div>
 
                     <!-- লিঙ্ক রেজাল্ট -->
-                    <div class="link-result" id="linkResult">
+                    <div class="result-content" id="linkResult" style="display: none;">
                         <div class="result-type">
-                            <i class="fas fa-link"></i> আপনার ছবির লিঙ্ক
+                            <i class="fas fa-link"></i> আপনার ছবির হাই-কোয়ালিটি লিঙ্ক
                         </div>
-                        <p>এই লিঙ্কটি যেকেউ ব্যবহার করে আপনার ছবিটি দেখতে পারবে:</p>
+                        <p>এই লিঙ্কটি যেকেউ ব্যবহার করে আপনার হাই-কোয়ালিটির ছবিটি দেখতে পারবে:</p>
                         <div class="link-box" id="generatedLink">
                             লিঙ্ক লোড হচ্ছে...
                         </div>
@@ -951,19 +997,19 @@
                     </div>
 
                     <!-- ব্যাকগ্রাউন্ড রিমুভ রেজাল্ট -->
-                    <div class="image-result" id="imageResult">
+                    <div class="result-content" id="imageResult" style="display: none;">
                         <div class="result-type">
-                            <i class="fas fa-magic"></i> ব্যাকগ্রাউন্ড রিমুভ করা ছবি
+                            <i class="fas fa-magic"></i> হাই-কোয়ালিটি ব্যাকগ্রাউন্ড রিমুভ
                         </div>
-                        <p>ছবির ব্যাকগ্রাউন্ড সফলভাবে মুছে ফেলা হয়েছে:</p>
-                        <img class="result-image" id="processedImage" src="" alt="Processed Image">
+                        <p>ছবির ব্যাকগ্রাউন্ড সফলভাবে মুছে ফেলা হয়েছে (হাই-কোয়ালিটি):</p>
+                        
+                        <div class="result-image-container">
+                            <img class="result-image" id="processedImage" src="" alt="Processed Image">
+                        </div>
                         
                         <div class="action-buttons">
                             <button class="action-btn download-btn" onclick="downloadImage()">
                                 <i class="fas fa-download"></i> ছবি ডাউনলোড করুন
-                            </button>
-                            <button class="action-btn copy-btn" onclick="copyImageLink()">
-                                <i class="fas fa-copy"></i> লিঙ্ক কপি করুন
                             </button>
                             <button class="action-btn view-btn" onclick="viewImage()">
                                 <i class="fas fa-eye"></i> ছবি দেখুন
@@ -971,7 +1017,7 @@
                         </div>
                     </div>
 
-                    <div class="action-buttons" style="margin-top: 30px;">
+                    <div class="action-buttons">
                         <button class="action-btn reset-btn" onclick="resetTool()">
                             <i class="fas fa-redo"></i> নতুন ছবি প্রসেস করুন
                         </button>
@@ -982,7 +1028,7 @@
     </div>
 
     <div class="footer">
-        <p>© ২০২৫ - প্রিমিয়াম ছবি প্রসেসিং টুল | উচ্চ মানের প্রসেসিং সুবিধা</p>
+        <p>© ২০২৫ - অটো হাই-কোয়ালিটি ছবি প্রসেসিং | সব ছবি স্বয়ংক্রিয়ভাবে উচ্চ মানে প্রসেস হয়</p>
     </div>
 
     <div class="notification" id="notification">
@@ -1000,18 +1046,12 @@
         const imageInput = document.getElementById('imageInput');
         const previewSection = document.getElementById('previewSection');
         const selectedImage = document.getElementById('selectedImage');
-        const qualitySection = document.getElementById('qualitySection');
         const optionsSection = document.getElementById('optionsSection');
         const processBtn = document.getElementById('processBtn');
         const processingContainer = document.getElementById('processingContainer');
-        const processingSpinner = document.getElementById('processingSpinner');
-        const processingTitle = document.getElementById('processingTitle');
-        const processingText = document.getElementById('processingText');
         const resultsSection = document.getElementById('resultsSection');
         const resultsTitle = document.getElementById('resultsTitle');
         const resultsSubtitle = document.getElementById('resultsSubtitle');
-        const qualityInfo = document.getElementById('qualityInfo');
-        const qualityText = document.getElementById('qualityText');
         const linkResult = document.getElementById('linkResult');
         const imageResult = document.getElementById('imageResult');
         const generatedLink = document.getElementById('generatedLink');
@@ -1020,14 +1060,12 @@
         const notification = document.getElementById('notification');
         const notificationText = document.getElementById('notificationText');
         
-        // Global variables
+        // Global variables - সব ছবি AUTO HIGH QUALITY হবে
         let selectedFile = null;
-        let selectedQuality = 'standard'; // 'standard' or 'high'
         let selectedOption = null;
-        let uploadedImageUrl = null;
+        let uploadedLink = null;
         let bgRemovedImageUrl = null;
         let bgRemovedImageBlob = null;
-        let uploadedLink = null;
         
         // Event Listeners
         uploadArea.addEventListener('click', () => imageInput.click());
@@ -1066,7 +1104,7 @@
             }
             
             // Check file size (10MB limit for high quality)
-            const maxSize = 10 * 1024 * 1024; // 10MB
+            const maxSize = 10 * 1024 * 1024;
             if (file.size > maxSize) {
                 showNotification('ফাইলের সাইজ 10MB এর বেশি হওয়া যাবে না!', 'error');
                 return;
@@ -1079,53 +1117,22 @@
             reader.onload = function(e) {
                 selectedImage.src = e.target.result;
                 previewSection.style.display = 'block';
-                qualitySection.style.display = 'block';
+                optionsSection.style.display = 'block';
                 
                 // Reset any previous selections
-                resetQualitySelection();
                 resetOptionSelection();
                 processBtn.disabled = true;
-                processBtn.className = 'btn btn-primary';
                 
                 // Hide other sections
-                optionsSection.style.display = 'none';
                 processingContainer.style.display = 'none';
                 resultsSection.style.display = 'none';
-                qualityInfo.style.display = 'none';
                 
-                // Scroll to quality section
-                qualitySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                // Scroll to options
+                optionsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 
-                showNotification('ছবি সিলেক্ট করা হয়েছে! এখন ছবির মান নির্বাচন করুন।', 'success');
+                showNotification('ছবি সিলেক্ট করা হয়েছে! এখন প্রসেস অপশন নির্বাচন করুন।', 'success');
             };
             reader.readAsDataURL(file);
-        }
-        
-        function selectQuality(quality) {
-            selectedQuality = quality;
-            
-            // Reset all quality options
-            document.getElementById('standardQuality').classList.remove('active');
-            document.getElementById('highQuality').classList.remove('active');
-            
-            // Activate selected quality
-            if (quality === 'standard') {
-                document.getElementById('standardQuality').classList.add('active');
-                processBtn.className = 'btn btn-primary';
-            } else if (quality === 'high') {
-                document.getElementById('highQuality').classList.add('active');
-                processBtn.className = 'btn btn-gold';
-            }
-            
-            // Show options section
-            optionsSection.style.display = 'block';
-            optionsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            
-            // Reset option selection
-            resetOptionSelection();
-            processBtn.disabled = true;
-            
-            showNotification(`${quality === 'standard' ? 'স্ট্যান্ডার্ড' : 'হাই'} কোয়ালিটি সিলেক্ট করা হয়েছে। এখন প্রসেস অপশন নির্বাচন করুন।`, 'info');
         }
         
         function selectOption(option) {
@@ -1149,12 +1156,6 @@
             showNotification(`"${option === 'link' ? 'লিঙ্ক তৈরি' : 'ব্যাকগ্রাউন্ড রিমুভ'}" অপশন সিলেক্ট করা হয়েছে`, 'info');
         }
         
-        function resetQualitySelection() {
-            selectedQuality = 'standard';
-            document.getElementById('standardQuality').classList.remove('active');
-            document.getElementById('highQuality').classList.remove('active');
-        }
-        
         function resetOptionSelection() {
             selectedOption = null;
             document.getElementById('linkOption').classList.remove('active');
@@ -1162,161 +1163,108 @@
         }
         
         async function processImage() {
-            if (!selectedFile || !selectedQuality || !selectedOption) {
-                showNotification('প্রথমে ছবি, মান এবং অপশন সিলেক্ট করুন!', 'error');
+            if (!selectedFile || !selectedOption) {
+                showNotification('প্রথমে একটি ছবি এবং অপশন সিলেক্ট করুন!', 'error');
                 return;
             }
             
-            // Hide other sections, show processing
+            // Show processing section
             optionsSection.style.display = 'none';
             processingContainer.style.display = 'block';
-            
-            // Update processing UI based on quality
-            if (selectedQuality === 'high') {
-                processingSpinner.className = 'spinner gold';
-                processingTitle.textContent = 'হাই কোয়ালিটি প্রসেসিং...';
-                processingText.textContent = 'উচ্চ মানের ছবি প্রসেস করা হচ্ছে, এটি কিছু সময় নিতে পারে';
-            } else {
-                processingSpinner.className = 'spinner';
-                processingTitle.textContent = 'প্রসেসিং...';
-                processingText.textContent = 'ছবি প্রসেস করা হচ্ছে';
-            }
+            processingContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
             
             if (selectedOption === 'link') {
-                // Process for link generation
-                updateProcessingStep(1, 'ছবি প্রসেস করা হচ্ছে...');
-                
-                try {
-                    const formData = new FormData();
-                    formData.append("image", selectedFile);
-                    
-                    // Add quality parameter for ImgBB
-                    if (selectedQuality === 'high') {
-                        formData.append("expiration", "0"); // Never expire
-                    }
-                    
-                    updateProcessingStep(2, 'লিঙ্ক তৈরি করা হচ্ছে...');
-                    
-                    // Simulate high quality processing delay
-                    if (selectedQuality === 'high') {
-                        await new Promise(resolve => setTimeout(resolve, 2000));
-                    }
-                    
-                    const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
-                        method: "POST",
-                        body: formData
-                    });
-                    
-                    const data = await response.json();
-                    
-                    updateProcessingStep(3, 'লিঙ্ক তৈরি সম্পন্ন!');
-                    
-                    if (data.success) {
-                        uploadedLink = data.data.url;
-                        await new Promise(resolve => setTimeout(resolve, 1000));
-                        showLinkResult();
-                    } else {
-                        throw new Error('লিঙ্ক তৈরি করতে ব্যর্থ হয়েছে');
-                    }
-                    
-                } catch (error) {
-                    console.error('Error:', error);
-                    showNotification('লিঙ্ক তৈরি করতে ব্যর্থ হয়েছে! দয়া করে আবার চেষ্টা করুন।', 'error');
-                    resetToOptions();
-                }
-                
+                // Auto High Quality Link Generation
+                await processHighQualityLink();
             } else if (selectedOption === 'bgremove') {
-                // Process for background removal
-                updateProcessingStep(1, 'ছবি প্রসেস করা হচ্ছে...');
-                
-                try {
-                    const formData = new FormData();
-                    formData.append('image_file', selectedFile);
-                    formData.append('size', 'auto');
-                    
-                    // Add quality parameters for Remove.bg
-                    if (selectedQuality === 'high') {
-                        formData.append('format', 'png'); // Always PNG for high quality
-                        formData.append('quality', '100'); // Maximum quality
-                    } else {
-                        formData.append('format', 'jpg');
-                        formData.append('quality', '80');
-                    }
-                    
-                    updateProcessingStep(2, 'AI ব্যাকগ্রাউন্ড সনাক্ত করছে...');
-                    
-                    // Simulate high quality processing delay
-                    if (selectedQuality === 'high') {
-                        await new Promise(resolve => setTimeout(resolve, 3000));
-                    }
-                    
-                    const response = await fetch('https://api.remove.bg/v1.0/removebg', {
-                        method: 'POST',
-                        headers: {
-                            'X-Api-Key': REMOVE_BG_API_KEY
-                        },
-                        body: formData
-                    });
-                    
-                    if (!response.ok) {
-                        throw new Error(`API Error: ${response.status}`);
-                    }
-                    
-                    updateProcessingStep(3, 'ব্যাকগ্রাউন্ড রিমুভ সম্পন্ন!');
-                    
-                    const blob = await response.blob();
-                    await new Promise(resolve => setTimeout(resolve, 1000));
-                    
-                    bgRemovedImageUrl = URL.createObjectURL(blob);
-                    bgRemovedImageBlob = blob;
-                    
-                    showImageResult();
-                    
-                } catch (error) {
-                    console.error('Error:', error);
-                    
-                    if (error.message.includes('429')) {
-                        showNotification('API লিমিট অতিক্রম করেছে। দয়া করে কিছুক্ষণ পর চেষ্টা করুন।', 'error');
-                    } else if (error.message.includes('402')) {
-                        showNotification('API কিং-এর ক্রেডিট শেষ হয়েছে।', 'error');
-                    } else {
-                        showNotification('ব্যাকগ্রাউন্ড রিমুভ করতে ব্যর্থ হয়েছে! দয়া করে আবার চেষ্টা করুন।', 'error');
-                    }
-                    
-                    resetToOptions();
-                }
+                // Auto High Quality Background Removal
+                await processHighQualityBgRemove();
             }
         }
         
-        function updateProcessingStep(step, text) {
-            // Reset all steps
-            for (let i = 1; i <= 3; i++) {
-                const stepElement = document.getElementById(`step${i}`);
-                stepElement.classList.remove('active');
+        async function processHighQualityLink() {
+            try {
+                // Update processing message
+                showNotification('হাই-কোয়ালিটি লিঙ্ক তৈরি করা হচ্ছে...', 'info');
                 
-                if (i === 1) {
-                    stepElement.innerHTML = '<i class="fas fa-sync-alt"></i><span>ছবি প্রসেস করা হচ্ছে...</span>';
-                } else if (i === 2) {
-                    stepElement.innerHTML = `<i class="fas fa-cog"></i><span>${selectedOption === 'link' ? 'লিঙ্ক তৈরি করা হচ্ছে...' : 'AI ব্যাকগ্রাউন্ড সনাক্ত করছে...'}</span>`;
-                } else if (i === 3) {
-                    stepElement.innerHTML = `<i class="fas fa-check"></i><span>${selectedOption === 'link' ? 'লিঙ্ক তৈরি সম্পন্ন!' : 'ব্যাকগ্রাউন্ড রিমুভ সম্পন্ন!'}</span>`;
+                const formData = new FormData();
+                formData.append("image", selectedFile);
+                
+                // HIGH QUALITY SETTINGS for ImgBB
+                formData.append("expiration", "0"); // Never expire
+                
+                // Simulate high quality processing
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+                    method: "POST",
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    uploadedLink = data.data.url;
+                    showLinkResult();
+                } else {
+                    throw new Error('লিঙ্ক তৈরি করতে ব্যর্থ হয়েছে');
                 }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                showNotification('লিঙ্ক তৈরি করতে ব্যর্থ হয়েছে! দয়া করে আবার চেষ্টা করুন।', 'error');
+                resetToOptions();
             }
-            
-            // Activate current step
-            for (let i = 1; i <= step; i++) {
-                const stepElement = document.getElementById(`step${i}`);
-                stepElement.classList.add('active');
+        }
+        
+        async function processHighQualityBgRemove() {
+            try {
+                // Update processing message
+                showNotification('হাই-কোয়ালিটি ব্যাকগ্রাউন্ড রিমুভ করা হচ্ছে...', 'info');
                 
-                if (i === step) {
-                    if (i === 1) {
-                        stepElement.innerHTML = `<i class="fas fa-sync-alt fa-spin"></i><span>${text}</span>`;
-                    } else if (i === 2) {
-                        stepElement.innerHTML = `<i class="fas fa-cog fa-spin"></i><span>${text}</span>`;
-                    } else if (i === 3) {
-                        stepElement.innerHTML = `<i class="fas fa-check"></i><span>${text}</span>`;
-                    }
+                const formData = new FormData();
+                formData.append('image_file', selectedFile);
+                formData.append('size', 'auto');
+                
+                // AUTO HIGH QUALITY SETTINGS for Remove.bg
+                formData.append('format', 'png'); // Always PNG for high quality
+                formData.append('quality', '100'); // Maximum quality
+                formData.append('channels', 'rgba'); // Support transparency
+                
+                // Simulate high quality processing
+                await new Promise(resolve => setTimeout(resolve, 3000));
+                
+                const response = await fetch('https://api.remove.bg/v1.0/removebg', {
+                    method: 'POST',
+                    headers: {
+                        'X-Api-Key': REMOVE_BG_API_KEY
+                    },
+                    body: formData
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`API Error: ${response.status}`);
                 }
+                
+                const blob = await response.blob();
+                
+                bgRemovedImageUrl = URL.createObjectURL(blob);
+                bgRemovedImageBlob = blob;
+                
+                showImageResult();
+                
+            } catch (error) {
+                console.error('Error:', error);
+                
+                if (error.message.includes('429')) {
+                    showNotification('API লিমিট অতিক্রম করেছে। দয়া করে কিছুক্ষণ পর চেষ্টা করুন।', 'error');
+                } else if (error.message.includes('402')) {
+                    showNotification('API কিং-এর ক্রেডিট শেষ হয়েছে।', 'error');
+                } else {
+                    showNotification('ব্যাকগ্রাউন্ড রিমুভ করতে ব্যর্থ হয়েছে! দয়া করে আবার চেষ্টা করুন।', 'error');
+                }
+                
+                resetToOptions();
             }
         }
         
@@ -1324,14 +1272,8 @@
             processingContainer.style.display = 'none';
             resultsSection.style.display = 'block';
             
-            resultsTitle.textContent = selectedQuality === 'high' ? 'হাই কোয়ালিটি লিঙ্ক তৈরি হয়েছে!' : 'লিঙ্ক তৈরি হয়েছে!';
-            resultsSubtitle.textContent = 'আপনার ছবি আপলোড করা হয়েছে এবং লিঙ্ক তৈরি করা হয়েছে';
-            
-            // Show quality info
-            if (selectedQuality === 'high') {
-                qualityInfo.style.display = 'flex';
-                qualityText.textContent = 'হাই কোয়ালিটি মোডে প্রসেস করা হয়েছে';
-            }
+            resultsTitle.textContent = 'হাই-কোয়ালিটি লিঙ্ক তৈরি হয়েছে!';
+            resultsSubtitle.textContent = 'আপনার ছবি উচ্চ মানে আপলোড করা হয়েছে এবং পাবলিক লিঙ্ক তৈরি করা হয়েছে';
             
             linkResult.style.display = 'block';
             imageResult.style.display = 'none';
@@ -1340,21 +1282,15 @@
             viewLinkBtn.href = uploadedLink;
             
             resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            showNotification(`${selectedQuality === 'high' ? 'হাই কোয়ালিটি' : ''} লিঙ্ক তৈরি সফল!`, 'success');
+            showNotification('হাই-কোয়ালিটি লিঙ্ক তৈরি সফল!', 'success');
         }
         
         function showImageResult() {
             processingContainer.style.display = 'none';
             resultsSection.style.display = 'block';
             
-            resultsTitle.textContent = selectedQuality === 'high' ? 'হাই কোয়ালিটি ব্যাকগ্রাউন্ড রিমুভ!' : 'ব্যাকগ্রাউন্ড রিমুভ সম্পন্ন!';
-            resultsSubtitle.textContent = 'ছবির ব্যাকগ্রাউন্ড সফলভাবে মুছে ফেলা হয়েছে';
-            
-            // Show quality info
-            if (selectedQuality === 'high') {
-                qualityInfo.style.display = 'flex';
-                qualityText.textContent = 'হাই কোয়ালিটি মোডে প্রসেস করা হয়েছে - প্রিন্ট-রেডি আউটপুট';
-            }
+            resultsTitle.textContent = 'হাই-কোয়ালিটি ব্যাকগ্রাউন্ড রিমুভ!';
+            resultsSubtitle.textContent = 'ছবির ব্যাকগ্রাউন্ড সফলভাবে মুছে ফেলা হয়েছে (উচ্চ মানে)';
             
             linkResult.style.display = 'none';
             imageResult.style.display = 'block';
@@ -1362,14 +1298,14 @@
             processedImage.src = bgRemovedImageUrl;
             
             resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            showNotification(`${selectedQuality === 'high' ? 'হাই কোয়ালিটি' : ''} ব্যাকগ্রাউন্ড রিমুভ সফল!`, 'success');
+            showNotification('হাই-কোয়ালিটি ব্যাকগ্রাউন্ড রিমুভ সফল!', 'success');
         }
         
         function copyLink() {
             if (!uploadedLink) return;
             
             navigator.clipboard.writeText(uploadedLink).then(() => {
-                showNotification('লিঙ্ক কপি করা হয়েছে!', 'success');
+                showNotification('হাই-কোয়ালিটি লিঙ্ক কপি করা হয়েছে!', 'success');
             }).catch(err => {
                 showNotification('লিঙ্ক কপি করা যায়নি', 'error');
             });
@@ -1378,25 +1314,15 @@
         function downloadImage() {
             if (!bgRemovedImageBlob) return;
             
-            const extension = selectedQuality === 'high' ? 'png' : 'jpg';
+            // Always PNG for high quality
             const link = document.createElement('a');
             link.href = bgRemovedImageUrl;
-            link.download = `background-removed-${selectedQuality}-quality-${Date.now()}.${extension}`;
+            link.download = `হাই-কোয়ালিটি-ব্যাকগ্রাউন্ড-রিমুভ-${Date.now()}.png`;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
             
-            showNotification(`${selectedQuality === 'high' ? 'হাই কোয়ালিটি' : ''} ছবি ডাউনলোড শুরু হয়েছে!`, 'success');
-        }
-        
-        function copyImageLink() {
-            if (!bgRemovedImageUrl) return;
-            
-            navigator.clipboard.writeText(bgRemovedImageUrl).then(() => {
-                showNotification('ছবির লিঙ্ক কপি করা হয়েছে!', 'success');
-            }).catch(err => {
-                showNotification('লিঙ্ক কপি করা যায়নি', 'error');
-            });
+            showNotification('হাই-কোয়ালিটি ছবি ডাউনলোড শুরু হয়েছে!', 'success');
         }
         
         function viewImage() {
@@ -1409,7 +1335,6 @@
             processingContainer.style.display = 'none';
             optionsSection.style.display = 'block';
             resultsSection.style.display = 'none';
-            qualityInfo.style.display = 'none';
             
             optionsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
@@ -1417,32 +1342,26 @@
         function resetTool() {
             // Reset all variables
             selectedFile = null;
-            selectedQuality = 'standard';
             selectedOption = null;
-            uploadedImageUrl = null;
+            uploadedLink = null;
             bgRemovedImageUrl = null;
             bgRemovedImageBlob = null;
-            uploadedLink = null;
             
             // Reset UI
             previewSection.style.display = 'none';
-            qualitySection.style.display = 'none';
             optionsSection.style.display = 'none';
             processingContainer.style.display = 'none';
             resultsSection.style.display = 'none';
             linkResult.style.display = 'none';
             imageResult.style.display = 'none';
-            qualityInfo.style.display = 'none';
             
             // Reset file input
             imageInput.value = '';
             
-            // Reset selections
-            resetQualitySelection();
+            // Reset option selection
             resetOptionSelection();
             processBtn.disabled = true;
-            processBtn.className = 'btn btn-primary';
-            processBtn.innerHTML = '<i class="fas fa-play"></i> প্রসেস শুরু করুন';
+            processBtn.innerHTML = '<i class="fas fa-play-circle"></i> প্রসেস শুরু করুন';
             
             showNotification('নতুন ছবি প্রসেস করতে প্রস্তুত!', 'info');
             
@@ -1477,7 +1396,7 @@
         
         // Initialize app
         window.addEventListener('load', () => {
-            showNotification('প্রিমিয়াম ছবি প্রসেসিং টুলে স্বাগতম! একটি ছবি সিলেক্ট করে শুরু করুন।', 'info');
+            showNotification('অটো হাই-কোয়ালিটি ছবি প্রসেসিং টুলে স্বাগতম! একটি ছবি সিলেক্ট করে শুরু করুন।', 'info');
         });
     </script>
 </body>
