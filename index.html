@@ -3,28 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✨ একসাথে অনেক ছবি প্রসেসিং</title>
+    <title>✨ ছবি প্রসেসিং টুল</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --gold: #FFD700;
-            --gold-light: #FFF9E6;
+            --gold-light: #FFF8E1;
             --gold-dark: #FFC107;
             --gold-gradient: linear-gradient(135deg, #FFD700 0%, #FFEC8B 100%);
-            --primary: #4a6cf7;
-            --primary-light: #eef2ff;
-            --secondary: #764ba2;
-            --secondary-light: #f3e8ff;
-            --success: #4CAF50;
-            --danger: #ff6b6b;
-            --warning: #ffa726;
-            --info: #2196F3;
-            --text: #333;
-            --text-light: #666;
-            --border: #e0e0e0;
-            --bg: #fffef5;
             --white: #ffffff;
-            --shadow: rgba(255, 215, 0, 0.1);
+            --light-bg: #fafafa;
+            --light-border: #f0f0f0;
+            --text: #333333;
+            --text-light: #666666;
+            --success: #4CAF50;
+            --info: #2196F3;
+            --shadow: rgba(0, 0, 0, 0.08);
         }
 
         * {
@@ -35,320 +29,303 @@
 
         body {
             font-family: 'Segoe UI', 'Noto Sans Bengali', sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background: var(--light-bg);
             min-height: 100vh;
             padding: 20px;
             color: var(--text);
-            line-height: 1.6;
+            line-height: 1.5;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
+        /* Header */
         .header {
-            background: var(--gold-gradient);
-            border-radius: 20px;
+            background: var(--white);
+            border-radius: 16px;
             padding: 30px;
             margin-bottom: 25px;
             text-align: center;
-            box-shadow: 0 15px 35px rgba(255, 215, 0, 0.2);
-            position: relative;
-            overflow: hidden;
-            border: 2px solid rgba(255, 215, 0, 0.3);
-        }
-
-        .header:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
-            pointer-events: none;
+            box-shadow: 0 4px 12px var(--shadow);
+            border: 1px solid var(--light-border);
         }
 
         .logo {
-            font-size: 50px;
-            color: #333;
+            font-size: 48px;
+            color: var(--gold-dark);
             margin-bottom: 15px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
         .title {
-            color: #333;
+            color: var(--text);
             font-size: 32px;
             margin-bottom: 10px;
-            font-weight: 800;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            font-weight: 700;
         }
 
         .subtitle {
-            color: #444;
+            color: var(--text-light);
             font-size: 16px;
-            font-weight: 500;
             max-width: 600px;
             margin: 0 auto;
         }
 
-        .main-card {
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 25px;
+        }
+
+        /* Sidebar */
+        .sidebar {
             background: var(--white);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-            margin-bottom: 20px;
-            border: 1px solid rgba(255, 215, 0, 0.2);
-        }
-
-        /* Action Selection */
-        .section-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 25px;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--gold-light);
-        }
-
-        .section-title i {
-            color: var(--gold-dark);
-            font-size: 24px;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 12px var(--shadow);
+            border: 1px solid var(--light-border);
         }
 
         .action-buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
 
         .action-btn {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 25px 20px;
-            border-radius: 15px;
-            border: 2px solid var(--gold-light);
+            gap: 15px;
+            padding: 18px 20px;
+            border-radius: 12px;
+            border: 2px solid var(--light-border);
             background: var(--white);
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
+            transition: all 0.3s ease;
         }
 
         .action-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.2);
             border-color: var(--gold);
+            background: var(--gold-light);
+            transform: translateY(-2px);
         }
 
         .action-btn.active {
             border-color: var(--gold);
             background: var(--gold-gradient);
-            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
-            transform: translateY(-5px);
-        }
-
-        .action-btn.active:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--gold);
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.15);
         }
 
         .action-icon {
-            font-size: 32px;
-            color: var(--gold-dark);
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
             background: var(--gold-light);
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s;
+            font-size: 20px;
+            color: var(--gold-dark);
         }
 
         .action-btn.active .action-icon {
-            color: #333;
             background: var(--white);
-            transform: scale(1.1);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .action-info {
+            flex: 1;
+            text-align: left;
         }
 
         .action-label {
             font-size: 16px;
-            font-weight: 700;
-            color: #333;
-            transition: all 0.3s;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 3px;
         }
 
-        .action-btn.active .action-label {
-            color: #222;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-        }
-
-        .action-description {
+        .action-desc {
             font-size: 13px;
             color: var(--text-light);
-            margin-top: 5px;
         }
 
-        /* Multi Image Upload */
-        .upload-section {
-            display: none;
-            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        /* Content Area */
+        .content-area {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 12px var(--shadow);
+            border: 1px solid var(--light-border);
         }
 
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: var(--gold-dark);
+        }
+
+        /* Upload Area */
         .upload-area {
             border: 3px dashed var(--gold);
-            border-radius: 15px;
-            padding: 40px 20px;
+            border-radius: 12px;
+            padding: 50px 30px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
             background: var(--gold-light);
-            margin-bottom: 20px;
-            position: relative;
-            overflow: hidden;
+            margin-bottom: 25px;
         }
 
         .upload-area:hover {
             background: var(--gold-light);
             border-color: var(--gold-dark);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.15);
         }
 
         .upload-icon {
-            font-size: 50px;
+            font-size: 48px;
             color: var(--gold-dark);
-            margin-bottom: 15px;
-            opacity: 0.9;
+            margin-bottom: 20px;
         }
 
         .upload-text h3 {
-            font-size: 22px;
-            color: #333;
+            font-size: 20px;
+            color: var(--text);
             margin-bottom: 10px;
-            font-weight: 700;
+            font-weight: 600;
         }
 
         .upload-text p {
             font-size: 14px;
-            color: #666;
-            margin-bottom: 8px;
+            color: var(--text-light);
+            margin-bottom: 5px;
         }
 
         input[type="file"] {
             display: none;
         }
 
-        .selected-files {
-            margin-top: 25px;
+        /* Files Preview */
+        .files-preview {
             display: none;
+        }
+
+        .files-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light-border);
         }
 
         .files-count {
             font-size: 18px;
             font-weight: 600;
-            color: #333;
-            margin-bottom: 15px;
+            color: var(--text);
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .files-count i {
-            color: var(--gold-dark);
+        .clear-btn {
+            padding: 8px 16px;
+            background: var(--gold-light);
+            color: var(--text);
+            border: 2px solid var(--gold);
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .clear-btn:hover {
+            background: var(--gold);
         }
 
         .files-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             gap: 15px;
-            max-height: 300px;
+            max-height: 400px;
             overflow-y: auto;
             padding: 10px;
-            background: var(--gold-light);
-            border-radius: 10px;
-            border: 2px solid var(--gold);
         }
 
-        .file-item {
-            position: relative;
-            border-radius: 10px;
-            overflow: hidden;
+        .file-card {
             background: var(--white);
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px var(--shadow);
+            border: 1px solid var(--light-border);
             transition: all 0.3s;
+            position: relative;
         }
 
-        .file-item:hover {
+        .file-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px var(--shadow);
         }
 
         .file-preview {
             width: 100%;
-            height: 100px;
+            height: 120px;
             object-fit: cover;
             display: block;
         }
 
         .file-info {
-            padding: 8px;
+            padding: 12px;
             text-align: center;
-            background: var(--white);
         }
 
         .file-name {
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 600;
-            color: #333;
+            color: var(--text);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            margin-bottom: 3px;
+            margin-bottom: 5px;
         }
 
         .file-size {
-            font-size: 10px;
-            color: #666;
+            font-size: 11px;
+            color: var(--text-light);
         }
 
         .remove-file {
             position: absolute;
-            top: 5px;
-            right: 5px;
-            width: 20px;
-            height: 20px;
+            top: 8px;
+            right: 8px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
-            background: var(--danger);
-            color: var(--white);
+            background: rgba(255, 255, 255, 0.9);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 10px;
+            font-size: 12px;
+            color: var(--text);
             cursor: pointer;
             opacity: 0;
             transition: opacity 0.3s;
         }
 
-        .file-item:hover .remove-file {
+        .file-card:hover .remove-file {
             opacity: 1;
         }
 
@@ -358,35 +335,33 @@
             margin-top: 25px;
             border-radius: 12px;
             background: var(--gold-gradient);
-            color: #333;
+            color: var(--text);
             border: none;
-            font-size: 18px;
-            font-weight: 700;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
             transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
         }
 
         .process-btn:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 215, 0, 0.2);
         }
 
         .process-btn:disabled {
-            background: #cccccc;
+            background: #e0e0e0;
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
         }
 
         /* Processing */
-        .processing-container {
+        .processing-section {
             display: none;
-            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .processing-header {
@@ -396,25 +371,34 @@
 
         .processing-title {
             font-size: 24px;
-            color: #333;
+            font-weight: 600;
+            color: var(--text);
             margin-bottom: 10px;
-            font-weight: 700;
+        }
+
+        .processing-desc {
+            font-size: 15px;
+            color: var(--text-light);
         }
 
         .progress-container {
-            margin: 30px 0;
+            background: var(--light-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
         }
 
         .progress-info {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 10px;
+            align-items: center;
+            margin-bottom: 15px;
         }
 
         .progress-text {
             font-size: 16px;
             font-weight: 600;
-            color: #333;
+            color: var(--text);
         }
 
         .progress-percent {
@@ -425,9 +409,9 @@
 
         .progress-bar {
             width: 100%;
-            height: 8px;
-            background: var(--gold-light);
-            border-radius: 4px;
+            height: 6px;
+            background: var(--light-border);
+            border-radius: 3px;
             overflow: hidden;
         }
 
@@ -435,41 +419,27 @@
             height: 100%;
             background: var(--gold-gradient);
             width: 0%;
-            border-radius: 4px;
             transition: width 0.3s ease;
-            position: relative;
-            overflow: hidden;
         }
 
-        .progress-fill:after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            animation: shimmer 2s infinite;
-        }
-
-        .current-file {
+        .current-processing {
             text-align: center;
-            margin-top: 20px;
             padding: 15px;
             background: var(--gold-light);
             border-radius: 10px;
-            border: 2px solid var(--gold);
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--text);
         }
 
-        .current-file span {
+        .current-file {
             font-weight: 600;
-            color: #333;
+            color: var(--gold-dark);
         }
 
         /* Results */
-        .results-container {
+        .results-section {
             display: none;
-            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .results-header {
@@ -478,68 +448,30 @@
         }
 
         .success-icon {
-            font-size: 60px;
+            font-size: 56px;
             color: var(--gold-dark);
-            margin-bottom: 20px;
-            animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            margin-bottom: 15px;
         }
 
         .result-title {
             font-size: 28px;
-            color: #333;
+            font-weight: 600;
+            color: var(--text);
             margin-bottom: 10px;
-            font-weight: 700;
         }
 
-        .result-subtitle {
+        .result-desc {
             font-size: 16px;
-            color: #666;
+            color: var(--text-light);
             margin-bottom: 20px;
         }
 
-        .summary-card {
-            background: var(--gold-gradient);
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 25px;
-            border: 2px solid var(--gold);
-        }
-
-        .summary-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-bottom: 25px;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 15px;
-            background: var(--white);
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .stat-number {
-            font-size: 32px;
-            font-weight: 800;
-            color: var(--gold-dark);
-            margin-bottom: 5px;
-        }
-
-        .stat-label {
-            font-size: 14px;
-            color: #666;
-            font-weight: 600;
-        }
-
         /* Links Results */
-        .links-container {
-            background: var(--gold-light);
-            border-radius: 15px;
+        .links-results {
+            background: var(--light-bg);
+            border-radius: 12px;
             padding: 25px;
-            margin-top: 25px;
-            border: 2px solid var(--gold);
+            margin-bottom: 25px;
         }
 
         .links-header {
@@ -547,14 +479,12 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--gold);
         }
 
         .links-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: #333;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text);
             display: flex;
             align-items: center;
             gap: 10px;
@@ -562,10 +492,11 @@
 
         .copy-all-btn {
             padding: 10px 20px;
-            background: var(--gold-gradient);
-            color: #333;
-            border: none;
+            background: var(--gold-light);
+            color: var(--text);
+            border: 2px solid var(--gold);
             border-radius: 8px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             display: flex;
@@ -575,69 +506,75 @@
         }
 
         .copy-all-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
+            background: var(--gold);
         }
 
-        .links-list {
-            max-height: 300px;
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+            max-height: 500px;
             overflow-y: auto;
             padding: 10px;
         }
 
-        .link-item {
+        .link-card {
             background: var(--white);
             border-radius: 10px;
             padding: 15px;
-            margin-bottom: 10px;
-            border: 1px solid var(--gold-light);
+            box-shadow: 0 2px 8px var(--shadow);
+            border: 1px solid var(--light-border);
         }
 
-        .link-info {
+        .link-header {
             display: flex;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 10px;
+            gap: 10px;
+            margin-bottom: 12px;
         }
 
         .link-number {
             width: 30px;
             height: 30px;
-            background: var(--gold-gradient);
+            background: var(--gold-light);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
-            color: #333;
+            font-weight: 600;
+            color: var(--gold-dark);
         }
 
         .link-filename {
+            font-size: 14px;
             font-weight: 600;
-            color: #333;
+            color: var(--text);
             flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .link-box {
-            background: #f9f9f9;
+            background: var(--light-bg);
             border-radius: 8px;
             padding: 12px;
-            word-break: break-all;
             font-size: 13px;
-            color: #333;
-            border: 1px solid var(--border);
+            color: var(--text);
             font-family: 'Courier New', monospace;
-            margin-bottom: 10px;
+            word-break: break-all;
+            margin-bottom: 12px;
+            border: 1px solid var(--light-border);
         }
 
         .link-actions {
             display: flex;
-            gap: 10px;
+            gap: 8px;
         }
 
-        .link-action-btn {
+        .link-btn {
             flex: 1;
-            padding: 8px 15px;
+            padding: 10px;
             border-radius: 6px;
             font-size: 13px;
             font-weight: 600;
@@ -650,209 +587,310 @@
             transition: all 0.3s;
         }
 
-        .copy-link-btn {
-            background: var(--info);
-            color: var(--white);
+        .copy-btn {
+            background: var(--gold-light);
+            color: var(--text);
         }
 
-        .view-link-btn {
-            background: var(--primary);
-            color: var(--white);
+        .copy-btn:hover {
+            background: var(--gold);
         }
 
-        .download-link-btn {
-            background: var(--success);
-            color: var(--white);
+        .preview-btn {
+            background: var(--gold-light);
+            color: var(--text);
+        }
+
+        .preview-btn:hover {
+            background: var(--gold);
         }
 
         /* Images Results */
-        .images-container {
-            background: var(--gold-light);
-            border-radius: 15px;
+        .images-results {
+            background: var(--light-bg);
+            border-radius: 12px;
             padding: 25px;
-            margin-top: 25px;
-            border: 2px solid var(--gold);
+        }
+
+        .images-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .images-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .images-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 15px;
-            max-height: 400px;
+            max-height: 600px;
             overflow-y: auto;
             padding: 10px;
         }
 
-        .image-item {
+        .image-card {
             background: var(--white);
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px var(--shadow);
+            border: 1px solid var(--light-border);
             transition: all 0.3s;
         }
 
-        .image-item:hover {
+        .image-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px var(--shadow);
         }
 
         .image-preview {
             width: 100%;
-            height: 120px;
+            height: 140px;
             object-fit: cover;
             display: block;
+            cursor: pointer;
+        }
+
+        .image-preview:hover {
+            opacity: 0.9;
         }
 
         .image-info {
-            padding: 10px;
+            padding: 12px;
             text-align: center;
         }
 
         .image-name {
             font-size: 12px;
             font-weight: 600;
-            color: #333;
+            color: var(--text);
+            margin-bottom: 8px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            margin-bottom: 5px;
         }
 
         .image-actions {
             display: flex;
-            gap: 5px;
+            gap: 8px;
         }
 
-        .image-action-btn {
+        .image-btn {
             flex: 1;
-            padding: 5px 8px;
-            border-radius: 5px;
-            font-size: 11px;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
             cursor: pointer;
             border: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 3px;
+            gap: 5px;
+            transition: all 0.3s;
         }
 
-        .download-image-btn {
-            background: var(--success);
-            color: var(--white);
+        .download-btn {
+            background: var(--gold-light);
+            color: var(--text);
         }
 
-        .view-image-btn {
-            background: var(--primary);
-            color: var(--white);
+        .download-btn:hover {
+            background: var(--gold);
         }
 
         .reset-btn {
             width: 100%;
             padding: 18px;
-            margin-top: 30px;
+            margin-top: 25px;
             border-radius: 12px;
             background: var(--gold-gradient);
-            color: #333;
+            color: var(--text);
             border: none;
-            font-size: 18px;
-            font-weight: 700;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
             transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
         }
 
         .reset-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 215, 0, 0.2);
         }
 
-        .footer {
-            text-align: center;
-            padding: 20px;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 13px;
+        /* Modal for Image Preview */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s;
         }
 
+        .modal-content {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+            animation: slideUp 0.3s;
+        }
+
+        .modal-image {
+            max-width: 100%;
+            max-height: 70vh;
+            border-radius: 8px;
+            display: block;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--gold);
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            background: var(--gold-dark);
+        }
+
+        /* Notification */
         .notification {
             position: fixed;
             bottom: 25px;
             right: 25px;
-            background: var(--gold-gradient);
-            color: #333;
+            background: var(--gold-light);
+            color: var(--text);
             padding: 15px 25px;
-            border-radius: 12px;
-            box-shadow: 0 15px 35px rgba(255, 215, 0, 0.25);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px var(--shadow);
             display: flex;
             align-items: center;
             gap: 12px;
-            transform: translateX(400px) scale(0.8);
+            transform: translateX(400px);
             opacity: 0;
-            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transition: all 0.3s ease;
             z-index: 1000;
-            max-width: 350px;
             border: 2px solid var(--gold);
         }
 
         .notification.show {
-            transform: translateX(0) scale(1);
+            transform: translateX(0);
             opacity: 1;
         }
 
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
         @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
-        @keyframes bounceIn {
-            0% { transform: scale(0.3); opacity: 0; }
-            50% { transform: scale(1.1); }
-            70% { transform: scale(0.9); }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
+        /* Responsive */
+        @media (max-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                order: 2;
+            }
+            
+            .content-area {
+                order: 1;
+            }
         }
 
         @media (max-width: 768px) {
             .container {
-                padding: 0 10px;
+                padding: 15px;
             }
             
-            .header, .main-card {
-                border-radius: 15px;
-                padding: 20px;
+            .header {
+                padding: 25px 20px;
             }
             
             .title {
-                font-size: 26px;
+                font-size: 28px;
+            }
+            
+            .content-area {
+                padding: 20px;
+            }
+            
+            .files-grid {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            }
+            
+            .links-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .images-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .action-btn {
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 20px 15px;
+            }
+            
+            .logo {
+                font-size: 40px;
+            }
+            
+            .title {
+                font-size: 24px;
+            }
+            
+            .files-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .images-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
             
             .action-buttons {
-                grid-template-columns: 1fr;
-            }
-            
-            .summary-stats {
-                grid-template-columns: 1fr;
-            }
-            
-            .files-grid, .images-grid {
-                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            }
-            
-            .link-actions, .image-actions {
-                flex-direction: column;
+                gap: 10px;
             }
         }
     </style>
@@ -861,145 +899,156 @@
     <div class="container">
         <div class="header">
             <div class="logo">
-                ✨📷
+                ✨
             </div>
-            <h1 class="title">একসাথে অনেক ছবি</h1>
-            <p class="subtitle">লিঙ্ক তৈরি করুন অথবা ব্যাকগ্রাউন্ড রিমুভ করুন - একবারে অনেকগুলো ছবি</p>
+            <h1 class="title">ছবি প্রসেসিং টুল</h1>
+            <p class="subtitle">একসাথে অনেক ছবি প্রসেস করুন - লিঙ্ক তৈরি বা ব্যাকগ্রাউন্ড রিমুভ</p>
         </div>
 
-        <div class="main-card">
-            <!-- Step 1: Action Selection -->
-            <div class="section-title">
-                <i class="fas fa-mouse-pointer"></i>
-                আপনি কি করতে চান?
-            </div>
-            
-            <div class="action-buttons">
-                <div class="action-btn" id="linkAction" onclick="selectAction('link')">
-                    <div class="action-icon">
-                        <i class="fas fa-link"></i>
+        <div class="main-content">
+            <!-- Sidebar - Action Selection -->
+            <div class="sidebar">
+                <div class="action-buttons">
+                    <div class="action-btn" id="linkAction" onclick="selectAction('link')">
+                        <div class="action-icon">
+                            <i class="fas fa-link"></i>
+                        </div>
+                        <div class="action-info">
+                            <div class="action-label">লিঙ্ক তৈরি</div>
+                            <div class="action-desc">পাবলিক শেয়ারিং লিঙ্ক</div>
+                        </div>
                     </div>
-                    <div>
-                        <div class="action-label">লিঙ্ক তৈরি</div>
-                        <div class="action-description">একসাথে অনেক ছবির লিঙ্ক</div>
-                    </div>
-                </div>
-                
-                <div class="action-btn" id="bgRemoveAction" onclick="selectAction('bgremove')">
-                    <div class="action-icon">
-                        <i class="fas fa-magic"></i>
-                    </div>
-                    <div>
-                        <div class="action-label">ব্যাকগ্রাউন্ড রিমুভ</div>
-                        <div class="action-description">একসাথে অনেক ছবি</div>
+                    
+                    <div class="action-btn" id="bgRemoveAction" onclick="selectAction('bgremove')">
+                        <div class="action-icon">
+                            <i class="fas fa-magic"></i>
+                        </div>
+                        <div class="action-info">
+                            <div class="action-label">ব্যাকগ্রাউন্ড রিমুভ</div>
+                            <div class="action-desc">AI প্রযুক্তি ব্যবহার</div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Step 2: Multi Image Upload -->
-            <div class="upload-section" id="uploadSection">
-                <div class="section-title">
-                    <i class="fas fa-images"></i>
-                    ছবিগুলো সিলেক্ট করুন
-                </div>
-                
-                <div class="upload-area" id="uploadArea">
-                    <div class="upload-icon">
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Upload Section -->
+                <div class="upload-section" id="uploadSection">
+                    <div class="section-title">
                         <i class="fas fa-cloud-upload-alt"></i>
+                        ছবি সিলেক্ট করুন
                     </div>
-                    <div class="upload-text">
-                        <h3>একসাথে অনেক ছবি আপলোড করুন</h3>
-                        <p>ক্লিক করুন অথবা ছবিগুলো ড্র্যাগ করুন</p>
-                        <p>সর্বোচ্চ ২০টি ছবি • প্রতিটি ১০MB • JPG, PNG, WEBP</p>
-                    </div>
-                    <input type="file" id="imageInput" accept="image/*" multiple>
-                </div>
-
-                <div class="selected-files" id="selectedFiles">
-                    <div class="files-count">
-                        <i class="fas fa-images"></i>
-                        <span id="filesCount">০টি ছবি সিলেক্ট করা হয়েছে</span>
-                    </div>
-                    <div class="files-grid" id="filesGrid"></div>
-                </div>
-
-                <button class="process-btn" id="processBtn" onclick="startProcessing()" disabled>
-                    <i class="fas fa-play"></i> প্রসেস শুরু করুন
-                </button>
-            </div>
-
-            <!-- Step 3: Processing -->
-            <div class="processing-container" id="processingContainer">
-                <div class="processing-header">
-                    <div class="processing-title" id="processingTitle">ছবি প্রসেস করা হচ্ছে...</div>
-                </div>
-
-                <div class="progress-container">
-                    <div class="progress-info">
-                        <div class="progress-text" id="progressText">০টি ছবি প্রসেস করা হয়েছে</div>
-                        <div class="progress-percent" id="progressPercent">০%</div>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressFill"></div>
-                    </div>
-                </div>
-
-                <div class="current-file" id="currentFile">
-                    বর্তমানে প্রসেসিং: <span id="currentFileName">কোনো ছবি নেই</span>
-                </div>
-            </div>
-
-            <!-- Step 4: Results -->
-            <div class="results-container" id="resultsContainer">
-                <div class="results-header">
-                    <div class="success-icon">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <h2 class="result-title" id="resultTitle">প্রসেসিং সম্পূর্ণ!</h2>
-                    <p class="result-subtitle" id="resultSubtitle">সব ছবি সফলভাবে প্রসেস করা হয়েছে</p>
-                </div>
-
-                <div class="summary-card">
-                    <div class="summary-stats" id="summaryStats"></div>
-                </div>
-
-                <!-- Links Results -->
-                <div class="links-container" id="linksContainer" style="display: none;">
-                    <div class="links-header">
-                        <div class="links-title">
-                            <i class="fas fa-link"></i> সব ছবির লিঙ্ক
+                    
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-icon">
+                            <i class="fas fa-images"></i>
                         </div>
-                        <button class="copy-all-btn" onclick="copyAllLinks()">
-                            <i class="fas fa-copy"></i> সব লিঙ্ক কপি
-                        </button>
+                        <div class="upload-text">
+                            <h3>একসাথে অনেক ছবি আপলোড করুন</h3>
+                            <p>ক্লিক করুন অথবা ছবিগুলো ড্র্যাগ করুন</p>
+                            <p>সর্বোচ্চ ২০টি ছবি • প্রতিটি ১০MB • JPG, PNG, WEBP</p>
+                        </div>
+                        <input type="file" id="imageInput" accept="image/*" multiple>
                     </div>
-                    <div class="links-list" id="linksList"></div>
+
+                    <div class="files-preview" id="filesPreview">
+                        <div class="files-header">
+                            <div class="files-count">
+                                <i class="fas fa-images"></i>
+                                <span id="filesCount">০টি ছবি</span>
+                            </div>
+                            <button class="clear-btn" onclick="clearAllFiles()">
+                                <i class="fas fa-trash"></i> সব মুছুন
+                            </button>
+                        </div>
+                        <div class="files-grid" id="filesGrid"></div>
+                    </div>
+
+                    <button class="process-btn" id="processBtn" onclick="startProcessing()" disabled>
+                        <i class="fas fa-play"></i> প্রসেস শুরু করুন
+                    </button>
                 </div>
 
-                <!-- Images Results -->
-                <div class="images-container" id="imagesContainer" style="display: none;">
-                    <div class="links-header">
-                        <div class="links-title">
-                            <i class="fas fa-image"></i> প্রসেস করা ছবি
+                <!-- Processing Section -->
+                <div class="processing-section" id="processingSection">
+                    <div class="processing-header">
+                        <div class="processing-title" id="processingTitle">ছবি প্রসেস করা হচ্ছে...</div>
+                        <div class="processing-desc" id="processingDesc">দয়া করে অপেক্ষা করুন</div>
+                    </div>
+
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <div class="progress-text" id="progressText">০টি ছবি প্রসেস করা হয়েছে</div>
+                            <div class="progress-percent" id="progressPercent">০%</div>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
                         </div>
                     </div>
-                    <div class="images-grid" id="imagesGrid"></div>
+
+                    <div class="current-processing">
+                        বর্তমানে: <span class="current-file" id="currentFileName">কোনো ছবি নেই</span>
+                    </div>
                 </div>
 
-                <button class="reset-btn" onclick="resetTool()">
-                    <i class="fas fa-redo"></i> নতুন ছবি প্রসেস করুন
-                </button>
-            </div>
-        </div>
+                <!-- Results Section -->
+                <div class="results-section" id="resultsSection">
+                    <div class="results-header">
+                        <div class="success-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="result-title" id="resultTitle">প্রসেসিং সম্পূর্ণ</div>
+                        <div class="result-desc" id="resultDesc"></div>
+                    </div>
 
-        <div class="footer">
-            <p>© ২০২৫ একসাথে অনেক ছবি প্রসেসিং | ২০টি ছবি একসাথে প্রসেস করুন</p>
+                    <!-- Links Results -->
+                    <div class="links-results" id="linksResults">
+                        <div class="links-header">
+                            <div class="links-title">
+                                <i class="fas fa-link"></i>
+                                <span>সব ছবির লিঙ্ক</span>
+                            </div>
+                            <button class="copy-all-btn" onclick="copyAllLinks()">
+                                <i class="fas fa-copy"></i> সব লিঙ্ক কপি
+                            </button>
+                        </div>
+                        <div class="links-grid" id="linksGrid"></div>
+                    </div>
+
+                    <!-- Images Results -->
+                    <div class="images-results" id="imagesResults">
+                        <div class="images-header">
+                            <div class="images-title">
+                                <i class="fas fa-image"></i>
+                                <span>প্রসেস করা ছবি</span>
+                            </div>
+                        </div>
+                        <div class="images-grid" id="imagesGrid"></div>
+                    </div>
+
+                    <button class="reset-btn" onclick="resetTool()">
+                        <i class="fas fa-redo"></i> নতুন ছবি প্রসেস করুন
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- Image Preview Modal -->
+    <div class="modal-overlay" id="imageModal">
+        <div class="modal-content">
+            <div class="modal-close" onclick="closeModal()">
+                <i class="fas fa-times"></i>
+            </div>
+            <img class="modal-image" id="modalImage" src="" alt="Preview">
+        </div>
+    </div>
+
+    <!-- Notification -->
     <div class="notification" id="notification">
         <i class="fas fa-check-circle"></i>
-        <span id="notificationText">সফল!</span>
+        <span id="notificationText"></span>
     </div>
 
     <script>
@@ -1011,31 +1060,32 @@
         const uploadSection = document.getElementById('uploadSection');
         const uploadArea = document.getElementById('uploadArea');
         const imageInput = document.getElementById('imageInput');
-        const selectedFiles = document.getElementById('selectedFiles');
+        const filesPreview = document.getElementById('filesPreview');
         const filesCount = document.getElementById('filesCount');
         const filesGrid = document.getElementById('filesGrid');
         const processBtn = document.getElementById('processBtn');
-        const processingContainer = document.getElementById('processingContainer');
+        const processingSection = document.getElementById('processingSection');
         const processingTitle = document.getElementById('processingTitle');
+        const processingDesc = document.getElementById('processingDesc');
         const progressText = document.getElementById('progressText');
         const progressPercent = document.getElementById('progressPercent');
         const progressFill = document.getElementById('progressFill');
-        const currentFile = document.getElementById('currentFile');
         const currentFileName = document.getElementById('currentFileName');
-        const resultsContainer = document.getElementById('resultsContainer');
+        const resultsSection = document.getElementById('resultsSection');
         const resultTitle = document.getElementById('resultTitle');
-        const resultSubtitle = document.getElementById('resultSubtitle');
-        const summaryStats = document.getElementById('summaryStats');
-        const linksContainer = document.getElementById('linksContainer');
-        const linksList = document.getElementById('linksList');
-        const imagesContainer = document.getElementById('imagesContainer');
+        const resultDesc = document.getElementById('resultDesc');
+        const linksResults = document.getElementById('linksResults');
+        const linksGrid = document.getElementById('linksGrid');
+        const imagesResults = document.getElementById('imagesResults');
         const imagesGrid = document.getElementById('imagesGrid');
+        const imageModal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
         const notification = document.getElementById('notification');
         const notificationText = document.getElementById('notificationText');
         
         // State
         let selectedAction = null;
-        let selectedFilesArray = [];
+        let selectedFiles = [];
         const MAX_FILES = 20;
         let processedResults = [];
         
@@ -1045,24 +1095,19 @@
             
             selectedAction = action;
             
-            // Reset all actions
+            // Update UI
             document.getElementById('linkAction').classList.remove('active');
             document.getElementById('bgRemoveAction').classList.remove('active');
+            document.getElementById(action + 'Action').classList.add('active');
             
-            // Activate selected action
-            if (action === 'link') {
-                document.getElementById('linkAction').classList.add('active');
-                showNotification('লিঙ্ক তৈরি সিলেক্ট করা হয়েছে! এখন ছবি সিলেক্ট করুন।', 'info');
-            } else if (action === 'bgremove') {
-                document.getElementById('bgRemoveAction').classList.add('active');
-                showNotification('ব্যাকগ্রাউন্ড রিমুভ সিলেক্ট করা হয়েছে! এখন ছবি সিলেক্ট করুন।', 'info');
+            // Show upload section if not visible
+            if (uploadSection.style.display !== 'block') {
+                uploadSection.style.display = 'block';
+                processingSection.style.display = 'none';
+                resultsSection.style.display = 'none';
             }
             
-            // Auto show upload section
-            setTimeout(() => {
-                uploadSection.style.display = 'block';
-                uploadSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 300);
+            showNotification(action === 'link' ? 'লিঙ্ক তৈরি সিলেক্ট করা হয়েছে' : 'ব্যাকগ্রাউন্ড রিমুভ সিলেক্ট করা হয়েছে', 'info');
         }
         
         // File Upload
@@ -1072,23 +1117,17 @@
             e.preventDefault();
             uploadArea.style.borderColor = 'var(--gold-dark)';
             uploadArea.style.background = 'var(--gold-light)';
-            uploadArea.style.transform = 'translateY(-3px)';
-            uploadArea.style.boxShadow = '0 10px 20px rgba(255, 215, 0, 0.2)';
         });
         
         uploadArea.addEventListener('dragleave', () => {
             uploadArea.style.borderColor = 'var(--gold)';
             uploadArea.style.background = 'var(--gold-light)';
-            uploadArea.style.transform = 'translateY(0)';
-            uploadArea.style.boxShadow = 'none';
         });
         
         uploadArea.addEventListener('drop', (e) => {
             e.preventDefault();
             uploadArea.style.borderColor = 'var(--gold)';
             uploadArea.style.background = 'var(--gold-light)';
-            uploadArea.style.transform = 'translateY(0)';
-            uploadArea.style.boxShadow = 'none';
             
             if (e.dataTransfer.files.length) {
                 handleFiles(e.dataTransfer.files);
@@ -1102,135 +1141,139 @@
         });
         
         function handleFiles(files) {
-            const newFiles = Array.from(files).slice(0, MAX_FILES - selectedFilesArray.length);
+            const newFiles = Array.from(files).slice(0, MAX_FILES - selectedFiles.length);
             
             if (newFiles.length === 0) {
-                showNotification(`আপনি সর্বোচ্চ ${MAX_FILES}টি ছবি সিলেক্ট করতে পারেন!`, 'error');
+                showNotification(`সর্বোচ্চ ${MAX_FILES}টি ছবি সিলেক্ট করা যাবে`, 'warning');
                 return;
             }
             
             let validFiles = 0;
             
             newFiles.forEach(file => {
-                // Check if file is an image
-                if (!file.type.match('image.*')) {
-                    showNotification(`${file.name} ছবি ফাইল নয়!`, 'error');
+                // Validation
+                if (!file.type.startsWith('image/')) {
+                    showNotification(`${file.name} ছবি ফাইল নয়`, 'warning');
                     return;
                 }
                 
-                // Check file size
                 if (file.size > 10 * 1024 * 1024) {
-                    showNotification(`${file.name} ১০MB এর বেশি!`, 'error');
+                    showNotification(`${file.name} ১০MB এর বেশি`, 'warning');
                     return;
                 }
                 
-                // Check for duplicates
-                if (selectedFilesArray.some(f => f.name === file.name && f.size === file.size)) {
-                    showNotification(`${file.name} ইতিমধ্যে সিলেক্ট করা আছে!`, 'warning');
+                // Check duplicate
+                if (selectedFiles.some(f => f.name === file.name && f.size === file.size)) {
                     return;
                 }
                 
-                // Add to array
-                selectedFilesArray.push({
-                    file: file,
-                    id: Date.now() + Math.random(),
-                    preview: null
-                });
+                // Create preview
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    selectedFiles.push({
+                        file: file,
+                        preview: e.target.result,
+                        id: Date.now() + Math.random()
+                    });
+                    
+                    updateFilesDisplay();
+                    processBtn.disabled = false;
+                    
+                    if (selectedFiles.length === 1) {
+                        showNotification('ছবি সিলেক্ট করা হয়েছে', 'success');
+                    } else {
+                        filesCount.textContent = `${selectedFiles.length}টি ছবি`;
+                    }
+                };
+                reader.readAsDataURL(file);
                 validFiles++;
             });
-            
-            if (validFiles > 0) {
-                updateFilesDisplay();
-                processBtn.disabled = false;
-                showNotification(`${validFiles}টি ছবি সিলেক্ট করা হয়েছে!`, 'success');
-            }
         }
         
         function updateFilesDisplay() {
-            filesCount.textContent = `${selectedFilesArray.length}টি ছবি সিলেক্ট করা হয়েছে`;
+            filesPreview.style.display = 'block';
+            filesCount.textContent = `${selectedFiles.length}টি ছবি`;
+            filesGrid.innerHTML = '';
             
-            if (selectedFilesArray.length > 0) {
-                selectedFiles.style.display = 'block';
-                filesGrid.innerHTML = '';
-                
-                selectedFilesArray.forEach((fileObj, index) => {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        fileObj.preview = e.target.result;
-                        
-                        const fileItem = document.createElement('div');
-                        fileItem.className = 'file-item';
-                        fileItem.innerHTML = `
-                            <img class="file-preview" src="${e.target.result}" alt="${fileObj.file.name}">
-                            <div class="file-info">
-                                <div class="file-name">${fileObj.file.name}</div>
-                                <div class="file-size">${formatFileSize(fileObj.file.size)}</div>
-                            </div>
-                            <div class="remove-file" onclick="removeFile(${index})">
-                                <i class="fas fa-times"></i>
-                            </div>
-                        `;
-                        filesGrid.appendChild(fileItem);
-                    };
-                    reader.readAsDataURL(fileObj.file);
-                });
-            } else {
-                selectedFiles.style.display = 'none';
+            selectedFiles.forEach((fileObj, index) => {
+                const fileCard = document.createElement('div');
+                fileCard.className = 'file-card';
+                fileCard.innerHTML = `
+                    <img class="file-preview" src="${fileObj.preview}" alt="${fileObj.file.name}" onclick="openModal('${fileObj.preview}')">
+                    <div class="file-info">
+                        <div class="file-name">${fileObj.file.name}</div>
+                        <div class="file-size">${formatFileSize(fileObj.file.size)}</div>
+                    </div>
+                    <div class="remove-file" onclick="removeFile(${index})">
+                        <i class="fas fa-times"></i>
+                    </div>
+                `;
+                filesGrid.appendChild(fileCard);
+            });
+        }
+        
+        function removeFile(index) {
+            selectedFiles.splice(index, 1);
+            updateFilesDisplay();
+            
+            if (selectedFiles.length === 0) {
+                filesPreview.style.display = 'none';
                 processBtn.disabled = true;
             }
         }
         
-        function removeFile(index) {
-            selectedFilesArray.splice(index, 1);
-            updateFilesDisplay();
-            showNotification('ছবি মুছে ফেলা হয়েছে!', 'info');
+        function clearAllFiles() {
+            selectedFiles = [];
+            filesPreview.style.display = 'none';
+            processBtn.disabled = true;
+            imageInput.value = '';
+            showNotification('সব ছবি মুছে ফেলা হয়েছে', 'info');
         }
         
         function formatFileSize(bytes) {
             if (bytes < 1024) return bytes + ' বাইট';
-            else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
-            else return (bytes / 1048576).toFixed(1) + ' MB';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
         }
         
-        // Start Processing
-        function startProcessing() {
-            if (!selectedAction || selectedFilesArray.length === 0) {
-                showNotification('প্রথমে অ্যাকশন এবং ছবি সিলেক্ট করুন!', 'error');
-                return;
-            }
+        // Processing
+        async function startProcessing() {
+            if (!selectedAction || selectedFiles.length === 0) return;
             
             uploadSection.style.display = 'none';
-            processingContainer.style.display = 'block';
+            processingSection.style.display = 'block';
             
-            // Start processing
             if (selectedAction === 'link') {
-                processMultipleLinks();
-            } else if (selectedAction === 'bgremove') {
-                processMultipleBackgroundRemovals();
+                await processLinks();
+            } else {
+                await processBackgroundRemovals();
             }
-            
-            processingContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
         
-        // Processing Functions
-        async function processMultipleLinks() {
+        async function processLinks() {
             processingTitle.textContent = 'লিঙ্ক তৈরি করা হচ্ছে...';
+            processingDesc.textContent = 'ছবিগুলো আপলোড হচ্ছে';
+            
             processedResults = [];
             let completed = 0;
             let successful = 0;
             
-            for (let i = 0; i < selectedFilesArray.length; i++) {
-                const fileObj = selectedFilesArray[i];
+            for (let i = 0; i < selectedFiles.length; i++) {
+                const fileObj = selectedFiles[i];
                 
-                // Update current file info
+                // Update UI
                 currentFileName.textContent = fileObj.file.name;
+                const percent = Math.round(((i + 1) / selectedFiles.length) * 100);
+                progressText.textContent = `${i + 1}/${selectedFiles.length} ছবি`;
+                progressPercent.textContent = `${percent}%`;
+                progressFill.style.width = `${percent}%`;
                 
                 try {
                     const formData = new FormData();
-                    formData.append("image", fileObj.file);
+                    formData.append('image', fileObj.file);
                     
                     const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
-                        method: "POST",
+                        method: 'POST',
                         body: formData
                     });
                     
@@ -1245,34 +1288,33 @@
                         });
                         successful++;
                     }
-                    
                 } catch (error) {
                     console.error('Error:', error);
                 }
                 
                 completed++;
-                
-                // Update progress
-                const percent = Math.round((completed / selectedFilesArray.length) * 100);
-                progressText.textContent = `${completed}টি ছবি প্রসেস করা হয়েছে`;
-                progressPercent.textContent = `${percent}%`;
-                progressFill.style.width = `${percent}%`;
             }
             
-            showLinksResults(successful);
+            showLinksResults(successful, selectedFiles.length);
         }
         
-        async function processMultipleBackgroundRemovals() {
+        async function processBackgroundRemovals() {
             processingTitle.textContent = 'ব্যাকগ্রাউন্ড রিমুভ করা হচ্ছে...';
+            processingDesc.textContent = 'AI প্রযুক্তি ব্যবহার করে';
+            
             processedResults = [];
             let completed = 0;
             let successful = 0;
             
-            for (let i = 0; i < selectedFilesArray.length; i++) {
-                const fileObj = selectedFilesArray[i];
+            for (let i = 0; i < selectedFiles.length; i++) {
+                const fileObj = selectedFiles[i];
                 
-                // Update current file info
+                // Update UI
                 currentFileName.textContent = fileObj.file.name;
+                const percent = Math.round(((i + 1) / selectedFiles.length) * 100);
+                progressText.textContent = `${i + 1}/${selectedFiles.length} ছবি`;
+                progressPercent.textContent = `${percent}%`;
+                progressFill.style.width = `${percent}%`;
                 
                 try {
                     const formData = new FormData();
@@ -1301,214 +1343,160 @@
                         });
                         successful++;
                     }
-                    
                 } catch (error) {
                     console.error('Error:', error);
                 }
                 
                 completed++;
-                
-                // Update progress
-                const percent = Math.round((completed / selectedFilesArray.length) * 100);
-                progressText.textContent = `${completed}টি ছবি প্রসেস করা হয়েছে`;
-                progressPercent.textContent = `${percent}%`;
-                progressFill.style.width = `${percent}%`;
             }
             
-            showImagesResults(successful);
+            showImagesResults(successful, selectedFiles.length);
         }
         
-        // Show Results
-        function showLinksResults(successful) {
-            processingContainer.style.display = 'none';
-            resultsContainer.style.display = 'block';
+        // Results Display
+        function showLinksResults(successful, total) {
+            processingSection.style.display = 'none';
+            resultsSection.style.display = 'block';
             
-            resultTitle.textContent = 'লিঙ্ক তৈরি সম্পূর্ণ!';
-            resultSubtitle.textContent = `${successful}টি ছবির লিঙ্ক তৈরি করা হয়েছে`;
+            resultTitle.textContent = 'লিঙ্ক তৈরি সম্পূর্ণ';
+            resultDesc.textContent = `${successful}/${total}টি ছবির লিঙ্ক তৈরি হয়েছে`;
             
-            // Update summary stats
-            summaryStats.innerHTML = `
-                <div class="stat-item">
-                    <div class="stat-number">${selectedFilesArray.length}</div>
-                    <div class="stat-label">সিলেক্ট করা</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">${successful}</div>
-                    <div class="stat-label">সফল লিঙ্ক</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">${selectedFilesArray.length - successful}</div>
-                    <div class="stat-label">ব্যর্থ</div>
-                </div>
-            `;
+            // Show links results
+            linksResults.style.display = 'block';
+            imagesResults.style.display = 'none';
             
-            // Show links container
-            linksContainer.style.display = 'block';
-            imagesContainer.style.display = 'none';
-            
-            // Populate links list
-            linksList.innerHTML = '';
+            // Populate links
+            linksGrid.innerHTML = '';
             processedResults.forEach((result, index) => {
-                const linkItem = document.createElement('div');
-                linkItem.className = 'link-item';
-                linkItem.innerHTML = `
-                    <div class="link-info">
+                const linkCard = document.createElement('div');
+                linkCard.className = 'link-card';
+                linkCard.innerHTML = `
+                    <div class="link-header">
                         <div class="link-number">${index + 1}</div>
                         <div class="link-filename">${result.name}</div>
                     </div>
                     <div class="link-box">${result.url}</div>
                     <div class="link-actions">
-                        <button class="link-action-btn copy-link-btn" onclick="copyLink('${result.url}')">
+                        <button class="link-btn copy-btn" onclick="copyLink('${result.url}')">
                             <i class="fas fa-copy"></i> কপি
                         </button>
-                        <a href="${result.url}" target="_blank">
-                            <button class="link-action-btn view-link-btn">
-                                <i class="fas fa-eye"></i> দেখুন
-                            </button>
-                        </a>
+                        <button class="link-btn preview-btn" onclick="openModal('${result.preview}')">
+                            <i class="fas fa-eye"></i> ছবি
+                        </button>
                     </div>
                 `;
-                linksList.appendChild(linkItem);
+                linksGrid.appendChild(linkCard);
             });
-            
-            resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            showNotification(`${successful}টি ছবির লিঙ্ক তৈরি সফল!`, 'success');
         }
         
-        function showImagesResults(successful) {
-            processingContainer.style.display = 'none';
-            resultsContainer.style.display = 'block';
+        function showImagesResults(successful, total) {
+            processingSection.style.display = 'none';
+            resultsSection.style.display = 'block';
             
-            resultTitle.textContent = 'ব্যাকগ্রাউন্ড রিমুভ সম্পূর্ণ!';
-            resultSubtitle.textContent = `${successful}টি ছবির ব্যাকগ্রাউন্ড মুছে ফেলা হয়েছে`;
+            resultTitle.textContent = 'ব্যাকগ্রাউন্ড রিমুভ সম্পূর্ণ';
+            resultDesc.textContent = `${successful}/${total}টি ছবির ব্যাকগ্রাউন্ড রিমুভ হয়েছে`;
             
-            // Update summary stats
-            summaryStats.innerHTML = `
-                <div class="stat-item">
-                    <div class="stat-number">${selectedFilesArray.length}</div>
-                    <div class="stat-label">সিলেক্ট করা</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">${successful}</div>
-                    <div class="stat-label">সফল রিমুভ</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">${selectedFilesArray.length - successful}</div>
-                    <div class="stat-label">ব্যর্থ</div>
-                </div>
-            `;
+            // Show images results
+            linksResults.style.display = 'none';
+            imagesResults.style.display = 'block';
             
-            // Show images container
-            linksContainer.style.display = 'none';
-            imagesContainer.style.display = 'block';
-            
-            // Populate images grid
+            // Populate images
             imagesGrid.innerHTML = '';
             processedResults.forEach((result, index) => {
-                const imageItem = document.createElement('div');
-                imageItem.className = 'image-item';
-                imageItem.innerHTML = `
-                    <img class="image-preview" src="${result.preview}" alt="${result.name}">
+                const imageCard = document.createElement('div');
+                imageCard.className = 'image-card';
+                imageCard.innerHTML = `
+                    <img class="image-preview" src="${result.preview}" alt="${result.name}" onclick="openModal('${result.url}')">
                     <div class="image-info">
                         <div class="image-name">${result.name}</div>
                         <div class="image-actions">
-                            <button class="image-action-btn download-image-btn" onclick="downloadImage(${index})">
+                            <button class="image-btn download-btn" onclick="downloadImage(${index})">
                                 <i class="fas fa-download"></i> ডাউনলোড
                             </button>
-                            <button class="image-action-btn view-image-btn" onclick="viewImage('${result.url}')">
-                                <i class="fas fa-eye"></i> দেখুন
+                            <button class="image-btn preview-btn" onclick="openModal('${result.url}')">
+                                <i class="fas fa-eye"></i> ছবি
                             </button>
                         </div>
                     </div>
                 `;
-                imagesGrid.appendChild(imageItem);
+                imagesGrid.appendChild(imageCard);
             });
-            
-            resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            showNotification(`${successful}টি ছবির ব্যাকগ্রাউন্ড রিমুভ সফল!`, 'success');
         }
         
-        // Result Actions
+        // Actions
         function copyLink(link) {
             navigator.clipboard.writeText(link).then(() => {
-                showNotification('লিঙ্ক কপি করা হয়েছে!', 'success');
-            }).catch(err => {
-                showNotification('কপি করা যায়নি!', 'error');
+                showNotification('লিঙ্ক কপি করা হয়েছে', 'success');
             });
         }
         
         function copyAllLinks() {
-            let allLinks = '';
-            processedResults.forEach((result, index) => {
-                allLinks += `${index + 1}. ${result.name}\n${result.url}\n\n`;
-            });
-            
+            const allLinks = processedResults.map(r => r.url).join('\n\n');
             navigator.clipboard.writeText(allLinks).then(() => {
-                showNotification('সব লিঙ্ক কপি করা হয়েছে!', 'success');
-            }).catch(err => {
-                showNotification('কপি করা যায়নি!', 'error');
+                showNotification('সব লিঙ্ক কপি করা হয়েছে', 'success');
             });
         }
         
         function downloadImage(index) {
             const result = processedResults[index];
-            if (!result.blob) return;
-            
             const link = document.createElement('a');
             link.href = result.url;
-            link.download = `ব্যাকগ্রাউন্ড-রিমুভ-${result.name.split('.')[0]}.png`;
+            link.download = `bg-removed-${result.name.split('.')[0]}.png`;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            
-            showNotification('ছবি ডাউনলোড শুরু হয়েছে!', 'success');
+            showNotification('ছবি ডাউনলোড শুরু হয়েছে', 'success');
         }
         
-        function viewImage(url) {
-            window.open(url, '_blank');
+        // Modal Functions
+        function openModal(imageUrl) {
+            modalImage.src = imageUrl;
+            imageModal.style.display = 'flex';
         }
         
+        function closeModal() {
+            imageModal.style.display = 'none';
+        }
+        
+        // Close modal on overlay click
+        imageModal.addEventListener('click', function(e) {
+            if (e.target === imageModal) {
+                closeModal();
+            }
+        });
+        
+        // Reset Tool
         function resetTool() {
-            // Reset state
+            // Clear state
             selectedAction = null;
-            selectedFilesArray = [];
+            selectedFiles = [];
             processedResults = [];
             
             // Reset UI
             document.getElementById('linkAction').classList.remove('active');
             document.getElementById('bgRemoveAction').classList.remove('active');
             
-            uploadSection.style.display = 'none';
-            selectedFiles.style.display = 'none';
-            processingContainer.style.display = 'none';
-            resultsContainer.style.display = 'none';
-            
+            uploadSection.style.display = 'block';
+            processingSection.style.display = 'none';
+            resultsSection.style.display = 'none';
+            filesPreview.style.display = 'none';
             processBtn.disabled = true;
-            progressFill.style.width = '0%';
-            progressPercent.textContent = '0%';
             imageInput.value = '';
             
-            // Revoke object URLs
-            processedResults.forEach(result => {
-                if (result.type === 'image' && result.url) {
-                    URL.revokeObjectURL(result.url);
+            // Cleanup object URLs
+            processedResults.forEach(r => {
+                if (r.type === 'image' && r.url) {
+                    URL.revokeObjectURL(r.url);
                 }
             });
             
-            showNotification('নতুন ছবি প্রসেস করতে প্রস্তুত!', 'info');
+            showNotification('নতুন ছবি প্রসেস করতে প্রস্তুত', 'info');
         }
         
         // Notification
         function showNotification(message, type) {
-            // Set icon based on type
-            let icon = 'fas fa-check-circle';
-            if (type === 'error') icon = 'fas fa-exclamation-circle';
-            if (type === 'warning') icon = 'fas fa-exclamation-triangle';
-            if (type === 'info') icon = 'fas fa-info-circle';
-            
-            notification.innerHTML = `<i class="${icon}"></i><span>${message}</span>`;
-            
-            notification.classList.add('show');
+            notificationText.textContent = message;
+            notification.className = 'notification show';
             
             setTimeout(() => {
                 notification.classList.remove('show');
@@ -1517,7 +1505,7 @@
         
         // Initialize
         window.addEventListener('load', () => {
-            showNotification('একসাথে অনেক ছবি প্রসেসিং টুলে স্বাগতম!', 'info');
+            showNotification('ছবি প্রসেসিং টুলে স্বাগতম! একটি অ্যাকশন সিলেক্ট করুন।', 'info');
         });
     </script>
 </body>
