@@ -3,14 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📷 একসাথে অনেক ছবি আপলোড</title>
+    <title>📷 ছবি আপলোড ও ব্যাকগ্রাউন্ড রিমুভ</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #4a6cf7;
             --primary-light: #eef2ff;
+            --secondary: #764ba2;
+            --secondary-light: #f3e8ff;
             --success: #4CAF50;
             --danger: #ff6b6b;
+            --warning: #ffa726;
             --text: #333;
             --text-light: #666;
             --border: #e0e0e0;
@@ -35,80 +38,134 @@
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
         .header {
             background: var(--white);
             border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
             text-align: center;
-            box-shadow: 0 10px 30px var(--shadow);
+            box-shadow: 0 15px 35px var(--shadow);
             border: 2px solid rgba(255, 255, 255, 0.2);
         }
 
         .title {
             color: var(--primary);
-            font-size: 32px;
-            margin-bottom: 10px;
+            font-size: 36px;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 15px;
+            flex-wrap: wrap;
         }
 
         .title i {
-            font-size: 36px;
+            font-size: 40px;
         }
 
         .subtitle {
             color: var(--text-light);
-            font-size: 16px;
-            max-width: 600px;
-            margin: 0 auto;
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 10px;
         }
 
-        .upload-box {
+        .tools-info {
+            background: var(--primary-light);
+            padding: 12px 20px;
+            border-radius: 10px;
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 14px;
+            color: var(--primary);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .upload-section, .bg-remove-section {
             background: var(--white);
             border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 20px;
-            text-align: center;
-            box-shadow: 0 10px 30px var(--shadow);
-            border: 3px dashed var(--primary);
-            transition: all 0.3s ease;
-            cursor: pointer;
+            padding: 30px;
+            box-shadow: 0 15px 35px var(--shadow);
         }
 
-        .upload-box:hover {
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .section-icon {
+            font-size: 28px;
+            color: var(--primary);
+        }
+
+        .bg-remove-section .section-icon {
+            color: var(--secondary);
+        }
+
+        .section-title {
+            font-size: 24px;
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .upload-area {
+            border: 3px dashed var(--primary);
+            border-radius: 15px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--bg);
+            margin-bottom: 20px;
+        }
+
+        .upload-area:hover {
             background: var(--primary-light);
             transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(74, 108, 247, 0.2);
+            box-shadow: 0 10px 25px rgba(74, 108, 247, 0.2);
         }
 
-        .upload-box.dragover {
+        .upload-area.dragover {
             background: var(--primary-light);
             border-color: var(--success);
         }
 
         .upload-icon {
-            font-size: 64px;
+            font-size: 60px;
             color: var(--primary);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             opacity: 0.8;
         }
 
         .upload-text h3 {
             color: var(--text);
-            font-size: 24px;
+            font-size: 22px;
             margin-bottom: 10px;
         }
 
         .upload-text p {
             color: var(--text-light);
-            font-size: 15px;
+            font-size: 14px;
             margin-bottom: 5px;
         }
 
@@ -117,11 +174,7 @@
         }
 
         .file-info {
-            background: var(--white);
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px var(--shadow);
+            margin-top: 25px;
             animation: slideDown 0.5s ease;
         }
 
@@ -130,8 +183,6 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--border);
         }
 
         .files-count {
@@ -143,37 +194,18 @@
             gap: 10px;
         }
 
-        .clear-btn {
-            background: var(--danger);
-            color: var(--white);
-            border: none;
-            padding: 10px 20px;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s;
-        }
-
-        .clear-btn:hover {
-            background: #ff5252;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
-        }
-
         .preview-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 20px;
-            margin-top: 25px;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
         }
 
         .preview-card {
             background: var(--white);
-            border-radius: 15px;
+            border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 5px 15px var(--shadow);
             transition: all 0.3s;
@@ -188,42 +220,42 @@
 
         .preview-img {
             width: 100%;
-            height: 150px;
+            height: 120px;
             object-fit: cover;
             display: block;
         }
 
         .preview-info {
-            padding: 15px;
+            padding: 12px;
         }
 
         .preview-name {
             font-weight: 600;
-            margin-bottom: 5px;
-            font-size: 14px;
+            font-size: 13px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            margin-bottom: 5px;
         }
 
         .preview-size {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-light);
         }
 
         .remove-btn {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 8px;
+            right: 8px;
             background: rgba(255, 107, 107, 0.9);
             color: var(--white);
-            width: 30px;
-            height: 30px;
+            width: 26px;
+            height: 26px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
+            font-size: 12px;
             cursor: pointer;
             border: none;
             opacity: 0;
@@ -234,114 +266,185 @@
             opacity: 1;
         }
 
-        .upload-btn {
-            background: linear-gradient(135deg, var(--primary) 0%, #6a8aff 100%);
-            color: var(--white);
-            border: none;
-            padding: 18px 30px;
-            border-radius: 15px;
-            font-size: 18px;
+        .controls {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
+            border: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            width: 100%;
+            gap: 10px;
             transition: all 0.3s;
-            box-shadow: 0 10px 25px rgba(74, 108, 247, 0.3);
         }
 
-        .upload-btn:hover:not(:disabled) {
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, #6a8aff 100%);
+            color: var(--white);
+            box-shadow: 0 8px 20px rgba(74, 108, 247, 0.3);
+        }
+
+        .btn-primary:hover:not(:disabled) {
             transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(74, 108, 247, 0.4);
+            box-shadow: 0 12px 25px rgba(74, 108, 247, 0.4);
         }
 
-        .upload-btn:disabled {
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--secondary) 0%, #9b5de5 100%);
+            color: var(--white);
+            box-shadow: 0 8px 20px rgba(118, 75, 162, 0.3);
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(118, 75, 162, 0.4);
+        }
+
+        .btn:disabled {
             background: #cccccc;
             cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
+            transform: none !important;
+            box-shadow: none !important;
         }
 
-        .progress-container {
+        .bg-remove-area {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .bg-remove-icon {
+            font-size: 70px;
+            color: var(--secondary);
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .bg-remove-text {
+            color: var(--text-light);
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        .image-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .comparison-box {
+            text-align: center;
+        }
+
+        .comparison-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text);
+            font-size: 16px;
+        }
+
+        .comparison-img {
+            width: 100%;
+            height: 180px;
+            object-fit: contain;
+            border-radius: 10px;
+            border: 2px solid var(--border);
+            background: var(--bg);
+            padding: 5px;
+        }
+
+        .bg-remove-progress {
             background: var(--white);
             border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 20px;
+            padding: 25px;
+            margin: 25px 0;
             box-shadow: 0 10px 30px var(--shadow);
+            text-align: center;
             animation: slideDown 0.5s ease;
+            display: none;
         }
 
         .progress-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             margin-bottom: 20px;
         }
 
         .progress-title {
             font-size: 20px;
             font-weight: 600;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            color: var(--secondary);
+            margin-bottom: 10px;
         }
 
-        .progress-percent {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--primary);
+        .progress-steps {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .step-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--secondary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary);
+            font-size: 18px;
+        }
+
+        .step.active .step-icon {
+            background: var(--secondary);
+            color: var(--white);
+        }
+
+        .step-text {
+            font-size: 13px;
+            color: var(--text-light);
         }
 
         .progress-bar {
-            height: 12px;
-            background: var(--primary-light);
-            border-radius: 6px;
+            height: 10px;
+            background: var(--secondary-light);
+            border-radius: 5px;
             overflow: hidden;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
         }
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(to right, var(--primary), #6a8aff);
+            background: linear-gradient(to right, var(--secondary), #9b5de5);
             width: 0%;
-            border-radius: 6px;
+            border-radius: 5px;
             transition: width 0.5s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .progress-fill::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            background: linear-gradient(
-                90deg,
-                transparent 0%,
-                rgba(255, 255, 255, 0.3) 50%,
-                transparent 100%
-            );
-            animation: shimmer 2s infinite;
-        }
-
-        .uploaded-count {
-            text-align: center;
-            font-size: 16px;
-            color: var(--text-light);
         }
 
         .results-container {
             background: var(--white);
             border-radius: 20px;
             padding: 30px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px var(--shadow);
+            margin-bottom: 25px;
+            box-shadow: 0 15px 35px var(--shadow);
             animation: slideDown 0.5s ease;
+            display: none;
         }
 
         .results-header {
@@ -357,14 +460,9 @@
         }
 
         .results-title {
-            font-size: 26px;
+            font-size: 28px;
             color: var(--text);
             margin-bottom: 10px;
-        }
-
-        .results-subtitle {
-            color: var(--text-light);
-            font-size: 16px;
         }
 
         .image-gallery {
@@ -378,14 +476,14 @@
             background: var(--white);
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 5px 15px var(--shadow);
+            box-shadow: 0 8px 20px var(--shadow);
             transition: all 0.3s;
             border: 2px solid transparent;
         }
 
         .image-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
             border-color: var(--primary);
         }
 
@@ -402,7 +500,7 @@
 
         .image-name {
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             font-size: 16px;
             white-space: nowrap;
             overflow: hidden;
@@ -412,7 +510,7 @@
         .link-box {
             background: var(--primary-light);
             border-radius: 10px;
-            padding: 15px;
+            padding: 12px;
             margin-top: 10px;
             word-break: break-all;
             font-size: 13px;
@@ -422,7 +520,7 @@
 
         .action-buttons {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             margin-top: 15px;
         }
 
@@ -437,7 +535,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
             transition: all 0.3s;
         }
 
@@ -461,22 +559,22 @@
             transform: translateY(-2px);
         }
 
+        .download-btn {
+            background: var(--secondary);
+            color: var(--white);
+        }
+
+        .download-btn:hover {
+            background: #653d8b;
+            transform: translateY(-2px);
+        }
+
         .footer {
             text-align: center;
             padding: 25px;
             color: var(--white);
             font-size: 14px;
             opacity: 0.9;
-        }
-
-        .footer a {
-            color: var(--white);
-            text-decoration: none;
-            border-bottom: 1px dashed rgba(255, 255, 255, 0.5);
-        }
-
-        .footer a:hover {
-            opacity: 0.8;
         }
 
         .notification {
@@ -487,7 +585,7 @@
             color: var(--white);
             padding: 15px 25px;
             border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
             display: flex;
             align-items: center;
             gap: 12px;
@@ -518,15 +616,6 @@
             }
         }
 
-        @keyframes shimmer {
-            0% {
-                transform: translateX(-100%);
-            }
-            100% {
-                transform: translateX(100%);
-            }
-        }
-
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% {
                 transform: translateY(0);
@@ -544,7 +633,7 @@
                 padding: 0 10px;
             }
             
-            .header, .upload-box, .file-info, .progress-container, .results-container {
+            .header, .upload-section, .bg-remove-section, .results-container {
                 padding: 20px;
                 border-radius: 15px;
             }
@@ -555,7 +644,7 @@
             
             .preview-grid {
                 grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-                gap: 15px;
+                gap: 12px;
             }
             
             .image-gallery {
@@ -563,41 +652,13 @@
                 gap: 20px;
             }
             
-            .preview-img {
-                height: 120px;
+            .image-comparison {
+                grid-template-columns: 1fr;
+                gap: 20px;
             }
             
-            .image-preview {
-                height: 150px;
-            }
-            
-            .notification {
-                bottom: 20px;
-                right: 20px;
-                left: 20px;
-                max-width: none;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .title {
-                font-size: 20px;
+            .controls {
                 flex-direction: column;
-                gap: 5px;
-            }
-            
-            .files-header {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-            }
-            
-            .action-buttons {
-                flex-direction: column;
-            }
-            
-            .preview-grid {
-                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
@@ -607,59 +668,131 @@
         <div class="header">
             <h1 class="title">
                 <i class="fas fa-images"></i>
-                একসাথে অনেক ছবি আপলোড
+                ছবি আপলোড ও ব্যাকগ্রাউন্ড রিমুভ
             </h1>
             <p class="subtitle">
-                একবারে একাধিক ছবি আপলোড করুন এবং সুন্দর গ্যালারি আকারে লিঙ্ক সংগ্রহ করুন
+                একসাথে অনেক ছবি আপলোড করুন অথবা কোনো ছবি থেকে ব্যাকগ্রাউন্ড মুছে ফেলুন
             </p>
+            <div class="tools-info">
+                <i class="fas fa-info-circle"></i>
+                ২টি টুল একসাথে - ছবি আপলোড এবং ব্যাকগ্রাউন্ড রিমুভার
+            </div>
         </div>
 
-        <div class="upload-box" id="uploadArea">
-            <div class="upload-icon">
-                <i class="fas fa-cloud-upload-alt"></i>
-            </div>
-            <div class="upload-text">
-                <h3>ছবিগুলো সিলেক্ট করুন</h3>
-                <p>এখানে ক্লিক করুন অথবা ফাইলগুলো ড্র্যাগ করে আনুন</p>
-                <p>একসাথে অনেকগুলো ছবি নির্বাচন করতে পারেন</p>
-            </div>
-            <input type="file" id="imageInput" accept="image/*" multiple>
-        </div>
-
-        <div class="file-info" id="fileInfo" style="display: none;">
-            <div class="files-header">
-                <div class="files-count">
-                    <i class="fas fa-images"></i>
-                    <span id="filesCount">০টি ছবি</span>
+        <div class="main-content">
+            <!-- ছবি আপলোড সেকশন -->
+            <div class="upload-section">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <h2 class="section-title">ছবি আপলোড</h2>
                 </div>
-                <button class="clear-btn" onclick="clearAllFiles()">
-                    <i class="fas fa-trash"></i> সব ছবি মুছুন
-                </button>
-            </div>
-            <div class="preview-grid" id="previewGrid"></div>
-        </div>
 
-        <button class="upload-btn" id="uploadBtn" onclick="uploadImages()" disabled>
-            <i class="fas fa-upload"></i> সব ছবি আপলোড করুন
-        </button>
-
-        <div class="progress-container" id="progressContainer" style="display: none;">
-            <div class="progress-header">
-                <div class="progress-title">
-                    <i class="fas fa-sync-alt fa-spin"></i>
-                    আপলোড চলছে...
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <div class="upload-text">
+                        <h3>ছবিগুলো সিলেক্ট করুন</h3>
+                        <p>একসাথে অনেকগুলো ছবি নির্বাচন করতে পারেন</p>
+                        <p>JPG, PNG, WEBP ফরম্যাট সাপোর্টেড</p>
+                    </div>
+                    <input type="file" id="imageInput" accept="image/*" multiple>
                 </div>
-                <div class="progress-percent" id="progressPercent">০%</div>
+
+                <div class="file-info" id="fileInfo" style="display: none;">
+                    <div class="files-header">
+                        <div class="files-count">
+                            <i class="fas fa-images"></i>
+                            <span id="filesCount">০টি ছবি</span>
+                        </div>
+                        <button class="btn btn-secondary" onclick="clearAllFiles()" style="padding: 10px 20px;">
+                            <i class="fas fa-trash"></i> সব মুছুন
+                        </button>
+                    </div>
+                    <div class="preview-grid" id="previewGrid"></div>
+                </div>
+
+                <div class="controls">
+                    <button class="btn btn-primary" id="uploadBtn" onclick="uploadImages()" disabled>
+                        <i class="fas fa-upload"></i> ছবি আপলোড করুন
+                    </button>
+                </div>
             </div>
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
-            <div class="uploaded-count" id="uploadedCount">
-                ০টি ছবি আপলোড করা হয়েছে
+
+            <!-- ব্যাকগ্রাউন্ড রিমুভ সেকশন -->
+            <div class="bg-remove-section">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                    <h2 class="section-title">ব্যাকগ্রাউন্ড রিমুভ</h2>
+                </div>
+
+                <div class="upload-area" id="bgUploadArea">
+                    <div class="upload-icon">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <div class="upload-text">
+                        <h3>একটি ছবি সিলেক্ট করুন</h3>
+                        <p>ব্যাকগ্রাউন্ড মুছতে চান এমন একটি ছবি নির্বাচন করুন</p>
+                        <p>AI প্রযুক্তি দ্বারা ব্যাকগ্রাউন্ড মুছে ফেলা হবে</p>
+                    </div>
+                    <input type="file" id="bgImageInput" accept="image/*">
+                </div>
+
+                <div class="image-comparison" id="imageComparison" style="display: none;">
+                    <div class="comparison-box">
+                        <div class="comparison-title">আসল ছবি</div>
+                        <img class="comparison-img" id="originalImage" src="" alt="Original Image">
+                    </div>
+                    <div class="comparison-box">
+                        <div class="comparison-title">ব্যাকগ্রাউন্ড মুছে গেছে</div>
+                        <img class="comparison-img" id="processedImage" src="" alt="Processed Image">
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <button class="btn btn-secondary" id="removeBgBtn" onclick="removeBackground()" disabled>
+                        <i class="fas fa-magic"></i> ব্যাকগ্রাউন্ড রিমুভ করুন
+                    </button>
+                </div>
+
+                <div class="bg-remove-progress" id="bgRemoveProgress">
+                    <div class="progress-header">
+                        <h3 class="progress-title">ব্যাকগ্রাউন্ড রিমুভ করা হচ্ছে...</h3>
+                        <p>দয়া করে অপেক্ষা করুন, এটি কিছু সময় নিতে পারে</p>
+                    </div>
+                    
+                    <div class="progress-steps">
+                        <div class="step active" id="step1">
+                            <div class="step-icon">1</div>
+                            <div class="step-text">ছবি আপলোড</div>
+                        </div>
+                        <div class="step" id="step2">
+                            <div class="step-icon">2</div>
+                            <div class="step-text">AI প্রসেসিং</div>
+                        </div>
+                        <div class="step" id="step3">
+                            <div class="step-icon">3</div>
+                            <div class="step-text">ব্যাকগ্রাউন্ড রিমুভ</div>
+                        </div>
+                        <div class="step" id="step4">
+                            <div class="step-icon">4</div>
+                            <div class="step-text">সম্পূর্ণ</div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="bgProgressFill"></div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="results-container" id="resultsContainer" style="display: none;">
+        <!-- আপলোড রেজাল্ট সেকশন -->
+        <div class="results-container" id="resultsContainer">
             <div class="results-header">
                 <div class="success-icon">
                     <i class="fas fa-check-circle"></i>
@@ -670,14 +803,52 @@
 
             <div class="image-gallery" id="imageGallery"></div>
 
-            <button class="upload-btn" onclick="resetApp()">
+            <button class="btn btn-primary" onclick="resetUploadSection()">
                 <i class="fas fa-redo"></i> নতুন ছবি আপলোড করুন
+            </button>
+        </div>
+
+        <!-- ব্যাকগ্রাউন্ড রিমুভ রেজাল্ট সেকশন -->
+        <div class="results-container" id="bgResultsContainer" style="display: none;">
+            <div class="results-header">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2 class="results-title">ব্যাকগ্রাউন্ড সফলভাবে রিমুভ হয়েছে!</h2>
+                <p class="results-subtitle">ছবিটি ডাউনলোড করুন</p>
+            </div>
+
+            <div class="image-comparison">
+                <div class="comparison-box">
+                    <div class="comparison-title">আসল ছবি</div>
+                    <img class="comparison-img" id="finalOriginalImage" src="" alt="Original Image">
+                </div>
+                <div class="comparison-box">
+                    <div class="comparison-title">চূড়ান্ত ফলাফল</div>
+                    <img class="comparison-img" id="finalProcessedImage" src="" alt="Processed Image">
+                </div>
+            </div>
+
+            <div class="action-buttons" style="margin-top: 30px;">
+                <button class="action-btn download-btn" onclick="downloadBgRemovedImage()">
+                    <i class="fas fa-download"></i> ছবি ডাউনলোড
+                </button>
+                <button class="action-btn copy-btn" onclick="copyBgRemovedImage()">
+                    <i class="fas fa-copy"></i> লিঙ্ক কপি
+                </button>
+                <button class="action-btn view-btn" onclick="viewBgRemovedImage()">
+                    <i class="fas fa-eye"></i> ছবি দেখুন
+                </button>
+            </div>
+
+            <button class="btn btn-secondary" onclick="resetBgRemoveSection()" style="margin-top: 20px;">
+                <i class="fas fa-redo"></i> নতুন ছবি রিমুভ করুন
             </button>
         </div>
     </div>
 
     <div class="footer">
-        <p>© ২০২৫ - একসাথে অনেক ছবি আপলোড টুল | সর্বোচ্চ ১০টি ছবি একসাথে আপলোড করা যাবে</p>
+        <p>© ২০২৫ - ছবি আপলোড ও ব্যাকগ্রাউন্ড রিমুভ টুল | ImgBB API + Remove.bg API</p>
     </div>
 
     <div class="notification" id="notification">
@@ -686,22 +857,35 @@
     </div>
 
     <script>
-        const API_KEY = "c1f29465e1de3534d7069b0e1a663aee";
+        // API Keys
+        const IMGBB_API_KEY = "c1f29465e1de3534d7069b0e1a663aee";
+        const REMOVE_BG_API_KEY = "7ZzNjzXi6JhF69z6c3Qrj9tD";
         
-        // DOM Elements
+        // DOM Elements for Upload Section
         const uploadArea = document.getElementById('uploadArea');
         const imageInput = document.getElementById('imageInput');
         const fileInfo = document.getElementById('fileInfo');
         const filesCount = document.getElementById('filesCount');
         const previewGrid = document.getElementById('previewGrid');
         const uploadBtn = document.getElementById('uploadBtn');
-        const progressContainer = document.getElementById('progressContainer');
-        const progressFill = document.getElementById('progressFill');
-        const progressPercent = document.getElementById('progressPercent');
-        const uploadedCount = document.getElementById('uploadedCount');
         const resultsContainer = document.getElementById('resultsContainer');
         const resultsSubtitle = document.getElementById('resultsSubtitle');
         const imageGallery = document.getElementById('imageGallery');
+        
+        // DOM Elements for BG Remove Section
+        const bgUploadArea = document.getElementById('bgUploadArea');
+        const bgImageInput = document.getElementById('bgImageInput');
+        const removeBgBtn = document.getElementById('removeBgBtn');
+        const imageComparison = document.getElementById('imageComparison');
+        const originalImage = document.getElementById('originalImage');
+        const processedImage = document.getElementById('processedImage');
+        const bgRemoveProgress = document.getElementById('bgRemoveProgress');
+        const bgResultsContainer = document.getElementById('bgResultsContainer');
+        const finalOriginalImage = document.getElementById('finalOriginalImage');
+        const finalProcessedImage = document.getElementById('finalProcessedImage');
+        const bgProgressFill = document.getElementById('bgProgressFill');
+        
+        // Common DOM Elements
         const notification = document.getElementById('notification');
         const notificationText = document.getElementById('notificationText');
         
@@ -709,30 +893,46 @@
         let selectedImages = [];
         let uploadedLinks = [];
         const MAX_FILES = 10;
+        let bgRemovedImageUrl = null;
+        let bgRemovedImageBlob = null;
         
-        // Event Listeners
+        // ==================== ছবি আপলোড সেকশন ====================
+        
+        // Event Listeners for Upload
         uploadArea.addEventListener('click', () => imageInput.click());
+        bgUploadArea.addEventListener('click', () => bgImageInput.click());
         
-        uploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadArea.classList.add('dragover');
-        });
-        
-        uploadArea.addEventListener('dragleave', () => {
-            uploadArea.classList.remove('dragover');
-        });
-        
-        uploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadArea.classList.remove('dragover');
+        // Drag and Drop for Upload
+        [uploadArea, bgUploadArea].forEach(area => {
+            area.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                area.classList.add('dragover');
+            });
             
-            if (e.dataTransfer.files.length) {
-                handleFiles(e.dataTransfer.files);
-            }
+            area.addEventListener('dragleave', () => {
+                area.classList.remove('dragover');
+            });
+            
+            area.addEventListener('drop', (e) => {
+                e.preventDefault();
+                area.classList.remove('dragover');
+                
+                if (e.dataTransfer.files.length) {
+                    if (area === uploadArea) {
+                        handleFiles(e.dataTransfer.files);
+                    } else {
+                        handleBgImage(e.dataTransfer.files[0]);
+                    }
+                }
+            });
         });
         
         imageInput.addEventListener('change', () => {
             handleFiles(imageInput.files);
+        });
+        
+        bgImageInput.addEventListener('change', () => {
+            handleBgImage(bgImageInput.files[0]);
         });
         
         function handleFiles(files) {
@@ -771,6 +971,34 @@
             }
         }
         
+        function handleBgImage(file) {
+            if (!file) return;
+            
+            if (!file.type.match('image.*')) {
+                showNotification('দয়া করে শুধুমাত্র ছবি ফাইল সিলেক্ট করুন!', 'error');
+                return;
+            }
+            
+            if (file.size > 5 * 1024 * 1024) {
+                showNotification('ফাইলের সাইজ 5MB এর বেশি হওয়া যাবে না!', 'error');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                originalImage.src = e.target.result;
+                finalOriginalImage.src = e.target.result;
+                imageComparison.style.display = 'grid';
+                removeBgBtn.disabled = false;
+                
+                // Store the file for processing
+                bgImageInput.file = file;
+                
+                showNotification('ছবি সিলেক্ট করা হয়েছে। এখন ব্যাকগ্রাউন্ড রিমুভ করুন।', 'success');
+            };
+            reader.readAsDataURL(file);
+        }
+        
         function updateFileList() {
             filesCount.textContent = `${selectedImages.length}টি ছবি`;
             
@@ -804,9 +1032,6 @@
                 };
                 reader.readAsDataURL(image.file);
             });
-            
-            // Scroll to file info
-            fileInfo.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
         
         function formatFileSize(bytes) {
@@ -832,17 +1057,9 @@
         async function uploadImages() {
             if (selectedImages.length === 0) return;
             
-            // Show progress container
-            progressContainer.style.display = 'block';
-            resultsContainer.style.display = 'none';
             uploadBtn.disabled = true;
-            
-            // Reset progress
-            progressFill.style.width = '0%';
-            progressPercent.textContent = '0%';
             uploadedLinks = [];
             
-            let uploadedCount = 0;
             let successfulCount = 0;
             
             for (let i = 0; i < selectedImages.length; i++) {
@@ -852,7 +1069,7 @@
                     const formData = new FormData();
                     formData.append("image", image.file);
                     
-                    const response = await fetch(`https://api.imgbb.com/1/upload?key=${API_KEY}`, {
+                    const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
                         method: "POST",
                         body: formData
                     });
@@ -868,27 +1085,12 @@
                             preview: URL.createObjectURL(image.file)
                         });
                         successfulCount++;
-                        showNotification(`${image.file.name} - আপলোড সফল`, 'success');
-                    } else {
-                        image.uploaded = false;
-                        showNotification(`${image.file.name} - আপলোড ব্যর্থ`, 'error');
                     }
                 } catch (error) {
-                    image.uploaded = false;
-                    showNotification(`${image.file.name} - নেটওয়ার্ক ত্রুটি`, 'error');
+                    console.error('Upload error:', error);
                 }
-                
-                uploadedCount++;
-                
-                // Update progress
-                const percent = Math.round((uploadedCount / selectedImages.length) * 100);
-                progressFill.style.width = percent + '%';
-                progressPercent.textContent = percent + '%';
-                uploadedCountElement.textContent = `${uploadedCount}টি ছবি আপলোড করা হয়েছে`;
             }
             
-            // Show results
-            progressContainer.style.display = 'none';
             showResults(successfulCount);
         }
         
@@ -936,6 +1138,132 @@
             showNotification('সব ছবি আপলোড সম্পূর্ণ!', 'success');
         }
         
+        // ==================== ব্যাকগ্রাউন্ড রিমুভ সেকশন ====================
+        
+        async function removeBackground() {
+            if (!bgImageInput.file) {
+                showNotification('প্রথমে একটি ছবি সিলেক্ট করুন!', 'error');
+                return;
+            }
+            
+            // Show progress
+            bgRemoveProgress.style.display = 'block';
+            removeBgBtn.disabled = true;
+            updateProgressStep(1);
+            
+            try {
+                const formData = new FormData();
+                formData.append('image_file', bgImageInput.file);
+                formData.append('size', 'auto');
+                
+                // Step 1: Uploading
+                updateProgressStep(2);
+                bgProgressFill.style.width = '25%';
+                
+                const response = await fetch('https://api.remove.bg/v1.0/removebg', {
+                    method: 'POST',
+                    headers: {
+                        'X-Api-Key': REMOVE_BG_API_KEY
+                    },
+                    body: formData
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`API Error: ${response.status}`);
+                }
+                
+                // Step 2: Processing
+                updateProgressStep(3);
+                bgProgressFill.style.width = '50%';
+                
+                const blob = await response.blob();
+                
+                // Step 3: Background removal
+                updateProgressStep(4);
+                bgProgressFill.style.width = '75%';
+                
+                bgRemovedImageUrl = URL.createObjectURL(blob);
+                bgRemovedImageBlob = blob;
+                
+                processedImage.src = bgRemovedImageUrl;
+                finalProcessedImage.src = bgRemovedImageUrl;
+                
+                // Step 4: Complete
+                bgProgressFill.style.width = '100%';
+                setTimeout(() => {
+                    bgRemoveProgress.style.display = 'none';
+                    bgResultsContainer.style.display = 'block';
+                    bgResultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    showNotification('ব্যাকগ্রাউন্ড সফলভাবে রিমুভ হয়েছে!', 'success');
+                }, 500);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                bgRemoveProgress.style.display = 'none';
+                removeBgBtn.disabled = false;
+                
+                if (error.message.includes('429')) {
+                    showNotification('API লিমিট অতিক্রম করেছে। দয়া করে কিছুক্ষণ পর চেষ্টা করুন।', 'error');
+                } else if (error.message.includes('402')) {
+                    showNotification('API কিং-এর ক্রেডিট শেষ হয়েছে।', 'error');
+                } else {
+                    showNotification('ত্রুটি ঘটেছে! দয়া করে আবার চেষ্টা করুন।', 'error');
+                }
+            }
+        }
+        
+        function updateProgressStep(step) {
+            // Reset all steps
+            for (let i = 1; i <= 4; i++) {
+                const stepElement = document.getElementById(`step${i}`);
+                stepElement.classList.remove('active');
+            }
+            
+            // Activate current step
+            for (let i = 1; i <= step; i++) {
+                const stepElement = document.getElementById(`step${i}`);
+                stepElement.classList.add('active');
+            }
+        }
+        
+        function downloadBgRemovedImage() {
+            if (!bgRemovedImageBlob) {
+                showNotification('ডাউনলোড করার জন্য কোনো ছবি নেই!', 'error');
+                return;
+            }
+            
+            const link = document.createElement('a');
+            link.href = bgRemovedImageUrl;
+            link.download = `background-removed-${Date.now()}.png`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            showNotification('ছবিটি ডাউনলোড শুরু হয়েছে!', 'success');
+        }
+        
+        function copyBgRemovedImage() {
+            if (!bgRemovedImageUrl) {
+                showNotification('কপি করার জন্য কোনো লিঙ্ক নেই!', 'error');
+                return;
+            }
+            
+            // For background removed image, we can't copy the blob URL
+            // So we'll show a message to download instead
+            showNotification('দয়া করে ছবিটি ডাউনলোড করুন।', 'info');
+        }
+        
+        function viewBgRemovedImage() {
+            if (!bgRemovedImageUrl) {
+                showNotification('দেখার জন্য কোনো ছবি নেই!', 'error');
+                return;
+            }
+            
+            window.open(bgRemovedImageUrl, '_blank');
+        }
+        
+        // ==================== কমন ফাংশন ====================
+        
         function copyLink(link) {
             navigator.clipboard.writeText(link).then(() => {
                 showNotification('লিঙ্ক কপি করা হয়েছে!', 'success');
@@ -944,30 +1272,37 @@
             });
         }
         
-        function resetApp() {
-            // Reset everything
+        function resetUploadSection() {
             selectedImages = [];
             uploadedLinks = [];
-            
-            // Reset UI
             fileInfo.style.display = 'none';
-            progressContainer.style.display = 'none';
             resultsContainer.style.display = 'none';
             uploadBtn.disabled = true;
-            
-            // Reset file input
             imageInput.value = '';
             
             showNotification('নতুন ছবি আপলোড করতে প্রস্তুত!', 'info');
             
-            // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        function resetBgRemoveSection() {
+            bgRemovedImageUrl = null;
+            bgRemovedImageBlob = null;
+            imageComparison.style.display = 'none';
+            bgResultsContainer.style.display = 'none';
+            removeBgBtn.disabled = true;
+            bgImageInput.value = '';
+            originalImage.src = '';
+            processedImage.src = '';
+            finalOriginalImage.src = '';
+            finalProcessedImage.src = '';
+            
+            showNotification('নতুন ছবি রিমুভ করতে প্রস্তুত!', 'info');
         }
         
         function showNotification(message, type) {
             notificationText.textContent = message;
             
-            // Set color based on type
             switch(type) {
                 case 'success':
                     notification.style.background = '#4CAF50';
@@ -992,7 +1327,7 @@
         
         // Initialize app
         window.addEventListener('load', () => {
-            showNotification('ছবি আপলোড টুলে স্বাগতম! ছবি সিলেক্ট করে শুরু করুন।', 'info');
+            showNotification('ছবি আপলোড ও ব্যাকগ্রাউন্ড রিমুভ টুলে স্বাগতম!', 'info');
         });
     </script>
 </body>
