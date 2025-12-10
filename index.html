@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✨ একসাথে অনেক ছবি প্রসেসিং</title>
+    <title>✨ ছবি প্রসেসিং</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -358,225 +358,34 @@
             opacity: 1;
         }
 
-        /* Background Color Options */
-        .bg-color-options {
-            display: none;
-            margin-top: 25px;
-            padding: 20px;
-            background: var(--gold-light);
-            border-radius: 15px;
-            border: 2px solid var(--gold);
-        }
+     /* Original Color Picker Upgraded Box */
+.original-picker-box {
+    width: 120px;
+    height: 60px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 3px solid var(--gold);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--white);
+    cursor: pointer;
+    margin: 0 auto;
+    transition: 0.3s;
+}
 
-        .bg-colors-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+.original-picker-box:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
 
-        .bg-colors-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .bg-color-option {
-            padding: 10px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 2px solid transparent;
-            text-align: center;
-        }
-
-        .bg-color-option:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .bg-color-option.active {
-            border-color: var(--gold);
-            background: var(--gold-light);
-        }
-
-        .bg-color-preview {
-            width: 100%;
-            height: 40px;
-            border-radius: 8px;
-            margin-bottom: 8px;
-            border: 2px solid rgba(0,0,0,0.1);
-        }
-
-        .bg-color-name {
-            font-size: 12px;
-            font-weight: 600;
-            color: #333;
-        }
-
-        /* Colour Picker Section */
-        .colour-picker-section {
-            margin-top: 20px;
-            padding: 20px;
-            background: var(--white);
-            border-radius: 15px;
-            border: 2px solid var(--gold);
-        }
-
-        .colour-picker-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .colour-picker-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: #333;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .colour-display {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .current-colour-box {
-            width: 80px;
-            height: 80px;
-            border-radius: 10px;
-            border: 3px solid var(--gold);
-            background-color: #ffffff;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .colour-details {
-            flex: 1;
-        }
-
-        .colour-hex {
-            font-size: 20px;
-            font-weight: 700;
-            color: #333;
-            font-family: monospace;
-            margin-bottom: 5px;
-        }
-
-        .colour-rgb {
-            font-size: 14px;
-            color: #666;
-            font-family: monospace;
-        }
-
-        .colour-picker-wrapper {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .colour-picker-label {
-            display: block;
-            font-size: 16px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        .colour-picker-input {
-            width: 100%;
-            height: 60px;
-            border: 3px solid var(--gold);
-            border-radius: 10px;
-            cursor: pointer;
-            background: transparent;
-        }
-
-        .colour-sliders {
-            margin-top: 25px;
-        }
-
-        .slider-container {
-            margin-bottom: 15px;
-        }
-
-        .slider-label {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
-            font-size: 14px;
-            color: #333;
-        }
-
-        .slider-name {
-            font-weight: 600;
-        }
-
-        .slider-value {
-            font-family: monospace;
-            font-weight: 700;
-        }
-
-        .slider {
-            width: 100%;
-            height: 10px;
-            -webkit-appearance: none;
-            appearance: none;
-            background: linear-gradient(to right, #000000, var(--slider-color));
-            border-radius: 5px;
-            outline: none;
-        }
-
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            background: var(--white);
-            border: 2px solid var(--gold);
-            cursor: pointer;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-        }
-
-        .process-btn {
-            width: 100%;
-            padding: 18px;
-            margin-top: 25px;
-            border-radius: 12px;
-            background: var(--gold-gradient);
-            color: #333;
-            border: none;
-            font-size: 18px;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
-        }
-
-        .process-btn:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
-        }
-
-        .process-btn:disabled {
-            background: #cccccc;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
+/* Make actual input invisible but clickable */
+.original-picker-box input[type=color] {
+    width: 200%;
+    height: 200%;
+    opacity: 0;
+    cursor: pointer;
+}
         /* Processing */
         .processing-container {
             display: none;
@@ -1127,72 +936,73 @@
                         ব্যাকগ্রাউন্ড কালার সিলেক্ট করুন
                     </div>
                     
-                    <!-- Colour Picker Section -->
-                    <div class="colour-picker-section">
-                        <div class="colour-picker-header">
-                            <div class="colour-picker-title">
-                                <i class="fas fa-eye-dropper"></i>
-                                কালার পিকার
-                            </div>
-                        </div>
-                        
-                        <div class="colour-display">
-                            <div class="current-colour-box" id="currentColourBox" style="background-color: #ffffff;"></div>
-                            <div class="colour-details">
-                                <div class="colour-hex" id="colourHex">#FFFFFF</div>
-                                <div class="colour-rgb" id="colourRGB">RGB: 255, 255, 255</div>
-                            </div>
-                        </div>
-                        
-                        <div class="colour-picker-wrapper">
-                            <label class="colour-picker-label">এখানে ক্লিক করে কালার সিলেক্ট করুন</label>
-                            <input type="color" id="colourPicker" class="colour-picker-input" value="#ffffff">
-                        </div>
-                        
-                        <div class="colour-sliders">
-                            <div class="slider-container">
-                                <div class="slider-label">
-                                    <span class="slider-name">লাল (Red)</span>
-                                    <span class="slider-value" id="redValue">255</span>
-                                </div>
-                                <input type="range" min="0" max="255" value="255" class="slider" id="redSlider" style="--slider-color: #ff0000;">
-                            </div>
-                            
-                            <div class="slider-container">
-                                <div class="slider-label">
-                                    <span class="slider-name">সবুজ (Green)</span>
-                                    <span class="slider-value" id="greenValue">255</span>
-                                </div>
-                                <input type="range" min="0" max="255" value="255" class="slider" id="greenSlider" style="--slider-color: #00ff00;">
-                            </div>
-                            
-                            <div class="slider-container">
-                                <div class="slider-label">
-                                    <span class="slider-name">নীল (Blue)</span>
-                                    <span class="slider-value" id="blueValue">255</span>
-                                </div>
-                                <input type="range" min="0" max="255" value="255" class="slider" id="blueSlider" style="--slider-color: #0000ff;">
-                            </div>
-                        </div>
-                    </div>
+              <!-- Colour Picker Section -->
+<div class="colour-picker-section">
+    <div class="colour-picker-header">
+        <div class="colour-picker-title">
+            <i class="fas fa-eye-dropper"></i>
+            কালার পিকার
+        </div>
+    </div>
 
-                    <!-- Preset Colors -->
-                    <div style="margin-top: 25px;">
-                        <div class="section-title">
-                            <i class="fas fa-swatchbook"></i>
-                            প্রিসেট কালার
-                        </div>
-                        <div class="bg-colors-grid" id="bgColorsGrid">
-                            <!-- Background colors will be added by JavaScript -->
-                        </div>
-                    </div>
-                </div>
+    <div class="colour-display">
+        <div class="current-colour-box" id="currentColourBox" style="background-color: #ffffff;"></div>
+        <div class="colour-details">
+            <div class="colour-hex" id="colourHex">#FFFFFF</div>
+            <div class="colour-rgb" id="colourRGB">RGB: 255, 255, 255</div>
+        </div>
+    </div>
 
-                <button class="process-btn" id="processBtn" onclick="startProcessing()" disabled>
-                    <i class="fas fa-play"></i> প্রসেস শুরু করুন
-                </button>
+    <!-- Original Color Picker (Upgraded UI) -->
+    <div class="colour-picker-wrapper">
+        <label class="colour-picker-label">এখানে ক্লিক করে কালার সিলেক্ট করুন</label>
+
+        <div class="original-picker-box">
+            <input type="color" id="colourPicker" value="#ffffff">
+        </div>
+    </div>
+
+    <div class="colour-sliders">
+        <div class="slider-container">
+            <div class="slider-label">
+                <span class="slider-name">লাল (Red)</span>
+                <span class="slider-value" id="redValue">255</span>
             </div>
+            <input type="range" min="0" max="255" value="255" class="slider" id="redSlider" style="--slider-color: #ff0000;">
+        </div>
 
+        <div class="slider-container">
+            <div class="slider-label">
+                <span class="slider-name">সবুজ (Green)</span>
+                <span class="slider-value" id="greenValue">255</span>
+            </div>
+            <input type="range" min="0" max="255" value="255" class="slider" id="greenSlider" style="--slider-color: #00ff00;">
+        </div>
+
+        <div class="slider-container">
+            <div class="slider-label">
+                <span class="slider-name">নীল (Blue)</span>
+                <span class="slider-value" id="blueValue">255</span>
+            </div>
+            <input type="range" min="0" max="255" value="255" class="slider" id="blueSlider" style="--slider-color: #0000ff;">
+        </div>
+    </div>
+</div>
+
+<!-- Preset Colors -->
+<div style="margin-top: 25px;">
+    <div class="section-title">
+        <i class="fas fa-swatchbook"></i>
+        প্রিসেট কালার
+    </div>
+    <div class="bg-colors-grid" id="bgColorsGrid">
+        <!-- Background colors added by JavaScript -->
+    </div>
+</div>
+
+<button class="process-btn" id="processBtn" onclick="startProcessing()" disabled>
+    <i class="fas fa-play"></i> প্রসেস শুরু করুন
+</button>
             <!-- Step 3: Processing -->
             <div class="processing-container" id="processingContainer">
                 <div class="processing-header">
