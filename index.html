@@ -8,26 +8,26 @@
     <style>
         :root {
             --gold: #FFD700;
-            --gold-light: #faf798;
-            --gold-dark: #FFC107;
-            --gold-gradient: linear-gradient(135deg, #FFD700 0%, #FFEC8B 100%);
-            --primary: #4a6cf7;
-            --primary-light: #eef2ff;
-            --secondary: #764ba2;
-            --secondary-light: #f3e8ff;
-            --success: #4CAF50;
-            --danger: #ff6b6b;
-            --warning: #ffa726;
-            --info: #2196F3;
-            --text: #333;
-            --text-light: #666;
-            --border: #e0e0e0;
-            --bg: #fffef5;
+            --gold-light: #3c8069;
+            --gold-dark: #3c7680;
+            --gold-gradient: linear-gradient(135deg, #603c80 0%, #91505e 100%);
+            --primary: #e1e37f;
+            --primary-light: #e1e37f;
+            --secondary: #0f918f;
+            --secondary-light: #49806d;
+            --success: #488c46;
+            --danger: #eb0551;
+            --warning: #bf3450;
+            --info: #077863;
+            --text: #000000;
+            --text-light: #662424;
+            --border: #f7fa34;
+            --bg: #ebe7c3;
             --white: #ffffff;
             --shadow: rgba(255, 215, 0, 0.1);
             
             /* New background colors */
-            --bg-color-1: #e4e68e;
+            --bg-color-1: #0c7840;
             --bg-color-2: #60a185;
             --bg-color-3: #6070a1;
             --bg-color-4: #a1606e;
@@ -418,32 +418,132 @@
             color: #333;
         }
 
-        .custom-bg-section {
+        /* Colour Picker Section */
+        .colour-picker-section {
             margin-top: 20px;
-            padding: 15px;
+            padding: 20px;
             background: var(--white);
-            border-radius: 10px;
-            border: 2px dashed var(--gold);
-            text-align: center;
+            border-radius: 15px;
+            border: 2px solid var(--gold);
         }
 
-        .custom-bg-input {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid var(--gold-light);
-            border-radius: 8px;
+        .colour-picker-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .colour-picker-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .colour-display {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .current-colour-box {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            border: 3px solid var(--gold);
+            background-color: #ffffff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .colour-details {
+            flex: 1;
+        }
+
+        .colour-hex {
+            font-size: 20px;
+            font-weight: 700;
+            color: #333;
+            font-family: monospace;
+            margin-bottom: 5px;
+        }
+
+        .colour-rgb {
             font-size: 14px;
-            margin-bottom: 10px;
+            color: #666;
             font-family: monospace;
         }
 
-        .custom-bg-preview {
-            width: 60px;
+        .colour-picker-wrapper {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .colour-picker-label {
+            display: block;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .colour-picker-input {
+            width: 100%;
             height: 60px;
-            border-radius: 8px;
-            margin: 10px auto;
+            border: 3px solid var(--gold);
+            border-radius: 10px;
+            cursor: pointer;
+            background: transparent;
+        }
+
+        .colour-sliders {
+            margin-top: 25px;
+        }
+
+        .slider-container {
+            margin-bottom: 15px;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .slider-name {
+            font-weight: 600;
+        }
+
+        .slider-value {
+            font-family: monospace;
+            font-weight: 700;
+        }
+
+        .slider {
+            width: 100%;
+            height: 10px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: linear-gradient(to right, #000000, var(--slider-color));
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--white);
             border: 2px solid var(--gold);
-            display: none;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
         }
 
         .process-btn {
@@ -858,86 +958,6 @@
             box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
         }
 
-        /* Preview Section */
-        .preview-section {
-            margin-top: 20px;
-            padding: 20px;
-            background: var(--gold-light);
-            border-radius: 15px;
-            border: 2px solid var(--gold);
-        }
-
-        .preview-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .preview-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-        }
-
-        .preview-item {
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .preview-item:hover {
-            transform: translateY(-3px);
-        }
-
-        .preview-box {
-            width: 100%;
-            height: 60px;
-            border-radius: 8px;
-            margin-bottom: 8px;
-            border: 3px solid transparent;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .preview-box.active {
-            border-color: var(--gold);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .preview-box:after {
-            content: '✓';
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background: var(--gold);
-            color: #333;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 12px;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .preview-box.active:after {
-            opacity: 1;
-        }
-
-        .preview-name {
-            font-size: 12px;
-            font-weight: 600;
-            color: #333;
-        }
-
         .footer {
             text-align: center;
             padding: 20px;
@@ -1019,8 +1039,13 @@
                 grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
             }
             
-            .bg-colors-grid, .preview-grid {
+            .bg-colors-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .colour-display {
+                flex-direction: column;
+                text-align: center;
             }
             
             .link-actions, .image-actions {
@@ -1102,29 +1127,64 @@
                         ব্যাকগ্রাউন্ড কালার সিলেক্ট করুন
                     </div>
                     
-                    <!-- Preview Section -->
-                    <div class="preview-section" id="previewSection">
-                        <div class="preview-title">
-                            <i class="fas fa-eye"></i>
-                            প্রিভিউ কালার
+                    <!-- Colour Picker Section -->
+                    <div class="colour-picker-section">
+                        <div class="colour-picker-header">
+                            <div class="colour-picker-title">
+                                <i class="fas fa-eye-dropper"></i>
+                                কালার পিকার
+                            </div>
                         </div>
-                        <div class="preview-grid" id="previewGrid"></div>
+                        
+                        <div class="colour-display">
+                            <div class="current-colour-box" id="currentColourBox" style="background-color: #ffffff;"></div>
+                            <div class="colour-details">
+                                <div class="colour-hex" id="colourHex">#FFFFFF</div>
+                                <div class="colour-rgb" id="colourRGB">RGB: 255, 255, 255</div>
+                            </div>
+                        </div>
+                        
+                        <div class="colour-picker-wrapper">
+                            <label class="colour-picker-label">এখানে ক্লিক করে কালার সিলেক্ট করুন</label>
+                            <input type="color" id="colourPicker" class="colour-picker-input" value="#ffffff">
+                        </div>
+                        
+                        <div class="colour-sliders">
+                            <div class="slider-container">
+                                <div class="slider-label">
+                                    <span class="slider-name">লাল (Red)</span>
+                                    <span class="slider-value" id="redValue">255</span>
+                                </div>
+                                <input type="range" min="0" max="255" value="255" class="slider" id="redSlider" style="--slider-color: #ff0000;">
+                            </div>
+                            
+                            <div class="slider-container">
+                                <div class="slider-label">
+                                    <span class="slider-name">সবুজ (Green)</span>
+                                    <span class="slider-value" id="greenValue">255</span>
+                                </div>
+                                <input type="range" min="0" max="255" value="255" class="slider" id="greenSlider" style="--slider-color: #00ff00;">
+                            </div>
+                            
+                            <div class="slider-container">
+                                <div class="slider-label">
+                                    <span class="slider-name">নীল (Blue)</span>
+                                    <span class="slider-value" id="blueValue">255</span>
+                                </div>
+                                <input type="range" min="0" max="255" value="255" class="slider" id="blueSlider" style="--slider-color: #0000ff;">
+                            </div>
+                        </div>
                     </div>
-                    
-                    <div class="bg-colors-grid" id="bgColorsGrid">
-                        <!-- Background colors will be added by JavaScript -->
-                    </div>
-                    
-                    <div class="custom-bg-section">
+
+                    <!-- Preset Colors -->
+                    <div style="margin-top: 25px;">
                         <div class="section-title">
-                            <i class="fas fa-paint-brush"></i>
-                            কাস্টম ব্যাকগ্রাউন্ড কালার
+                            <i class="fas fa-swatchbook"></i>
+                            প্রিসেট কালার
                         </div>
-                        <input type="color" id="customBgColor" class="custom-bg-input" value="#ffffff">
-                        <div id="customBgPreview" class="custom-bg-preview"></div>
-                        <p style="font-size: 12px; color: #666; margin-top: 10px;">
-                            উপরে ক্লিক করে আপনার পছন্দের কালার সিলেক্ট করুন
-                        </p>
+                        <div class="bg-colors-grid" id="bgColorsGrid">
+                            <!-- Background colors will be added by JavaScript -->
+                        </div>
                     </div>
                 </div>
 
@@ -1222,10 +1282,16 @@
         const processBtn = document.getElementById('processBtn');
         const bgColorOptions = document.getElementById('bgColorOptions');
         const bgColorsGrid = document.getElementById('bgColorsGrid');
-        const previewSection = document.getElementById('previewSection');
-        const previewGrid = document.getElementById('previewGrid');
-        const customBgColor = document.getElementById('customBgColor');
-        const customBgPreview = document.getElementById('customBgPreview');
+        const colourPicker = document.getElementById('colourPicker');
+        const currentColourBox = document.getElementById('currentColourBox');
+        const colourHex = document.getElementById('colourHex');
+        const colourRGB = document.getElementById('colourRGB');
+        const redSlider = document.getElementById('redSlider');
+        const greenSlider = document.getElementById('greenSlider');
+        const blueSlider = document.getElementById('blueSlider');
+        const redValue = document.getElementById('redValue');
+        const greenValue = document.getElementById('greenValue');
+        const blueValue = document.getElementById('blueValue');
         const processingContainer = document.getElementById('processingContainer');
         const processingTitle = document.getElementById('processingTitle');
         const progressText = document.getElementById('progressText');
@@ -1248,12 +1314,15 @@
         let selectedAction = null;
         let selectedFilesArray = [];
         let selectedBgColor = '#ffffff'; // Default white background
-        let previewColors = []; // Array to store preview colors
         const MAX_FILES = 20;
         let processedResults = [];
         
-        // Background color options
-        const backgroundColors = [
+        // Preset background colors (including your requested colors)
+        const presetColors = [
+            { name: 'হালকা হলুদ', color: '#e4e68e' },
+            { name: 'সবুজাভ', color: '#60a185' },
+            { name: 'নীলাভ', color: '#6070a1' },
+            { name: 'গোলাপী', color: '#a1606e' },
             { name: 'সাদা', color: '#ffffff' },
             { name: 'কালো', color: '#000000' },
             { name: 'নীল', color: '#2196F3' },
@@ -1264,82 +1333,114 @@
             { name: 'ধূসর', color: '#9E9E9E' }
         ];
         
-        // New preview colors
-        const previewColorOptions = [
-            { name: 'হালকা হলুদ', color: '#e4e68e' },
-            { name: 'সবুজাভ', color: '#60a185' },
-            { name: 'নীলাভ', color: '#6070a1' },
-            { name: 'গোলাপী', color: '#a1606e' }
-        ];
-        
-        // Initialize background color options
-        function initBackgroundColors() {
-            bgColorsGrid.innerHTML = '';
-            previewGrid.innerHTML = '';
+        // Initialize colour picker
+        function initColourPicker() {
+            // Set initial color
+            updateColourDisplay(255, 255, 255);
             
-            // Add preview colors
-            previewColorOptions.forEach((bg, index) => {
-                const previewItem = document.createElement('div');
-                previewItem.className = 'preview-item';
-                previewItem.onclick = () => selectPreviewColor(bg.color, bg.name);
+            // Colour picker change event
+            colourPicker.addEventListener('input', function() {
+                const hex = this.value;
+                const rgb = hexToRgb(hex);
                 
-                if (index === 0) {
-                    previewItem.classList.add('active');
-                    selectPreviewColor(bg.color, bg.name);
+                if (rgb) {
+                    redSlider.value = rgb.r;
+                    greenSlider.value = rgb.g;
+                    blueSlider.value = rgb.b;
+                    
+                    updateColourDisplay(rgb.r, rgb.g, rgb.b);
+                    selectedBgColor = hex;
+                    
+                    // Remove active class from preset colors
+                    document.querySelectorAll('.bg-color-option').forEach(opt => {
+                        opt.classList.remove('active');
+                    });
                 }
-                
-                previewItem.innerHTML = `
-                    <div class="preview-box" style="background-color: ${bg.color};"></div>
-                    <div class="preview-name">${bg.name}</div>
-                `;
-                
-                previewGrid.appendChild(previewItem);
             });
             
-            // Add regular background colors
-            backgroundColors.forEach((bg, index) => {
+            // Slider change events
+            redSlider.addEventListener('input', updateColourFromSliders);
+            greenSlider.addEventListener('input', updateColourFromSliders);
+            blueSlider.addEventListener('input', updateColourFromSliders);
+            
+            // Initialize preset colors
+            initPresetColors();
+        }
+        
+        function updateColourFromSliders() {
+            const r = parseInt(redSlider.value);
+            const g = parseInt(greenSlider.value);
+            const b = parseInt(blueSlider.value);
+            
+            updateColourDisplay(r, g, b);
+            
+            // Update colour picker
+            const hex = rgbToHex(r, g, b);
+            colourPicker.value = hex;
+            selectedBgColor = hex;
+            
+            // Remove active class from preset colors
+            document.querySelectorAll('.bg-color-option').forEach(opt => {
+                opt.classList.remove('active');
+            });
+        }
+        
+        function updateColourDisplay(r, g, b) {
+            // Update values
+            redValue.textContent = r;
+            greenValue.textContent = g;
+            blueValue.textContent = b;
+            
+            // Update color box
+            const rgbColor = `rgb(${r}, ${g}, ${b})`;
+            currentColourBox.style.backgroundColor = rgbColor;
+            
+            // Update hex and rgb text
+            const hex = rgbToHex(r, g, b);
+            colourHex.textContent = hex;
+            colourRGB.textContent = `RGB: ${r}, ${g}, ${b}`;
+            
+            selectedBgColor = hex;
+        }
+        
+        function rgbToHex(r, g, b) {
+            return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
+        }
+        
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : null;
+        }
+        
+        // Initialize preset colors
+        function initPresetColors() {
+            bgColorsGrid.innerHTML = '';
+            
+            presetColors.forEach((color, index) => {
                 const bgOption = document.createElement('div');
                 bgOption.className = 'bg-color-option';
-                bgOption.setAttribute('data-color', bg.color);
-                bgOption.onclick = () => selectBgColor(bg.color, bg.name);
+                bgOption.setAttribute('data-color', color.color);
+                bgOption.onclick = () => selectPresetColor(color.color, color.name);
                 
-                if (bg.color === '#ffffff') {
+                if (color.color === '#ffffff') {
                     bgOption.classList.add('active');
                 }
                 
                 bgOption.innerHTML = `
-                    <div class="bg-color-preview" style="background-color: ${bg.color};"></div>
-                    <div class="bg-color-name">${bg.name}</div>
+                    <div class="bg-color-preview" style="background-color: ${color.color};"></div>
+                    <div class="bg-color-name">${color.name}</div>
                 `;
                 
                 bgColorsGrid.appendChild(bgOption);
             });
-            
-            // Update custom color preview
-            customBgPreview.style.display = 'block';
-            customBgPreview.style.backgroundColor = selectedBgColor;
         }
         
-        // Select preview color
-        function selectPreviewColor(color, name) {
-            selectedBgColor = color;
-            
-            // Update UI
-            document.querySelectorAll('.preview-item').forEach(opt => {
-                opt.classList.remove('active');
-            });
-            
-            event.currentTarget.classList.add('active');
-            
-            // Update custom color input
-            customBgColor.value = color;
-            customBgPreview.style.backgroundColor = color;
-            
-            showNotification(`${name} প্রিভিউ কালার সিলেক্ট করা হয়েছে`, 'info');
-        }
-        
-        // Select background color
-        function selectBgColor(color, name) {
+        // Select preset color
+        function selectPresetColor(color, name) {
             selectedBgColor = color;
             
             // Update UI
@@ -1347,37 +1448,21 @@
                 opt.classList.remove('active');
             });
             
-            // Remove active from preview colors
-            document.querySelectorAll('.preview-item').forEach(opt => {
-                opt.classList.remove('active');
-            });
-            
             event.currentTarget.classList.add('active');
             
-            // Update custom color input
-            customBgColor.value = color;
-            customBgPreview.style.backgroundColor = color;
+            // Update colour picker and sliders
+            const rgb = hexToRgb(color);
+            if (rgb) {
+                colourPicker.value = color;
+                redSlider.value = rgb.r;
+                greenSlider.value = rgb.g;
+                blueSlider.value = rgb.b;
+                
+                updateColourDisplay(rgb.r, rgb.g, rgb.b);
+            }
             
-            showNotification(`${name} ব্যাকগ্রাউন্ড সিলেক্ট করা হয়েছে`, 'info');
+            showNotification(`${name} কালার সিলেক্ট করা হয়েছে`, 'info');
         }
-        
-        // Update custom background color
-        customBgColor.addEventListener('input', function() {
-            selectedBgColor = this.value;
-            customBgPreview.style.backgroundColor = this.value;
-            
-            // Remove active class from other options
-            document.querySelectorAll('.bg-color-option').forEach(opt => {
-                opt.classList.remove('active');
-            });
-            
-            // Remove active from preview colors
-            document.querySelectorAll('.preview-item').forEach(opt => {
-                opt.classList.remove('active');
-            });
-            
-            showNotification('কাস্টম কালার সিলেক্ট করা হয়েছে', 'info');
-        });
         
         // Action Selection
         function selectAction(action) {
@@ -1397,7 +1482,7 @@
             } else if (action === 'bgremove') {
                 document.getElementById('bgRemoveAction').classList.add('active');
                 bgColorOptions.style.display = 'block';
-                initBackgroundColors();
+                initColourPicker();
                 showNotification('ব্যাকগ্রাউন্ড রিমুভ সিলেক্ট করা হয়েছে! এখন ছবি সিলেক্ট করুন।', 'info');
             }
             
@@ -1857,8 +1942,21 @@
             progressFill.style.width = '0%';
             progressPercent.textContent = '0%';
             imageInput.value = '';
-            customBgColor.value = '#ffffff';
-            customBgPreview.style.backgroundColor = '#ffffff';
+            
+            // Reset colour picker
+            colourPicker.value = '#ffffff';
+            redSlider.value = 255;
+            greenSlider.value = 255;
+            blueSlider.value = 255;
+            updateColourDisplay(255, 255, 255);
+            
+            // Reset active preset
+            document.querySelectorAll('.bg-color-option').forEach(opt => {
+                opt.classList.remove('active');
+            });
+            if (document.querySelectorAll('.bg-color-option').length > 0) {
+                document.querySelectorAll('.bg-color-option')[4].classList.add('active'); // White color
+            }
             
             // Revoke object URLs
             processedResults.forEach(result => {
