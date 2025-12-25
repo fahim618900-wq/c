@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>একসাথে অনেক ছবি প্রসেসিং</title>
+    <title>অনেক ছবি প্রসেসিং সম্পূর্ণ ফ্রী</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -801,7 +801,7 @@
                 📷✨
             </div>
             <h1 class="title">একসাথে অনেক ছবি প্রসেসিং</h1>
-            <p class="subtitle">লিঙ্ক তৈরি করুন বা ব্যাকগ্রাউন্ড সরান - একবারে অনেকগুলো ছবি</p>
+            <p class="subtitle">লিঙ্ক তৈরি করুন বা ব্যাকগ্রাউন্ড সরান -  অনেকগুলো ছবি</p>
         </div>
 
         <div class="main-card">
@@ -818,7 +818,7 @@
                     </div>
                     <div>
                         <div class="action-label">লিঙ্ক তৈরি</div>
-                        <div class="action-description">একসাথে অনেক ছবির লিঙ্ক</div>
+                        <div class="action-description">অনেক ছবির লিঙ্ক</div>
                     </div>
                 </div>
                 
@@ -828,7 +828,7 @@
                     </div>
                     <div>
                         <div class="action-label">ব্যাকগ্রাউন্ড সরান</div>
-                        <div class="action-description">একসাথে অনেক ছবি</div>
+                        <div class="action-description">অনেক ছবি</div>
                     </div>
                 </div>
             </div>
@@ -845,7 +845,7 @@
                         <i class="fas fa-cloud-upload-alt"></i>
                     </div>
                     <div class="upload-text">
-                        <h3>একসাথে অনেক ছবি আপলোড করুন</h3>
+                        <h3> ছবি আপলোড করুন</h3>
                         <p>ক্লিক করুন অথবা ছবিগুলো ড্র্যাগ করুন</p>
                         <p>সর্বোচ্চ ২০টি ছবি • প্রতিটি ১০MB • JPG, PNG, WEBP</p>
                     </div>
@@ -1497,7 +1497,7 @@
             });
             
             navigator.clipboard.writeText(allLinks).then(() => {
-                showNotification('সব লিঙ্ক কপি করা হয়েছে', 'success');
+                showNotification(' লিঙ্ক কপি করা হয়েছে', 'success');
             }).catch(err => {
                 showNotification('কপি করা যায়নি', 'error');
             });
@@ -1546,4 +1546,44 @@
             
             transparentBtn.classList.remove('active');
             whiteBtn.classList.remove('active');
-           
+            customBtn.classList.remove('active');
+            transparentBtn.classList.add('active');
+            colourPickerSection.style.display = 'none';
+            
+            colourPicker.value = '#4361ee';
+            
+            processedResults.forEach(result => {
+                if (result.type === 'image' && result.url) {
+                    URL.revokeObjectURL(result.url);
+                }
+                if (result.originalUrl) {
+                    URL.revokeObjectURL(result.originalUrl);
+                }
+            });
+            
+            showNotification('নতুন ছবি প্রসেস করতে প্রস্তুত', 'info');
+        }
+        
+        // Notification
+        function showNotification(message, type) {
+            let icon = 'fas fa-check-circle';
+            if (type === 'error') icon = 'fas fa-exclamation-circle';
+            if (type === 'warning') icon = 'fas fa-exclamation-triangle';
+            if (type === 'info') icon = 'fas fa-info-circle';
+            
+            notification.innerHTML = `<i class="${icon}"></i><span>${message}</span>`;
+            
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Initialize
+        window.addEventListener('load', () => {
+            showNotification('একসাথে অনেক ছবি প্রসেসিং টুলে স্বাগতম', 'info');
+        });
+    </script>
+</body>
+</html>
