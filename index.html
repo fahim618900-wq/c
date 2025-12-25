@@ -1378,4 +1378,172 @@
             resultsContainer.style.display = 'block';
             
             resultTitle.textContent = 'লিঙ্ক তৈরি সম্পূর্ণ!';
-            resultSub
+            resultSubtitle.textContent = `${successful}টি ছবির লিঙ্ক তৈরি করা হয়েছে`;
+            
+            summaryStats.innerHTML = `
+                <div class="stat-item">
+                    <div class="stat-number">${selectedFilesArray.length}</div>
+                    <div class="stat-label">সিলেক্ট করা</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">${successful}</div>
+                    <div class="stat-label">সফল লিঙ্ক</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">${selectedFilesArray.length - successful}</div>
+                    <div class="stat-label">ব্যর্থ</div>
+                </div>
+            `;
+            
+            linksContainer.style.display = 'block';
+            imagesContainer.style.display = 'none';
+            
+            linksList.innerHTML = '';
+            processedResults.forEach((result, index) => {
+                const linkItem = document.createElement('div');
+                linkItem.className = 'link-item';
+                linkItem.innerHTML = `
+                    <div class="link-header">
+                        <div class="link-number">${index + 1}</div>
+                        <img class="link-preview-img" src="${result.preview}" alt="${result.name}" 
+                             onclick="window.open('${result.url}', '_blank')" style="cursor: pointer;">
+                        <div class="link-filename">${result.name}</div>
+                    </div>
+                    <div class="link-box">${result.url}</div>
+                    <div class="link-actions">
+                        <button class="link-action-btn copy-link-btn" onclick="copyLink('${result.url}')">
+                            <i class="fas fa-copy"></i> কপি
+                        </button>
+                    </div>
+                `;
+                linksList.appendChild(linkItem);
+            });
+            
+            resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            showNotification(`${successful}টি ছবির লিঙ্ক তৈরি সফল!`, 'success');
+        }
+        
+        function showImagesResults(successful) {
+            processingContainer.style.display = 'none';
+            resultsContainer.style.display = 'block';
+            
+            resultTitle.textContent = 'ব্যাকগ্রাউন্ড রিমুভ সম্পূর্ণ!';
+            
+            let bgInfo = '';
+            if (selectedBgOption === 'transparent') {
+                bgInfo = 'খালি ব্যাকগ্রাউন্ড';
+            } else if (selectedBgOption === 'white') {
+                bgInfo = 'সাদা ব্যাকগ্রাউন্ড';
+            } else {
+                bgInfo = 'কাস্টম কালার';
+            }
+            
+            resultSubtitle.textContent = `${successful}টি ছবির ব্যাকগ্রাউন্ড সরানো হয়েছে`;
+            
+            summaryStats.innerHTML = `
+                <div class="stat-item">
+                    <div class="stat-number">${selectedFilesArray.length}</div>
+                    <div class="stat-label">সিলেক্ট করা</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">${successful}</div>
+                    <div class="stat-label">সফল রিমুভ</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">${selectedFilesArray.length - successful}</div>
+                    <div class="stat-label">ব্যর্থ</div>
+                </div>
+            `;
+            
+            linksContainer.style.display = 'none';
+            imagesContainer.style.display = 'block';
+            
+            imagesGrid.innerHTML = '';
+            processedResults.forEach((result, index) => {
+                const imageItem = document.createElement('div');
+                imageItem.className = 'image-item';
+                
+                imageItem.innerHTML = `
+                    <img class="image-preview" src="${result.url}" alt="${result.name}">
+                    <div class="image-info">
+                        <div class="image-name">${result.name}</div>
+                        <div class="image-actions">
+                            <button class="image-action-btn download-image-btn" onclick="downloadImage(${index})">
+                                <i class="fas fa-download"></i> ডাউনলোড
+                            </button>
+                        </div>
+                    </div>
+                `;
+                imagesGrid.appendChild(imageItem);
+            });
+            
+            resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            showNotification(`${successful}টি ছবির ব্যাকগ্রাউন্ড রিমুভ সফল!`, 'success');
+        }
+        
+        // Result Actions
+        function copyLink(link) {
+            navigator.clipboard.writeText(link).then(() => {
+                showNotification('লিঙ্ক কপি করা হয়েছে', 'success');
+            }).catch(err => {
+                showNotification('কপি করা যায়নি', 'error');
+            });
+        }
+        
+        function copyAllLinks() {
+            let allLinks = '';
+            processedResults.forEach((result, index) => {
+                allLinks += `${index + 1}. ${result.name}\n${result.url}\n\n`;
+            });
+            
+            navigator.clipboard.writeText(allLinks).then(() => {
+                showNotification('সব লিঙ্ক কপি করা হয়েছে', 'success');
+            }).catch(err => {
+                showNotification('কপি করা যায়নি', 'error');
+            });
+        }
+        
+        function downloadImage(index) {
+            const result = processedResults[index];
+            if (!result.blob) return;
+            
+            const link = document.createElement('a');
+            link.href = result.url;
+            
+            let filename = `bg-removed-${result.name.split('.')[0]}.png`;
+            if (result.isTransparent) {
+                filename = `transparent-${result.name.split('.')[0]}.png`;
+            }
+            
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            showNotification('ছবি ডাউনলোড শুরু হয়েছে', 'success');
+        }
+        
+        function resetTool() {
+            selectedAction = null;
+            selectedFilesArray = [];
+            selectedBgOption = 'transparent';
+            selectedBgColor = null;
+            processedResults = [];
+            
+            document.getElementById('linkAction').classList.remove('active');
+            document.getElementById('bgRemoveAction').classList.remove('active');
+            
+            uploadSection.style.display = 'none';
+            selectedFiles.style.display = 'none';
+            bgColorOptions.style.display = 'none';
+            processingContainer.style.display = 'none';
+            resultsContainer.style.display = 'none';
+            
+            processBtn.disabled = true;
+            progressFill.style.width = '0%';
+            progressPercent.textContent = '0%';
+            imageInput.value = '';
+            
+            transparentBtn.classList.remove('active');
+            whiteBtn.classList.remove('active');
+           
