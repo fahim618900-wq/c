@@ -3,28 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✨ একসাথে অনেক ছবি প্রসেসিং</title>
+    <title>একসাথে অনেক ছবি প্রসেসিং</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --gold: #ff00a2;
-            --gold-light: #d422ec;
-            --gold-dark: #7322ec;
-            --gold-gradient: linear-gradient(135deg,  #22ecd4 0%, #FFEC8B 100%);
-            --primary:  #22ecd4;
+            --primary: #4361ee;
             --primary-light: #eef2ff;
-            --secondary: #764ba2;
-            --secondary-light: #f3e8ff;
-            --success: #4CAF50;
-            --danger: #ff6b6b;
-            --warning: #ffa726;
-            --info: #2196F3;
-            --text: #333;
-            --text-light: #666;
-            --border: #e0e0e0;
-            --bg: #fffef5;
+            --secondary: #3a0ca3;
+            --success: #4cc9f0;
+            --light-bg: #f8f9fa;
             --white: #ffffff;
-            --shadow: rgba(255, 215, 0, 0.1);
+            --text: #333333;
+            --text-light: #666666;
+            --border: #e1e5eb;
+            --shadow: rgba(0, 0, 0, 0.08);
         }
 
         * {
@@ -35,7 +27,7 @@
 
         body {
             font-family: 'Segoe UI', 'Noto Sans Bengali', sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background: var(--light-bg);
             min-height: 100vh;
             padding: 20px;
             color: var(--text);
@@ -48,224 +40,161 @@
         }
 
         .header {
-            background: var(--gold-gradient);
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 25px;
             text-align: center;
-            box-shadow: 0 15px 35px rgba(255, 215, 0, 0.2);
-            position: relative;
-            overflow: hidden;
-            border: 2px solid rgba(255, 215, 0, 0.3);
-        }
-
-        .header:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
-            pointer-events: none;
+            margin-bottom: 30px;
+            padding: 30px 20px;
         }
 
         .logo {
-            font-size: 50px;
-            color: #333;
+            font-size: 48px;
+            color: var(--primary);
             margin-bottom: 15px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
         .title {
-            color: #333;
-            font-size: 32px;
+            color: var(--text);
+            font-size: 28px;
             margin-bottom: 10px;
-            font-weight: 800;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            font-weight: 700;
         }
 
         .subtitle {
-            color: #444;
+            color: var(--text-light);
             font-size: 16px;
-            font-weight: 500;
             max-width: 600px;
             margin: 0 auto;
         }
 
         .main-card {
             background: var(--white);
-            border-radius: 20px;
+            border-radius: 16px;
             padding: 30px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 30px var(--shadow);
             margin-bottom: 20px;
-            border: 1px solid rgba(255, 215, 0, 0.2);
         }
 
-        /* Action Selection */
         .section-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 25px;
-            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 12px;
+            gap: 10px;
             padding-bottom: 15px;
-            border-bottom: 2px solid var(--gold-light);
+            border-bottom: 2px solid var(--primary-light);
         }
 
         .section-title i {
-            color: var(--gold-dark);
-            font-size: 24px;
+            color: var(--primary);
         }
 
+        /* Action Selection */
         .action-buttons {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            gap: 15px;
             margin-bottom: 30px;
         }
 
+        @media (max-width: 600px) {
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .action-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 25px 20px;
-            border-radius: 15px;
-            border: 2px solid var(--gold-light);
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid var(--border);
             background: var(--white);
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s ease;
             text-align: center;
-            position: relative;
-            overflow: hidden;
         }
 
         .action-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.2);
-            border-color: var(--gold);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--shadow);
         }
 
         .action-btn.active {
-            border-color: var(--gold);
-            background: var(--gold-gradient);
-            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
-            transform: translateY(-5px);
-        }
-
-        .action-btn.active:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--gold);
+            border-color: var(--primary);
+            background: var(--primary-light);
         }
 
         .action-icon {
-            font-size: 32px;
-            color: var(--gold-dark);
-            background: var(--gold-light);
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-
-        .action-btn.active .action-icon {
-            color: #333;
-            background: var(--white);
-            transform: scale(1.1);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            font-size: 28px;
+            color: var(--primary);
+            margin-bottom: 10px;
         }
 
         .action-label {
             font-size: 16px;
-            font-weight: 700;
-            color: #333;
-            transition: all 0.3s;
-        }
-
-        .action-btn.active .action-label {
-            color: #222;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 5px;
         }
 
         .action-description {
             font-size: 13px;
             color: var(--text-light);
-            margin-top: 5px;
         }
 
-        /* Multi Image Upload */
+        /* Upload Section */
         .upload-section {
             display: none;
-            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .upload-area {
-            border: 3px dashed var(--gold);
-            border-radius: 15px;
+            border: 2px dashed var(--primary);
+            border-radius: 12px;
             padding: 40px 20px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s ease;
-            background: var(--gold-light);
+            transition: all 0.2s;
+            background: var(--primary-light);
             margin-bottom: 20px;
-            position: relative;
-            overflow: hidden;
         }
 
         .upload-area:hover {
-            background: var(--gold-light);
-            border-color: var(--gold-dark);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.15);
+            background: rgba(67, 97, 238, 0.08);
         }
 
         .upload-icon {
-            font-size: 50px;
-            color: var(--gold-dark);
+            font-size: 40px;
+            color: var(--primary);
             margin-bottom: 15px;
-            opacity: 0.9;
         }
 
         .upload-text h3 {
-            font-size: 22px;
-            color: #333;
-            margin-bottom: 10px;
-            font-weight: 700;
+            font-size: 18px;
+            color: var(--text);
+            margin-bottom: 8px;
+            font-weight: 600;
         }
 
         .upload-text p {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 8px;
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 6px;
         }
 
         input[type="file"] {
             display: none;
         }
 
+        /* Selected Files */
         .selected-files {
-            margin-top: 25px;
+            margin-top: 20px;
             display: none;
         }
 
         .files-count {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
-            color: #333;
+            color: var(--text);
             margin-bottom: 15px;
             display: flex;
             align-items: center;
@@ -273,61 +202,51 @@
         }
 
         .files-count i {
-            color: var(--gold-dark);
+            color: var(--primary);
         }
 
         .files-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            gap: 15px;
-            max-height: 300px;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 12px;
+            max-height: 250px;
             overflow-y: auto;
             padding: 10px;
-            background: var(--gold-light);
+            background: var(--light-bg);
             border-radius: 10px;
-            border: 2px solid var(--gold);
         }
 
         .file-item {
             position: relative;
-            border-radius: 10px;
+            border-radius: 8px;
             overflow: hidden;
             background: var(--white);
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            transition: all 0.3s;
-        }
-
-        .file-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            box-shadow: 0 2px 8px var(--shadow);
         }
 
         .file-preview {
             width: 100%;
-            height: 100px;
+            height: 80px;
             object-fit: cover;
             display: block;
         }
 
         .file-info {
             padding: 8px;
-            text-align: center;
-            background: var(--white);
         }
 
         .file-name {
             font-size: 11px;
             font-weight: 600;
-            color: #333;
+            color: var(--text);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            margin-bottom: 3px;
         }
 
         .file-size {
             font-size: 10px;
-            color: #666;
+            color: var(--text-light);
         }
 
         .remove-file {
@@ -337,7 +256,7 @@
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background: var(--danger);
+            background: #ff4757;
             color: var(--white);
             display: flex;
             align-items: center;
@@ -345,104 +264,80 @@
             font-size: 10px;
             cursor: pointer;
             opacity: 0;
-            transition: opacity 0.3s;
+            transition: opacity 0.2s;
         }
 
         .file-item:hover .remove-file {
             opacity: 1;
         }
 
-        /* Background Color Options */
+        /* Background Options */
         .bg-color-options {
             display: none;
-            margin-top: 25px;
+            margin-top: 20px;
             padding: 20px;
-            background: var(--gold-light);
-            border-radius: 15px;
-            border: 2px solid var(--gold);
-        }
-
-        .bg-colors-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            background: var(--light-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border);
         }
 
         .bg-options-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 500px) {
+            .bg-options-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .bg-option-btn {
-            padding: 12px 10px;
-            border-radius: 10px;
-            border: 2px solid var(--gold-light);
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid var(--border);
             background: var(--white);
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s;
             text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
         }
 
         .bg-option-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: var(--primary);
         }
 
         .bg-option-btn.active {
-            border-color: var(--gold);
-            background: var(--gold-light);
+            border-color: var(--primary);
+            background: var(--primary-light);
         }
 
         .bg-option-icon {
-            font-size: 24px;
-            color: var(--gold-dark);
+            font-size: 20px;
+            margin-bottom: 8px;
         }
 
         .bg-option-name {
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 600;
-            color: #333;
+            color: var(--text);
+            margin-bottom: 3px;
         }
 
         .bg-option-desc {
-            font-size: 10px;
-            color: #666;
+            font-size: 11px;
+            color: var(--text-light);
         }
 
-        /* Colour Picker Section */
+        /* Colour Picker */
         .colour-picker-section {
-            margin-top: 20px;
+            margin-top: 15px;
             padding: 15px;
             background: var(--white);
-            border-radius: 10px;
-            border: 2px solid var(--gold);
+            border-radius: 8px;
+            border: 1px solid var(--border);
             display: none;
-        }
-
-        .colour-picker-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .colour-picker-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: #333;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
         .colour-display {
@@ -453,12 +348,11 @@
         }
 
         .current-colour-box {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             border-radius: 8px;
-            border: 2px solid var(--gold);
-            background-color: #ffffff;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border: 2px solid var(--border);
+            background-color: var(--primary);
         }
 
         .colour-details {
@@ -466,92 +360,67 @@
         }
 
         .colour-hex {
-            font-size: 16px;
-            font-weight: 700;
-            color: #333;
-            font-family: monospace;
-            margin-bottom: 3px;
-        }
-
-        .colour-rgb {
-            font-size: 12px;
-            color: #666;
-            font-family: monospace;
-        }
-
-        .colour-picker-wrapper {
-            text-align: center;
-            margin: 15px 0;
-        }
-
-        .colour-picker-label {
-            display: block;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
-            color: #333;
-            margin-bottom: 8px;
+            color: var(--text);
+            font-family: monospace;
+            margin-bottom: 2px;
         }
 
         .colour-picker-input {
             width: 100%;
-            height: 50px;
-            border: 2px solid var(--gold);
-            border-radius: 8px;
+            height: 40px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
             cursor: pointer;
             background: transparent;
         }
 
+        /* Buttons */
         .process-btn {
             width: 100%;
-            padding: 16px;
+            padding: 15px;
             margin-top: 25px;
-            border-radius: 12px;
-            background: var(--gold-gradient);
-            color: #333;
+            border-radius: 10px;
+            background: var(--primary);
+            color: var(--white);
             border: none;
             font-size: 16px;
-            font-weight: 700;
+            font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
+            transition: all 0.2s;
         }
 
         .process-btn:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.2);
         }
 
         .process-btn:disabled {
             background: #cccccc;
             cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
         }
 
         /* Processing */
         .processing-container {
             display: none;
-            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .processing-header {
-            text-align: center;
-            margin-bottom: 30px;
         }
 
         .processing-title {
-            font-size: 22px;
-            color: #333;
-            margin-bottom: 10px;
-            font-weight: 700;
+            font-size: 20px;
+            color: var(--text);
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-align: center;
         }
 
         .progress-container {
-            margin: 25px 0;
+            margin: 20px 0;
         }
 
         .progress-info {
@@ -562,64 +431,43 @@
 
         .progress-text {
             font-size: 14px;
-            font-weight: 600;
-            color: #333;
+            font-weight: 500;
+            color: var(--text);
         }
 
         .progress-percent {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--gold-dark);
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary);
         }
 
         .progress-bar {
             width: 100%;
-            height: 8px;
-            background: var(--gold-light);
-            border-radius: 4px;
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
             overflow: hidden;
         }
 
         .progress-fill {
             height: 100%;
-            background: var(--gold-gradient);
+            background: var(--primary);
             width: 0%;
-            border-radius: 4px;
-            transition: width 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .progress-fill:after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            animation: shimmer 2s infinite;
+            transition: width 0.3s;
         }
 
         .current-file {
             text-align: center;
-            margin-top: 15px;
             padding: 12px;
-            background: var(--gold-light);
+            background: var(--light-bg);
             border-radius: 8px;
-            border: 2px solid var(--gold);
             font-size: 13px;
-        }
-
-        .current-file span {
-            font-weight: 600;
-            color: #333;
+            color: var(--text);
         }
 
         /* Results */
         .results-container {
             display: none;
-            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .results-header {
@@ -628,68 +476,70 @@
         }
 
         .success-icon {
-            font-size: 50px;
-            color: var(--gold-dark);
+            font-size: 40px;
+            color: var(--primary);
             margin-bottom: 15px;
-            animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
 
         .result-title {
-            font-size: 24px;
-            color: #333;
+            font-size: 22px;
+            color: var(--text);
             margin-bottom: 8px;
             font-weight: 700;
         }
 
         .result-subtitle {
             font-size: 14px;
-            color: #666;
+            color: var(--text-light);
             margin-bottom: 15px;
         }
 
         .summary-card {
-            background: var(--gold-gradient);
-            border-radius: 15px;
+            background: var(--primary-light);
+            border-radius: 12px;
             padding: 20px;
             margin-bottom: 20px;
-            border: 2px solid var(--gold);
         }
 
         .summary-stats {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 15px;
-            margin-bottom: 20px;
+        }
+
+        @media (max-width: 500px) {
+            .summary-stats {
+                grid-template-columns: 1fr;
+            }
         }
 
         .stat-item {
             text-align: center;
-            padding: 12px;
+            padding: 15px;
             background: var(--white);
             border-radius: 8px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px var(--shadow);
         }
 
         .stat-number {
-            font-size: 28px;
-            font-weight: 800;
-            color: var(--gold-dark);
-            margin-bottom: 3px;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
         }
 
         .stat-label {
             font-size: 12px;
-            color: #666;
+            color: var(--text-light);
             font-weight: 600;
         }
 
         /* Links Results */
-        .links-container {
-            background: var(--gold-light);
-            border-radius: 15px;
+        .links-container, .images-container {
+            background: var(--light-bg);
+            border-radius: 12px;
             padding: 20px;
             margin-top: 20px;
-            border: 2px solid var(--gold);
         }
 
         .links-header {
@@ -697,14 +547,12 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid var(--gold);
         }
 
         .links-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: #333;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text);
             display: flex;
             align-items: center;
             gap: 8px;
@@ -712,26 +560,25 @@
 
         .copy-all-btn {
             padding: 8px 15px;
-            background: var(--gold-gradient);
-            color: #333;
+            background: var(--primary);
+            color: var(--white);
             border: none;
             border-radius: 6px;
-            font-weight: 600;
+            font-weight: 500;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 6px;
-            transition: all 0.3s;
+            transition: all 0.2s;
             font-size: 13px;
         }
 
         .copy-all-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 3px 10px rgba(255, 215, 0, 0.2);
+            background: var(--secondary);
         }
 
         .links-list {
-            max-height: 350px;
+            max-height: 300px;
             overflow-y: auto;
             padding: 8px;
         }
@@ -741,53 +588,51 @@
             border-radius: 8px;
             padding: 12px;
             margin-bottom: 12px;
-            border: 1px solid var(--gold-light);
         }
 
         .link-header {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             margin-bottom: 10px;
         }
 
         .link-number {
             width: 25px;
             height: 25px;
-            background: var(--gold-gradient);
+            background: var(--primary);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
-            color: #333;
+            font-weight: 600;
+            color: var(--white);
             font-size: 12px;
         }
 
         .link-preview-img {
-            width: 45px;
-            height: 45px;
+            width: 40px;
+            height: 40px;
             object-fit: cover;
             border-radius: 6px;
-            border: 2px solid var(--gold);
         }
 
         .link-filename {
-            font-weight: 600;
-            color: #333;
+            font-weight: 500;
+            color: var(--text);
             flex: 1;
             font-size: 12px;
         }
 
         .link-box {
-            background: #f9f9f9;
+            background: var(--light-bg);
             border-radius: 6px;
             padding: 10px;
             word-break: break-all;
             font-size: 12px;
-            color: #333;
+            color: var(--text);
             border: 1px solid var(--border);
-            font-family: 'Courier New', monospace;
+            font-family: monospace;
             margin-bottom: 10px;
         }
 
@@ -797,39 +642,30 @@
         }
 
         .link-action-btn {
-            flex: 1;
             padding: 6px 12px;
-            border-radius: 5px;
+            border-radius: 4px;
             font-size: 11px;
-            font-weight: 600;
+            font-weight: 500;
             cursor: pointer;
             border: none;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 4px;
-            transition: all 0.3s;
+            transition: all 0.2s;
         }
 
         .copy-link-btn {
-            background: var(--info);
+            background: var(--primary);
             color: var(--white);
         }
 
         /* Images Results */
-        .images-container {
-            background: var(--gold-light);
-            border-radius: 15px;
-            padding: 20px;
-            margin-top: 20px;
-            border: 2px solid var(--gold);
-        }
-
         .images-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 15px;
-            max-height: 500px;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 12px;
+            max-height: 400px;
             overflow-y: auto;
             padding: 8px;
         }
@@ -838,35 +674,29 @@
             background: var(--white);
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-            transition: all 0.3s;
-        }
-
-        .image-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 2px 8px var(--shadow);
         }
 
         .image-preview {
             width: 100%;
-            height: 140px;
+            height: 120px;
             object-fit: cover;
             display: block;
         }
 
         .image-info {
-            padding: 8px;
+            padding: 10px;
             text-align: center;
         }
 
         .image-name {
             font-size: 11px;
-            font-weight: 600;
-            color: #333;
+            font-weight: 500;
+            color: var(--text);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
 
         .image-actions {
@@ -875,51 +705,50 @@
         }
 
         .image-action-btn {
-            flex: 1;
-            padding: 5px 8px;
+            padding: 6px 10px;
             border-radius: 4px;
-            font-size: 10px;
+            font-size: 11px;
             cursor: pointer;
             border: none;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 3px;
+            flex: 1;
         }
 
         .download-image-btn {
-            background: var(--success);
+            background: var(--primary);
             color: var(--white);
         }
 
         .reset-btn {
             width: 100%;
-            padding: 16px;
+            padding: 15px;
             margin-top: 25px;
-            border-radius: 12px;
-            background: var(--gold-gradient);
-            color: #333;
-            border: none;
+            border-radius: 10px;
+            background: var(--light-bg);
+            color: var(--text);
+            border: 2px solid var(--border);
             font-size: 16px;
-            font-weight: 700;
+            font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
+            transition: all 0.2s;
         }
 
         .reset-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
+            background: var(--white);
+            border-color: var(--primary);
         }
 
         .footer {
             text-align: center;
             padding: 15px;
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--text-light);
             font-size: 12px;
         }
 
@@ -927,32 +756,30 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background: var(--gold-gradient);
-            color: #333;
+            background: var(--primary);
+            color: var(--white);
             padding: 12px 20px;
-            border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.25);
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             display: flex;
             align-items: center;
             gap: 10px;
-            transform: translateX(400px) scale(0.8);
+            transform: translateY(100px);
             opacity: 0;
-            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transition: all 0.3s;
             z-index: 1000;
             max-width: 300px;
-            border: 2px solid var(--gold);
-            font-size: 14px;
         }
 
         .notification.show {
-            transform: translateX(0) scale(1);
+            transform: translateY(0);
             opacity: 1;
         }
 
         @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
@@ -960,51 +787,10 @@
             }
         }
 
-        @keyframes bounceIn {
-            0% { transform: scale(0.3); opacity: 0; }
-            50% { transform: scale(1.1); }
-            70% { transform: scale(0.9); }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 0 10px;
-            }
-            
-            .header, .main-card {
-                border-radius: 15px;
-                padding: 20px;
-            }
-            
-            .title {
-                font-size: 26px;
-            }
-            
-            .action-buttons {
-                grid-template-columns: 1fr;
-            }
-            
-            .summary-stats {
-                grid-template-columns: 1fr;
-            }
-            
-            .files-grid, .images-grid {
-                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            }
-            
-            .bg-options-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .link-actions, .image-actions {
-                flex-direction: column;
-            }
+        .upload-section,
+        .processing-container,
+        .results-container {
+            animation: slideUp 0.3s ease;
         }
     </style>
 </head>
@@ -1012,10 +798,10 @@
     <div class="container">
         <div class="header">
             <div class="logo">
-                ✨📷
+                📷✨
             </div>
-            <h1 class="title">একসাথে অনেক ছবি</h1>
-            <p class="subtitle">লিঙ্ক তৈরি করুন অথবা ব্যাকগ্রাউন্ড রিমুভ করুন - একবারে অনেকগুলো ছবি</p>
+            <h1 class="title">একসাথে অনেক ছবি প্রসেসিং</h1>
+            <p class="subtitle">লিঙ্ক তৈরি করুন বা ব্যাকগ্রাউন্ড সরান - একবারে অনেকগুলো ছবি</p>
         </div>
 
         <div class="main-card">
@@ -1041,13 +827,13 @@
                         <i class="fas fa-magic"></i>
                     </div>
                     <div>
-                        <div class="action-label">ব্যাকগ্রাউন্ড রিমুভ</div>
+                        <div class="action-label">ব্যাকগ্রাউন্ড সরান</div>
                         <div class="action-description">একসাথে অনেক ছবি</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Step 2: Multi Image Upload -->
+            <!-- Step 2: Image Upload -->
             <div class="upload-section" id="uploadSection">
                 <div class="section-title">
                     <i class="fas fa-images"></i>
@@ -1074,21 +860,20 @@
                     <div class="files-grid" id="filesGrid"></div>
                 </div>
 
-                <!-- Background Color Options (for background removal) -->
+                <!-- Background Options -->
                 <div class="bg-color-options" id="bgColorOptions">
-                    <div class="bg-colors-title">
+                    <div class="section-title">
                         <i class="fas fa-palette"></i>
                         ব্যাকগ্রাউন্ড অপশন
                     </div>
                     
-                    <!-- Background Options -->
                     <div class="bg-options-grid">
                         <div class="bg-option-btn" id="transparentBtn" onclick="selectBgOption('transparent')">
                             <div class="bg-option-icon">
                                 <i class="fas fa-eraser"></i>
                             </div>
                             <div class="bg-option-name">খালি ব্যাকগ্রাউন্ড</div>
-                            <div class="bg-option-desc">শুধু ট্রান্সপারেন্ট</div>
+                            <div class="bg-option-desc">ট্রান্সপারেন্ট</div>
                         </div>
                         
                         <div class="bg-option-btn" id="whiteBtn" onclick="selectBgOption('white')">
@@ -1108,27 +893,21 @@
                         </div>
                     </div>
 
-                    <!-- Colour Picker Section -->
+                    <!-- Colour Picker -->
                     <div class="colour-picker-section" id="colourPickerSection">
-                        <div class="colour-picker-header">
-                            <div class="colour-picker-title">
-                                <i class="fas fa-paint-brush"></i>
-                                কালার সিলেক্ট করুন
-                            </div>
+                        <div class="section-title">
+                            <i class="fas fa-paint-brush"></i>
+                            কালার সিলেক্ট করুন
                         </div>
                         
                         <div class="colour-display">
-                            <div class="current-colour-box" id="currentColourBox" style="background-color: #4a6cf7;"></div>
+                            <div class="current-colour-box" id="currentColourBox" style="background-color: #4361ee;"></div>
                             <div class="colour-details">
-                                <div class="colour-hex" id="colourHex">#4A6CF7</div>
-                                <div class="colour-rgb" id="colourRGB">RGB: 74, 108, 247</div>
+                                <div class="colour-hex" id="colourHex">#4361EE</div>
                             </div>
                         </div>
                         
-                        <div class="colour-picker-wrapper">
-                            <label class="colour-picker-label">এখানে ক্লিক করে কালার সিলেক্ট করুন</label>
-                            <input type="color" id="colourPicker" class="colour-picker-input" value="#4a6cf7">
-                        </div>
+                        <input type="color" id="colourPicker" class="colour-picker-input" value="#4361ee">
                     </div>
                 </div>
 
@@ -1139,9 +918,7 @@
 
             <!-- Step 3: Processing -->
             <div class="processing-container" id="processingContainer">
-                <div class="processing-header">
-                    <div class="processing-title" id="processingTitle">ছবি প্রসেস করা হচ্ছে...</div>
-                </div>
+                <div class="processing-title" id="processingTitle">ছবি প্রসেস করা হচ্ছে...</div>
 
                 <div class="progress-container">
                     <div class="progress-info">
@@ -1154,7 +931,7 @@
                 </div>
 
                 <div class="current-file" id="currentFile">
-                    বর্তমানে প্রসেসিং: <span id="currentFileName">কোনো ছবি নেই</span>
+                    বর্তমানে: <span id="currentFileName">কোনো ছবি নেই</span>
                 </div>
             </div>
 
@@ -1179,7 +956,7 @@
                             <i class="fas fa-link"></i> সব ছবির লিঙ্ক
                         </div>
                         <button class="copy-all-btn" onclick="copyAllLinks()">
-                            <i class="fas fa-copy"></i> সব লিঙ্ক কপি
+                            <i class="fas fa-copy"></i> সব কপি
                         </button>
                     </div>
                     <div class="links-list" id="linksList"></div>
@@ -1196,7 +973,7 @@
                 </div>
 
                 <button class="reset-btn" onclick="resetTool()">
-                    <i class="fas fa-redo"></i> নতুন ছবি প্রসেস করুন
+                    <i class="fas fa-redo"></i> নতুন করে শুরু করুন
                 </button>
             </div>
         </div>
@@ -1232,7 +1009,6 @@
         const colourPicker = document.getElementById('colourPicker');
         const currentColourBox = document.getElementById('currentColourBox');
         const colourHex = document.getElementById('colourHex');
-        const colourRGB = document.getElementById('colourRGB');
         const processingContainer = document.getElementById('processingContainer');
         const processingTitle = document.getElementById('processingTitle');
         const progressText = document.getElementById('progressText');
@@ -1254,28 +1030,19 @@
         // State
         let selectedAction = null;
         let selectedFilesArray = [];
-        let selectedBgOption = 'transparent'; // 'transparent', 'white', 'custom'
-        let selectedBgColor = null; // null for transparent, '#ffffff' for white, or custom color
+        let selectedBgOption = 'transparent';
+        let selectedBgColor = null;
         const MAX_FILES = 20;
         let processedResults = [];
         
         // Initialize
         function initBackgroundOptions() {
-            // Set default to transparent
             selectBgOption('transparent');
             
-            // Colour picker change event
             colourPicker.addEventListener('input', function() {
                 const hex = this.value.toUpperCase();
                 currentColourBox.style.backgroundColor = hex;
                 colourHex.textContent = hex;
-                
-                // Convert hex to RGB
-                const rgb = hexToRgb(hex);
-                if (rgb) {
-                    colourRGB.textContent = `RGB: ${rgb.r}, ${rgb.g}, ${rgb.b}`;
-                }
-                
                 selectedBgColor = hex;
             });
         }
@@ -1284,16 +1051,14 @@
         function selectBgOption(option) {
             selectedBgOption = option;
             
-            // Reset all options
             transparentBtn.classList.remove('active');
             whiteBtn.classList.remove('active');
             customBtn.classList.remove('active');
             
-            // Activate selected option
             if (option === 'transparent') {
                 transparentBtn.classList.add('active');
                 colourPickerSection.style.display = 'none';
-                selectedBgColor = null; // null means transparent
+                selectedBgColor = null;
                 showNotification('খালি ব্যাকগ্রাউন্ড সিলেক্ট করা হয়েছে', 'info');
             } else if (option === 'white') {
                 whiteBtn.classList.add('active');
@@ -1303,26 +1068,12 @@
             } else if (option === 'custom') {
                 customBtn.classList.add('active');
                 colourPickerSection.style.display = 'block';
-                // Set default blue color
-                selectedBgColor = '#4A6CF7';
-                colourPicker.value = '#4a6cf7';
-                currentColourBox.style.backgroundColor = '#4A6CF7';
-                colourHex.textContent = '#4A6CF7';
-                colourRGB.textContent = 'RGB: 74, 108, 247';
+                selectedBgColor = '#4361EE';
+                colourPicker.value = '#4361ee';
+                currentColourBox.style.backgroundColor = '#4361EE';
+                colourHex.textContent = '#4361EE';
                 showNotification('কাস্টম কালার সিলেক্ট করুন', 'info');
             }
-        }
-        
-        // Hex to RGB conversion
-        function hexToRgb(hex) {
-            hex = hex.replace('#', '');
-            if (hex.length === 3) {
-                hex = hex.split('').map(char => char + char).join('');
-            }
-            const r = parseInt(hex.substring(0, 2), 16);
-            const g = parseInt(hex.substring(2, 4), 16);
-            const b = parseInt(hex.substring(4, 6), 16);
-            return { r, g, b };
         }
         
         // Action Selection
@@ -1331,23 +1082,20 @@
             
             selectedAction = action;
             
-            // Reset all actions
             document.getElementById('linkAction').classList.remove('active');
             document.getElementById('bgRemoveAction').classList.remove('active');
             
-            // Activate selected action
             if (action === 'link') {
                 document.getElementById('linkAction').classList.add('active');
                 bgColorOptions.style.display = 'none';
-                showNotification('লিঙ্ক তৈরি সিলেক্ট করা হয়েছে! এখন ছবি সিলেক্ট করুন।', 'info');
+                showNotification('লিঙ্ক তৈরি সিলেক্ট করা হয়েছে', 'info');
             } else if (action === 'bgremove') {
                 document.getElementById('bgRemoveAction').classList.add('active');
                 bgColorOptions.style.display = 'block';
                 initBackgroundOptions();
-                showNotification('ব্যাকগ্রাউন্ড রিমুভ সিলেক্ট করা হয়েছে! এখন ছবি সিলেক্ট করুন।', 'info');
+                showNotification('ব্যাকগ্রাউন্ড রিমুভ সিলেক্ট করা হয়েছে', 'info');
             }
             
-            // Auto show upload section
             setTimeout(() => {
                 uploadSection.style.display = 'block';
                 uploadSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1359,522 +1107,16 @@
         
         uploadArea.addEventListener('dragover', (e) => {
             e.preventDefault();
-            uploadArea.style.borderColor = 'var(--gold-dark)';
-            uploadArea.style.background = 'var(--gold-light)';
-            uploadArea.style.transform = 'translateY(-3px)';
-            uploadArea.style.boxShadow = '0 10px 20px rgba(255, 215, 0, 0.2)';
+            uploadArea.style.background = 'rgba(67, 97, 238, 0.1)';
         });
         
         uploadArea.addEventListener('dragleave', () => {
-            uploadArea.style.borderColor = 'var(--gold)';
-            uploadArea.style.background = 'var(--gold-light)';
-            uploadArea.style.transform = 'translateY(0)';
-            uploadArea.style.boxShadow = 'none';
+            uploadArea.style.background = '';
         });
         
         uploadArea.addEventListener('drop', (e) => {
             e.preventDefault();
-            uploadArea.style.borderColor = 'var(--gold)';
-            uploadArea.style.background = 'var(--gold-light)';
-            uploadArea.style.transform = 'translateY(0)';
-            uploadArea.style.boxShadow = 'none';
+            uploadArea.style.background = '';
             
             if (e.dataTransfer.files.length) {
-                handleFiles(e.dataTransfer.files);
-            }
-        });
-        
-        imageInput.addEventListener('change', () => {
-            if (imageInput.files.length) {
-                handleFiles(imageInput.files);
-            }
-        });
-        
-        function handleFiles(files) {
-            const newFiles = Array.from(files).slice(0, MAX_FILES - selectedFilesArray.length);
-            
-            if (newFiles.length === 0) {
-                showNotification(`আপনি সর্বোচ্চ ${MAX_FILES}টি ছবি সিলেক্ট করতে পারেন!`, 'error');
-                return;
-            }
-            
-            let validFiles = 0;
-            
-            newFiles.forEach(file => {
-                // Check if file is an image
-                if (!file.type.match('image.*')) {
-                    showNotification(`${file.name} ছবি ফাইল নয়!`, 'error');
-                    return;
-                }
-                
-                // Check file size
-                if (file.size > 10 * 1024 * 1024) {
-                    showNotification(`${file.name} ১০MB এর বেশি!`, 'error');
-                    return;
-                }
-                
-                // Check for duplicates
-                if (selectedFilesArray.some(f => f.name === file.name && f.size === file.size)) {
-                    showNotification(`${file.name} ইতিমধ্যে সিলেক্ট করা আছে!`, 'warning');
-                    return;
-                }
-                
-                // Add to array
-                selectedFilesArray.push({
-                    file: file,
-                    id: Date.now() + Math.random(),
-                    preview: null
-                });
-                validFiles++;
-            });
-            
-            if (validFiles > 0) {
-                updateFilesDisplay();
-                processBtn.disabled = false;
-                showNotification(`${validFiles}টি ছবি সিলেক্ট করা হয়েছে!`, 'success');
-            }
-        }
-        
-        function updateFilesDisplay() {
-            filesCount.textContent = `${selectedFilesArray.length}টি ছবি সিলেক্ট করা হয়েছে`;
-            
-            if (selectedFilesArray.length > 0) {
-                selectedFiles.style.display = 'block';
-                filesGrid.innerHTML = '';
-                
-                selectedFilesArray.forEach((fileObj, index) => {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        fileObj.preview = e.target.result;
-                        
-                        const fileItem = document.createElement('div');
-                        fileItem.className = 'file-item';
-                        fileItem.innerHTML = `
-                            <img class="file-preview" src="${e.target.result}" alt="${fileObj.file.name}">
-                            <div class="file-info">
-                                <div class="file-name">${fileObj.file.name}</div>
-                                <div class="file-size">${formatFileSize(fileObj.file.size)}</div>
-                            </div>
-                            <div class="remove-file" onclick="removeFile(${index})">
-                                <i class="fas fa-times"></i>
-                            </div>
-                        `;
-                        filesGrid.appendChild(fileItem);
-                    };
-                    reader.readAsDataURL(fileObj.file);
-                });
-            } else {
-                selectedFiles.style.display = 'none';
-                processBtn.disabled = true;
-            }
-        }
-        
-        function removeFile(index) {
-            selectedFilesArray.splice(index, 1);
-            updateFilesDisplay();
-            showNotification('ছবি মুছে ফেলা হয়েছে!', 'info');
-        }
-        
-        function formatFileSize(bytes) {
-            if (bytes < 1024) return bytes + ' বাইট';
-            else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
-            else return (bytes / 1048576).toFixed(1) + ' MB';
-        }
-        
-        // Start Processing
-        function startProcessing() {
-            if (!selectedAction || selectedFilesArray.length === 0) {
-                showNotification('প্রথমে অ্যাকশন এবং ছবি সিলেক্ট করুন!', 'error');
-                return;
-            }
-            
-            uploadSection.style.display = 'none';
-            processingContainer.style.display = 'block';
-            
-            // Start processing
-            if (selectedAction === 'link') {
-                processMultipleLinks();
-            } else if (selectedAction === 'bgremove') {
-                processMultipleBackgroundRemovals();
-            }
-            
-            processingContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-        
-        // Processing Functions
-        async function processMultipleLinks() {
-            processingTitle.textContent = 'লিঙ্ক তৈরি করা হচ্ছে...';
-            processedResults = [];
-            let completed = 0;
-            let successful = 0;
-            
-            for (let i = 0; i < selectedFilesArray.length; i++) {
-                const fileObj = selectedFilesArray[i];
-                
-                // Update current file info
-                currentFileName.textContent = fileObj.file.name;
-                
-                try {
-                    const formData = new FormData();
-                    formData.append("image", fileObj.file);
-                    
-                    const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
-                        method: "POST",
-                        body: formData
-                    });
-                    
-                    const data = await response.json();
-                    
-                    if (data.success) {
-                        processedResults.push({
-                            name: fileObj.file.name,
-                            type: 'link',
-                            url: data.data.url,
-                            preview: fileObj.preview,
-                            size: fileObj.file.size
-                        });
-                        successful++;
-                    }
-                    
-                } catch (error) {
-                    console.error('Error:', error);
-                }
-                
-                completed++;
-                
-                // Update progress
-                const percent = Math.round((completed / selectedFilesArray.length) * 100);
-                progressText.textContent = `${completed}টি ছবি প্রসেস করা হয়েছে`;
-                progressPercent.textContent = `${percent}%`;
-                progressFill.style.width = `${percent}%`;
-            }
-            
-            showLinksResults(successful);
-        }
-        
-        async function processMultipleBackgroundRemovals() {
-            processingTitle.textContent = 'ব্যাকগ্রাউন্ড রিমুভ করা হচ্ছে...';
-            processedResults = [];
-            let completed = 0;
-            let successful = 0;
-            
-            for (let i = 0; i < selectedFilesArray.length; i++) {
-                const fileObj = selectedFilesArray[i];
-                
-                // Update current file info
-                currentFileName.textContent = fileObj.file.name;
-                
-                try {
-                    const formData = new FormData();
-                    formData.append('image_file', fileObj.file);
-                    formData.append('size', 'auto');
-                    formData.append('format', 'png');
-                    
-                    const response = await fetch('https://api.remove.bg/v1.0/removebg', {
-                        method: 'POST',
-                        headers: {
-                            'X-Api-Key': REMOVE_BG_API_KEY
-                        },
-                        body: formData
-                    });
-                    
-                    if (response.ok) {
-                        const blob = await response.blob();
-                        const url = URL.createObjectURL(blob);
-                        
-                        let processedImageUrl = url;
-                        
-                        // Apply background color if not transparent
-                        if (selectedBgOption !== 'transparent') {
-                            processedImageUrl = await applyBackgroundColor(blob, selectedBgColor);
-                        }
-                        
-                        processedResults.push({
-                            name: fileObj.file.name,
-                            type: 'image',
-                            url: processedImageUrl,
-                            blob: blob,
-                            preview: fileObj.preview,
-                            originalUrl: url,
-                            bgColor: selectedBgColor,
-                            bgOption: selectedBgOption,
-                            isTransparent: selectedBgOption === 'transparent'
-                        });
-                        successful++;
-                    }
-                    
-                } catch (error) {
-                    console.error('Error:', error);
-                }
-                
-                completed++;
-                
-                // Update progress
-                const percent = Math.round((completed / selectedFilesArray.length) * 100);
-                progressText.textContent = `${completed}টি ছবি প্রসেস করা হয়েছে`;
-                progressPercent.textContent = `${percent}%`;
-                progressFill.style.width = `${percent}%`;
-            }
-            
-            showImagesResults(successful);
-        }
-        
-        // Apply background color to transparent image
-        async function applyBackgroundColor(blob, bgColor) {
-            return new Promise((resolve) => {
-                const img = new Image();
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                
-                img.onload = function() {
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-                    
-                    // Fill with background color
-                    ctx.fillStyle = bgColor;
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    
-                    // Draw the transparent image on top
-                    ctx.drawImage(img, 0, 0);
-                    
-                    // Convert to data URL
-                    const dataUrl = canvas.toDataURL('image/png');
-                    resolve(dataUrl);
-                };
-                
-                img.src = URL.createObjectURL(blob);
-            });
-        }
-        
-        // Show Results
-        function showLinksResults(successful) {
-            processingContainer.style.display = 'none';
-            resultsContainer.style.display = 'block';
-            
-            resultTitle.textContent = 'লিঙ্ক তৈরি সম্পূর্ণ!';
-            resultSubtitle.textContent = `${successful}টি ছবির লিঙ্ক তৈরি করা হয়েছে`;
-            
-            // Update summary stats
-            summaryStats.innerHTML = `
-                <div class="stat-item">
-                    <div class="stat-number">${selectedFilesArray.length}</div>
-                    <div class="stat-label">সিলেক্ট করা</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">${successful}</div>
-                    <div class="stat-label">সফল লিঙ্ক</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">${selectedFilesArray.length - successful}</div>
-                    <div class="stat-label">ব্যর্থ</div>
-                </div>
-            `;
-            
-            // Show links container
-            linksContainer.style.display = 'block';
-            imagesContainer.style.display = 'none';
-            
-            // Populate links list
-            linksList.innerHTML = '';
-            processedResults.forEach((result, index) => {
-                const linkItem = document.createElement('div');
-                linkItem.className = 'link-item';
-                linkItem.innerHTML = `
-                    <div class="link-header">
-                        <div class="link-number">${index + 1}</div>
-                        <img class="link-preview-img" src="${result.preview}" alt="${result.name}" 
-                             onclick="window.open('${result.url}', '_blank')" style="cursor: pointer;">
-                        <div class="link-filename">${result.name}</div>
-                    </div>
-                    <div class="link-box">${result.url}</div>
-                    <div class="link-actions">
-                        <button class="link-action-btn copy-link-btn" onclick="copyLink('${result.url}')">
-                            <i class="fas fa-copy"></i> লিঙ্ক কপি
-                        </button>
-                    </div>
-                `;
-                linksList.appendChild(linkItem);
-            });
-            
-            resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            showNotification(`${successful}টি ছবির লিঙ্ক তৈরি সফল!`, 'success');
-        }
-        
-        function showImagesResults(successful) {
-            processingContainer.style.display = 'none';
-            resultsContainer.style.display = 'block';
-            
-            resultTitle.textContent = 'ব্যাকগ্রাউন্ড রিমুভ সম্পূর্ণ!';
-            
-            let bgInfo = '';
-            if (selectedBgOption === 'transparent') {
-                bgInfo = 'খালি ব্যাকগ্রাউন্ড';
-            } else if (selectedBgOption === 'white') {
-                bgInfo = 'সাদা ব্যাকগ্রাউন্ড';
-            } else {
-                bgInfo = 'কাস্টম কালার';
-            }
-            
-            resultSubtitle.textContent = `${successful}টি ছবির ব্যাকগ্রাউন্ড মুছে ফেলা হয়েছে (${bgInfo})`;
-            
-            // Update summary stats
-            summaryStats.innerHTML = `
-                <div class="stat-item">
-                    <div class="stat-number">${selectedFilesArray.length}</div>
-                    <div class="stat-label">সিলেক্ট করা</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">${successful}</div>
-                    <div class="stat-label">সফল রিমুভ</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">${selectedFilesArray.length - successful}</div>
-                    <div class="stat-label">ব্যর্থ</div>
-                </div>
-            `;
-            
-            // Show images container
-            linksContainer.style.display = 'none';
-            imagesContainer.style.display = 'block';
-            
-            // Populate images grid
-            imagesGrid.innerHTML = '';
-            processedResults.forEach((result, index) => {
-                const imageItem = document.createElement('div');
-                imageItem.className = 'image-item';
-                
-                let previewStyle = '';
-                if (!result.isTransparent && result.bgColor) {
-                    previewStyle = `style="background-color: ${result.bgColor};"`;
-                }
-                
-                imageItem.innerHTML = `
-                    <img class="image-preview" src="${result.url}" alt="${result.name}" ${previewStyle}>
-                    <div class="image-info">
-                        <div class="image-name">${result.name}</div>
-                        <div class="image-actions">
-                            <button class="image-action-btn download-image-btn" onclick="downloadImage(${index})">
-                                <i class="fas fa-download"></i> ডাউনলোড
-                            </button>
-                        </div>
-                    </div>
-                `;
-                imagesGrid.appendChild(imageItem);
-            });
-            
-            resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            showNotification(`${successful}টি ছবির ব্যাকগ্রাউন্ড রিমুভ সফল!`, 'success');
-        }
-        
-        // Result Actions
-        function copyLink(link) {
-            navigator.clipboard.writeText(link).then(() => {
-                showNotification('লিঙ্ক কপি করা হয়েছে!', 'success');
-            }).catch(err => {
-                showNotification('কপি করা যায়নি!', 'error');
-            });
-        }
-        
-        function copyAllLinks() {
-            let allLinks = '';
-            processedResults.forEach((result, index) => {
-                allLinks += `${index + 1}. ${result.name}\n${result.url}\n\n`;
-            });
-            
-            navigator.clipboard.writeText(allLinks).then(() => {
-                showNotification('সব লিঙ্ক কপি করা হয়েছে!', 'success');
-            }).catch(err => {
-                showNotification('কপি করা যায়নি!', 'error');
-            });
-        }
-        
-        function downloadImage(index) {
-            const result = processedResults[index];
-            if (!result.blob) return;
-            
-            const link = document.createElement('a');
-            link.href = result.url;
-            
-            let filename = `ব্যাকগ্রাউন্ড-রিমুভ-${result.name.split('.')[0]}.png`;
-            if (result.isTransparent) {
-                filename = `ট্রান্সপারেন্ট-${result.name.split('.')[0]}.png`;
-            }
-            
-            link.download = filename;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            showNotification('ছবি ডাউনলোড শুরু হয়েছে!', 'success');
-        }
-        
-        function resetTool() {
-            // Reset state
-            selectedAction = null;
-            selectedFilesArray = [];
-            selectedBgOption = 'transparent';
-            selectedBgColor = null;
-            processedResults = [];
-            
-            // Reset UI
-            document.getElementById('linkAction').classList.remove('active');
-            document.getElementById('bgRemoveAction').classList.remove('active');
-            
-            uploadSection.style.display = 'none';
-            selectedFiles.style.display = 'none';
-            bgColorOptions.style.display = 'none';
-            processingContainer.style.display = 'none';
-            resultsContainer.style.display = 'none';
-            
-            processBtn.disabled = true;
-            progressFill.style.width = '0%';
-            progressPercent.textContent = '0%';
-            imageInput.value = '';
-            
-            // Reset background options
-            transparentBtn.classList.remove('active');
-            whiteBtn.classList.remove('active');
-            customBtn.classList.remove('active');
-            transparentBtn.classList.add('active');
-            colourPickerSection.style.display = 'none';
-            
-            // Reset colour picker
-            colourPicker.value = '#4a6cf7';
-            
-            // Revoke object URLs
-            processedResults.forEach(result => {
-                if (result.type === 'image' && result.url) {
-                    URL.revokeObjectURL(result.url);
-                }
-                if (result.originalUrl) {
-                    URL.revokeObjectURL(result.originalUrl);
-                }
-            });
-            
-            showNotification('নতুন ছবি প্রসেস করতে প্রস্তুত!', 'info');
-        }
-        
-        // Notification
-        function showNotification(message, type) {
-            // Set icon based on type
-            let icon = 'fas fa-check-circle';
-            if (type === 'error') icon = 'fas fa-exclamation-circle';
-            if (type === 'warning') icon = 'fas fa-exclamation-triangle';
-            if (type === 'info') icon = 'fas fa-info-circle';
-            
-            notification.innerHTML = `<i class="${icon}"></i><span>${message}</span>`;
-            
-            notification.classList.add('show');
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
-        }
-        
-        // Initialize
-        window.addEventListener('load', () => {
-            showNotification('একসাথে অনেক ছবি প্রসেসিং টুলে স্বাগতম!', 'info');
-        });
-    </script>
-</body>
-</html>
+                handleFiles(e.dataTr
